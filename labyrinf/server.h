@@ -4,7 +4,7 @@
 
 class Server{
 private:
-    int id;
+    // int id; 
     //Game game;
 
 public:
