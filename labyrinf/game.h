@@ -10,6 +10,8 @@ private:
     //Labirinth labirinth;
     //Players players;
 
+    //test comment
+
 
     sf::RenderWindow window;
     sf::Event event;
