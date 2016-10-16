@@ -1,4 +1,6 @@
-# Labyrinth
+# Labyrinf
+
+Labyrinf is a simple, multiplayer game
 
 ## First boot
 
