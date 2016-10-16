@@ -10,7 +10,6 @@ set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Werror")
 
 
-add_executable(main main.cpp labyrinf/game.cpp labyrinf/player.cpp labyrinf/labyrinth.cpp)
-#add_executable(main Tom3112.cpp)
+add_executable(main main.cpp labyrinf/game.cpp labyrinf/command.cpp labyrinf/player.cpp labyrinf/cell.cpp labyrinf/labyrinth.cpp)
 
 target_link_libraries(main sfml-graphics sfml-window sfml-system)

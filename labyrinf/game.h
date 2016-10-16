@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include "labyrinth.h"
 #include "player.h"
+#include "command.h"
 
 class Game
 {
@@ -11,10 +12,8 @@ private:
     sf::RenderWindow window;
     sf::Event event;
 
-
-    Labyrinth labyrinth;
-
     Player player;
+    Labyrinth labyrinth;
 
     sf::Clock clock;
     sf::Time time_since_last_update = sf::Time::Zero;
@@ -25,6 +24,7 @@ private:
     void update(sf::Time delta_time);
     void render();
 
+    void verify_action(Action action);
 public:
     Game();
     void run();
