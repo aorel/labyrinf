@@ -1,7 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "game_settings.h"
+#include "settings.h"
 
 class Cell : public sf::Drawable{
 private:

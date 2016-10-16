@@ -1,16 +1,19 @@
 #include "player.h"
 
+void Player::move(sf::Vector2i &movement){
+    position += movement;
+    shape.move(movement.x * settings::cell_size, movement.y * settings::cell_size);
+}
 void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const{
     target.draw(shape);
 }
 
 Player::Player() : id(0),
-                   shape(15),
-                   cell_x(10),
-                   cell_y(10){
+                   shape(settings::player_radius),
+                   position(10, 10){
     shape.setFillColor(sf::Color::Red);
-    shape.setPosition(game_settings::offset_x+cell_x*game_settings::cell_size+35.0/4.0, game_settings::offset_y+cell_y*game_settings::cell_size+35.0/4.0);
-    last_step_time.restart();
+    shape.setPosition(settings::player_offset_x + position.x * settings::cell_size, settings::player_offset_y + position.y * settings::cell_size);
+    last_step_time.restart();//pos_y*settings::cell_size+
 }
 
 void Player::update(sf::Time delta_time){
@@ -40,18 +43,34 @@ void Player::update(sf::Time delta_time){
 void Player::command(Command &command){
     if(last_step_time.getElapsedTime() > default_step_time){
 
-        sf::Vector2f movement(0.f, 0.f);
+        /*sf::Vector2f movement(0.f, 0.f);
         if(command.action == Player_up)
-            movement.y -= speed;
+            movement.y -= settings::cell_size;
         else if(command.action == Player_down)
-            movement.y += speed;
+            movement.y += settings::cell_size;
         else if(command.action == Player_left)
-            movement.x -= speed;
+            movement.x -= settings::cell_size;
         else if(command.action == Player_right)
-            movement.x += speed;
+            movement.x += settings::cell_size;
 
-        shape.move(movement);
+        shape.move(movement);*/
+        sf::Vector2i movement(0, 0);
+        if(command.action == Player_up)
+            movement.y -= 1;
+        else if(command.action == Player_down)
+            movement.y += 1;
+        else if(command.action == Player_left)
+            movement.x -= 1;
+        else if(command.action == Player_right)
+            movement.x += 1;
+
+        move(movement);
+        //shape.move(movement);
         
         last_step_time.restart();
     }
+}
+
+sf::Vector2i Player::get_position(){
+    return position;
 }

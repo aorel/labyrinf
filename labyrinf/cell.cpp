@@ -1,6 +1,6 @@
 #include "cell.h"
 
-Cell::Cell() : cell(sf::Vector2f(game_settings::cell_size, game_settings::cell_size)){
+Cell::Cell() : cell(sf::Vector2f(settings::cell_size, settings::cell_size)){
     cell.setFillColor(sf::Color(50, 50, 50));
     cell.setOutlineThickness(2);
     cell.setOutlineColor(sf::Color(150, 150, 150));

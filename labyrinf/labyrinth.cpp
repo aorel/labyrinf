@@ -14,17 +14,29 @@ void Labyrinth::draw(sf::RenderTarget& target, sf::RenderStates states) const{
 void Labyrinth::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const{
 }
 
-Labyrinth::Labyrinth() : id(0),
-                         cells_size_x(15),
-                         cells_size_y(15),
+Labyrinth::Labyrinth() : cells_size_x(15),
+                         cells_size_y(17),
                          cells(cells_size_x, std::vector<Cell> (cells_size_y, Cell())){
-    for(size_t i(0); i<cells_size_x; ++i){
-        for(size_t j(0); j<cells_size_y; ++j){
-            cells[i][j].setPosition(game_settings::offset_x+i*game_settings::cell_size, game_settings::offset_y+j*game_settings::cell_size);
+    for(int i(0); i<cells_size_x; ++i){
+        for(int j(0); j<cells_size_y; ++j){
+            cells[i][j].setPosition(settings::cell_offset_x+i*settings::cell_size, settings::cell_offset_y+j*settings::cell_size);
         }
     }
 }
 
-bool Labyrinth::verify_command(Player &p, Command &c, sf::Time delta_time){
+bool Labyrinth::verify_command(Player &p, Command &command, sf::Time delta_time){
+    sf::Vector2i position = p.get_position();
+    if(position.x == 0 && command.action == Player_left){
+        return false;
+    }
+    else if(position.x == (cells_size_x-1) && command.action == Player_right){
+        return false;
+    }
+    else if(position.y == 0 && command.action == Player_up){
+        return false;
+    }
+    else if(position.y == (cells_size_y-1) && command.action == Player_down){
+        return false;
+    }
     return true;
 }
