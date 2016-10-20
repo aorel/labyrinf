@@ -27,8 +27,8 @@ bool Labyrinth::verifyCommand(Player &p, Command &command){
 
 void Labyrinth::draw(sf::RenderTarget& target, sf::RenderStates states) const{
     drawCurrent(target, states);
-    for(auto& row : cells){
-        for(auto& elem : row){
+    for(const auto& row : cells){
+        for(const auto& elem : row){
             target.draw(elem);
             //elem.draw(target, states);
         }
