@@ -15,7 +15,7 @@ public:
     bool verifyCommand(Player &p, Command &command, sf::Time delta_time);
 
 private:
-    std::vector< std::vector<Cell> > cells;
+    std::vector<std::vector<Cell>> cells;
 
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
     void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
