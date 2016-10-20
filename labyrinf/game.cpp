@@ -1,5 +1,26 @@
 #include "game.h"
 
+Game::Game() : window(sf::VideoMode(settings::windowSizeX, settings::windowSizeY), settings::windowName){
+    window.setPosition(sf::Vector2i(settings::windowPositionX, settings::windowPositionY));
+}
+
+void Game::run(){
+    while (window.isOpen())
+    {
+        events();
+
+        timeSinceLastUpdate += clock.restart();
+        while (timeSinceLastUpdate > settings::gameSpf){
+            timeSinceLastUpdate -= settings::gameSpf;
+
+            events();
+            update(settings::gameSpf);
+        }
+
+        render();
+    }
+}
+
 void Game::events(){
     while (window.pollEvent(event))
     {
@@ -13,24 +34,19 @@ void Game::events(){
     }
 }
 
-void Game::update(sf::Time delta_time){
+void Game::update(sf::Time deltaTime){
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
-        verify_action(Action::Player_up);
+        verifyCommand(Command::PlayerUp);
     }
     else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
-        verify_action(Action::Player_down);
+        verifyCommand(Command::PlayerDown);
     }
     else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
-        verify_action(Action::Player_left);
+        verifyCommand(Command::PlayerLeft);
     }
-        
     else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
-        verify_action(Action::Player_right);
+        verifyCommand(Command::PlayerRight);
     }
-
-
-
-    player.update(delta_time);
 }
 
 void Game::render(){
@@ -42,29 +58,7 @@ void Game::render(){
     window.display();
 }
 
-void Game::verify_action(Action action){
-    Command c(action);
-    if(labyrinth.verify_command(player, c, time_per_frame))
+void Game::verifyCommand(Command c){
+    if(labyrinth.verifyCommand(player, c, settings::gameSpf))
         player.command(c);
-        
-}
-
-Game::Game() : window(sf::VideoMode(800, 800), "SFML works!"){
-    window.setPosition(sf::Vector2i(500, 100));
-}
-
-void Game::run(){
-    while (window.isOpen())
-    {
-        events();
-        
-        time_since_last_update += clock.restart();
-        while (time_since_last_update > time_per_frame){
-            time_since_last_update -= time_per_frame;
-            
-            events();
-            update(time_per_frame);
-        }
-        render();
-    }
 }

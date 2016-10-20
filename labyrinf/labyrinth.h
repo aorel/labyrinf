@@ -10,16 +10,13 @@
 
 
 class Labyrinth : public sf::Drawable{
-private:
+public:
+    Labyrinth();
+    bool verifyCommand(Player &p, Command &command, sf::Time delta_time);
 
-    int cells_size_x;
-    int cells_size_y;
+private:
     std::vector< std::vector<Cell> > cells;
 
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
     void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
-
-public:
-    Labyrinth();
-    bool verify_command(Player &p, Command &command, sf::Time delta_time);
 };

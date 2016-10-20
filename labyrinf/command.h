@@ -1,18 +1,19 @@
 #pragma once
 
-typedef enum Action
+typedef enum Command
 {
-    Player_up,
-    Player_down,
-    Player_left,
-    Player_right,
-} Action;
+    PlayerUp,
+    PlayerDown,
+    PlayerLeft,
+    PlayerRight,
+} Command;
 
+/*
 class Command{
+public:
+    const Commands command;
+    Command(Commands c);
 private:
     Command();
-
-public:
-    const Action action;
-    Command(Action a);
 };
+*/

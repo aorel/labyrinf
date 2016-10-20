@@ -7,6 +7,9 @@
 
 class Game
 {
+public:
+    Game();
+    void run();
 private:
     sf::RenderWindow window;
     sf::Event event;
@@ -15,16 +18,12 @@ private:
     Labyrinth labyrinth;
 
     sf::Clock clock;
-    sf::Time time_since_last_update = sf::Time::Zero;
-    sf::Time time_per_frame = sf::seconds(1.f/60.f);
-    
+    sf::Time timeSinceLastUpdate = sf::Time::Zero;
+
     void events();
     void handler();
-    void update(sf::Time delta_time);
+    void update(sf::Time);
     void render();
 
-    void verify_action(Action action);
-public:
-    Game();
-    void run();
+    void verifyCommand(Command);
 };

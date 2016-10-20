@@ -7,34 +7,21 @@
 #include "settings.h"
 
 class Player : public sf::Drawable{
+public:
+    Player();
+    void command(Command &command);
+    sf::Vector2i getPosition();
+
 private:
-    int id;
+    int id = {0};
     //int socket
 
-    sf::CircleShape shape;
-    /*float vel = 0.01;
-    float vel_x = 0;
-    float vel_y = 0;
-    float pos_x = 10;
-    float pos_y = 10;*/
-
+    sf::CircleShape shape;//??? sf::CircleShape shape = {sf::CircleShape(settings::playerRadius)}
     sf::Vector2i position;
 
-    sf::Clock last_step_time;
-    sf::Time default_step_time = sf::seconds(1.f/7.f);
-
-    //float speed = 50.f;
-    /*bool is_moving_up = 0;
-    bool is_moving_down = 0;
-    bool is_moving_left = 0;
-    bool is_moving_right = 0;*/
+    sf::Clock lastStepTime;
+    //sf:Time time_per_frame = sf::seconds(1.f/7.f);
 
     void move(sf::Vector2i &movement);
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-
-public:
-    Player();
-    void update(sf::Time delta_time);
-    void command(Command &command);
-    sf::Vector2i get_position();
 };

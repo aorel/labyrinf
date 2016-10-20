@@ -1,5 +1,30 @@
 #include "labyrinth.h"
 
+Labyrinth::Labyrinth() : cells(settings::labyrinthSizeX, std::vector<Cell> (settings::labyrinthSizeY, Cell())){
+    for(int i(0); i<settings::labyrinthSizeX; ++i){
+        for(int j(0); j<settings::labyrinthSizeY; ++j){
+            cells[i][j].setPosition(settings::cellOffsetX+i*settings::cellSize, settings::cellOffsetY+j*settings::cellSize);
+        }
+    }
+}
+
+bool Labyrinth::verifyCommand(Player &p, Command &command, sf::Time deltaTime){
+    sf::Vector2i position = p.getPosition();
+    if(position.x == 0 && command == PlayerLeft){
+        return false;
+    }
+    else if(position.x == (settings::labyrinthSizeX-1) && command == PlayerRight){
+        return false;
+    }
+    else if(position.y == 0 && command == PlayerUp){
+        return false;
+    }
+    else if(position.y == (settings::labyrinthSizeY-1) && command == PlayerDown){
+        return false;
+    }
+    return true;
+}
+
 void Labyrinth::draw(sf::RenderTarget& target, sf::RenderStates states) const{
     //states.transform *= getTransform();
     drawCurrent(target, states);
@@ -12,31 +37,4 @@ void Labyrinth::draw(sf::RenderTarget& target, sf::RenderStates states) const{
 }
 
 void Labyrinth::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const{
-}
-
-Labyrinth::Labyrinth() : cells_size_x(15),
-                         cells_size_y(17),
-                         cells(cells_size_x, std::vector<Cell> (cells_size_y, Cell())){
-    for(int i(0); i<cells_size_x; ++i){
-        for(int j(0); j<cells_size_y; ++j){
-            cells[i][j].setPosition(settings::cell_offset_x+i*settings::cell_size, settings::cell_offset_y+j*settings::cell_size);
-        }
-    }
-}
-
-bool Labyrinth::verify_command(Player &p, Command &command, sf::Time delta_time){
-    sf::Vector2i position = p.get_position();
-    if(position.x == 0 && command.action == Player_left){
-        return false;
-    }
-    else if(position.x == (cells_size_x-1) && command.action == Player_right){
-        return false;
-    }
-    else if(position.y == 0 && command.action == Player_up){
-        return false;
-    }
-    else if(position.y == (cells_size_y-1) && command.action == Player_down){
-        return false;
-    }
-    return true;
 }

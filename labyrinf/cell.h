@@ -4,12 +4,11 @@
 #include "settings.h"
 
 class Cell : public sf::Drawable{
-private:
-    sf::RectangleShape cell;
-    
-    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-
 public:
     Cell();
     void setPosition(float x, float y);
+private:
+    sf::RectangleShape cell;
+
+    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };
