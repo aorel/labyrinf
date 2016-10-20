@@ -4,10 +4,6 @@
 
 class Server{
 private:
-    // int id; 
-    //Game game;
-
-public:
-    Server() : id(0){
-    }
+    int id = {0};
+    Game game;
 };

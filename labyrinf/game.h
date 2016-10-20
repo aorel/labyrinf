@@ -3,94 +3,27 @@
 #include <SFML/Graphics.hpp>
 #include "labyrinth.h"
 #include "player.h"
+#include "command.h"
 
 class Game
 {
+public:
+    Game();
+    void run();
 private:
-    //Labirinth labirinth;
-    //Players players;
-
-
     sf::RenderWindow window;
     sf::Event event;
 
+    Player player;
+    Labyrinth labyrinth;
 
-    sf::CircleShape player;
-    float vel = 0.25;
-    float vel_x = 0;
-    float vel_y = 0;
-    float pos_x = 50;
-    float pos_y = 50;
+    sf::Clock clock;
+    sf::Time timeSinceLastUpdate = sf::Time::Zero;
 
-public:
-    Game() :
-    window(sf::VideoMode(800, 800), "SFML works!"),
-    player(25){//player(25, 3)
-        player.setFillColor(sf::Color::Blue);
-        player.setPosition(pos_x, pos_y);
-    };
-    void run()
-    {
-        while (window.isOpen())
-        {
-            processEvents();
-            update();
-            render();
-        }
-    }
-private:
-    void processEvents()
-    {
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed){
-                window.close();
-            }
+    void events();
+    void handler();
+    void update(sf::Time);
+    void render();
 
-            if(event.type == sf::Event::KeyPressed){
-                if(event.key.code == sf::Keyboard::Left){
-                    vel_x = -vel;
-                }
-                else if(event.key.code == sf::Keyboard::Right){
-                    vel_x = vel;
-                }
-                else if(event.key.code == sf::Keyboard::Up){
-                    vel_y = -vel;
-                }
-                else if(event.key.code == sf::Keyboard::Down){
-                    vel_y = vel;
-                }
-                else{
-                }
-            }
-            if(event.type == sf::Event::KeyReleased){
-                if(event.key.code == sf::Keyboard::Left){
-                    vel_x = 0;
-                }
-                else if(event.key.code == sf::Keyboard::Right){
-                    vel_x = 0;
-                }
-                else if(event.key.code == sf::Keyboard::Up){
-                    vel_y = 0;
-                }
-                else if(event.key.code == sf::Keyboard::Down){
-                    vel_y = 0;
-                }
-                else{
-                }
-            }
-        }
-    }
-    void update()
-    {
-        pos_x += vel_x;
-        pos_y += vel_y;
-        player.setPosition(pos_x, pos_y);
-    }
-    void render()
-    {
-        window.clear();
-        window.draw(player);
-        window.display();
-    }
+    void verifyCommand(Command);
 };

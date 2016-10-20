@@ -1,20 +1,27 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <iostream>
 
-class Player{
+#include "command.h"
+#include "settings.h"
+
+class Player : public sf::Drawable{
+public:
+    Player();
+    bool readyForNewCommand();
+    void command(Command &command);
+    sf::Vector2i getPosition();
+
 private:
-    int id;
+    int id = {0};
     //int socket
 
-    sf::CircleShape player;
-    float vel = 0.25;
-    float vel_x = 0;
-    float vel_y = 0;
-    float pos_x = 50;
-    float pos_y = 50;
+    sf::CircleShape shape;//??? sf::CircleShape shape = {sf::CircleShape(settings::playerRadius)}
+    sf::Vector2i position;
 
-public:
-    Player() : id(0){
-    }
+    sf::Clock lastStepTime;
+
+    void move(sf::Vector2i &movement);
+    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };

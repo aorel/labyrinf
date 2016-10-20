@@ -1,10 +1,8 @@
-# Labyrinth
+# Labyrinf
 
-## Installation
+Labyrinf is a simple, multiplayer game
 
-To install SFML run the command: `apt-get install libsfml-dev`
-Then go to application path and do `cd build`, `cmake ..`, `make`, `./main`
+## First boot
 
-## Develop
-
-Starting develop
+1. install SFML library `libsfml-dev`
+2. do `cd build`, `cmake .. && make && ./main`
