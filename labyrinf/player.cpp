@@ -7,24 +7,33 @@ Player::Player() : shape(settings::playerRadius),
     lastStepTime.restart();
 }
 
-void Player::command(Command &command){
+bool Player::readyForNewCommand(){
     if(lastStepTime.getElapsedTime() > settings::playerSpf){
-
-        sf::Vector2i movement(0, 0);
-        if(command == PlayerUp)
-            movement.y -= 1;
-        else if(command == PlayerDown)
-            movement.y += 1;
-        else if(command == PlayerLeft)
-            movement.x -= 1;
-        else if(command == PlayerRight)
-            movement.x += 1;
-
-        move(movement);
-        //shape.move(movement);
-        
-        lastStepTime.restart();
+        return true;
     }
+    else{
+        return false;
+    }
+}
+
+void Player::command(Command &command){
+    //if(lastStepTime.getElapsedTime() > settings::playerSpf){
+
+    sf::Vector2i movement(0, 0);
+    if(command == PlayerUp)
+        movement.y -= 1;
+    else if(command == PlayerDown)
+        movement.y += 1;
+    else if(command == PlayerLeft)
+        movement.x -= 1;
+    else if(command == PlayerRight)
+        movement.x += 1;
+
+    move(movement);
+    //shape.move(movement);
+        
+    lastStepTime.restart();
+    //}
 }
 
 sf::Vector2i Player::getPosition(){

@@ -58,7 +58,11 @@ void Game::render(){
     window.display();
 }
 
-void Game::verifyCommand(Command c){
-    if(labyrinth.verifyCommand(player, c, settings::gameSpf))
-        player.command(c);
+void Game::verifyCommand(Command command){
+    if(player.readyForNewCommand()){
+        if(labyrinth.verifyCommand(player, command)){
+            //if(serverVerify(player, command))...
+            player.command(command);
+        }
+    }
 }

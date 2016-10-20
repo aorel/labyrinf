@@ -9,6 +9,7 @@
 class Player : public sf::Drawable{
 public:
     Player();
+    bool readyForNewCommand();
     void command(Command &command);
     sf::Vector2i getPosition();
 
@@ -20,7 +21,6 @@ private:
     sf::Vector2i position;
 
     sf::Clock lastStepTime;
-    //sf:Time time_per_frame = sf::seconds(1.f/7.f);
 
     void move(sf::Vector2i &movement);
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;

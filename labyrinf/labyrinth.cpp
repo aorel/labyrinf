@@ -8,7 +8,7 @@ Labyrinth::Labyrinth() : cells(settings::labyrinthSizeX, std::vector<Cell> (sett
     }
 }
 
-bool Labyrinth::verifyCommand(Player &p, Command &command, sf::Time deltaTime){
+bool Labyrinth::verifyCommand(Player &p, Command &command){
     sf::Vector2i position = p.getPosition();
     if(position.x == 0 && command == PlayerLeft){
         return false;
@@ -26,7 +26,6 @@ bool Labyrinth::verifyCommand(Player &p, Command &command, sf::Time deltaTime){
 }
 
 void Labyrinth::draw(sf::RenderTarget& target, sf::RenderStates states) const{
-    //states.transform *= getTransform();
     drawCurrent(target, states);
     for(auto& row : cells){
         for(auto& elem : row){

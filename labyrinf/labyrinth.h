@@ -12,7 +12,7 @@
 class Labyrinth : public sf::Drawable{
 public:
     Labyrinth();
-    bool verifyCommand(Player &p, Command &command, sf::Time delta_time);
+    bool verifyCommand(Player &p, Command &command);
 
 private:
     std::vector<std::vector<Cell>> cells;
