@@ -46,7 +46,6 @@ void Game::verify_action(Action action){
     Command c(action);
     if(labyrinth.verify_command(player, c, time_per_frame))
         player.command(c);
-        
 }
 
 Game::Game() : window(sf::VideoMode(800, 800), "SFML works!"){
