@@ -1,7 +1,7 @@
 #include "labyrinthDrawable.h"
 
 LabyrinthDrawable::LabyrinthDrawable() :
-        cells(settings::labyrinthSizeX, std::vector<CellDrawable> (settings::labyrinthSizeY, CellDrawable())){//TODO getSize()
+        cells(settings::labyrinthSizeX, std::vector<CellDrawable> (settings::labyrinthSizeY, CellDrawable())){
     for(int i(0); i<settings::labyrinthSizeX; ++i){
         for(int j(0); j<settings::labyrinthSizeY; ++j){
             cells[i][j].setPosition(settings::cellOffsetX+i*settings::cellSize, settings::cellOffsetY+j*settings::cellSize);

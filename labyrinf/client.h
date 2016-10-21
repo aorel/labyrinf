@@ -1,11 +1,11 @@
 #pragma once
 
-#include "game.h"
+#include "gameDrawable.h"
 
 class Client{
 public:
     void run();
 private:
     int id = {0};
-    Game game;
+    GameDrawable game;
 };

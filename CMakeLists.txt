@@ -12,6 +12,7 @@ add_executable(main main.cpp
 labyrinf/server.cpp
 labyrinf/client.cpp
 labyrinf/game.cpp
+labyrinf/gameDrawable.cpp
 labyrinf/labyrinth.cpp
 labyrinf/labyrinthDrawable.cpp
 labyrinf/cell.cpp
