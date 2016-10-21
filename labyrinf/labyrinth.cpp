@@ -1,11 +1,11 @@
 #include "labyrinth.h"
 
 Labyrinth::Labyrinth() : cells(settings::labyrinthSizeX, std::vector<Cell> (settings::labyrinthSizeY, Cell())){
-    for(int i(0); i<settings::labyrinthSizeX; ++i){
+    /*for(int i(0); i<settings::labyrinthSizeX; ++i){
         for(int j(0); j<settings::labyrinthSizeY; ++j){
             cells[i][j].setPosition(settings::cellOffsetX+i*settings::cellSize, settings::cellOffsetY+j*settings::cellSize);
         }
-    }
+    }*/
 }
 
 bool Labyrinth::verifyCommand(Player &p, Command &command){
@@ -25,7 +25,11 @@ bool Labyrinth::verifyCommand(Player &p, Command &command){
     return true;
 }
 
-void Labyrinth::draw(sf::RenderTarget& target, sf::RenderStates states) const{
+/*const std::vector<std::vector<Cell>>& Labyrinth::getCells() const{
+    return cells;
+}*/
+
+/*void Labyrinth::draw(sf::RenderTarget& target, sf::RenderStates states) const{
     drawCurrent(target, states);
     for(const auto& row : cells){
         for(const auto& elem : row){
@@ -36,4 +40,4 @@ void Labyrinth::draw(sf::RenderTarget& target, sf::RenderStates states) const{
 }
 
 void Labyrinth::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const{
-}
+}*/

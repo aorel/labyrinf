@@ -1,5 +1,7 @@
 #pragma once
 
+#include <SFML/Graphics.hpp>
+
 namespace settings{
     const std::string windowName = {"Labyrinf"};
     const int windowSizeX = {800};

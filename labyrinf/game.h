@@ -1,9 +1,11 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "labyrinth.h"
-#include "player.h"
+
 #include "command.h"
+
+#include "labyrinthDrawable.h"//TODO
+#include "playerDrawable.h"//TODO
 
 class Game
 {
@@ -14,8 +16,10 @@ private:
     sf::RenderWindow window;
     sf::Event event;
 
-    Player player;
-    Labyrinth labyrinth;
+    //Labyrinth labyrinth;
+    LabyrinthDrawable labyrinth;//TODO
+    //Player player;
+    PlayerDrawable player;//TODO
 
     sf::Clock clock;
     sf::Time timeSinceLastUpdate = sf::Time::Zero;

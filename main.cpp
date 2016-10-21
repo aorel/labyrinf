@@ -15,8 +15,11 @@ int main()
         Client client();
     }*/
 
-    Game game;
-    game.run();
+    Client client;
+    client.run();
+
+    //Game game;
+    //game.run();
 
     return 0;
 }

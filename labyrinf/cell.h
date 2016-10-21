@@ -1,14 +1,10 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
 #include "settings.h"
 
-class Cell : public sf::Drawable{
+class Cell{
 public:
-    Cell();
-    void setPosition(float x, float y);
+    //Cell();//TODO
 private:
-    sf::RectangleShape cell;
-
-    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+    int type = {0};//TODO
 };

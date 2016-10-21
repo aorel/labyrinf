@@ -1,6 +1,9 @@
 #include "game.h"
 
-Game::Game() : window(sf::VideoMode(settings::windowSizeX, settings::windowSizeY), settings::windowName){
+Game::Game() :
+        window(sf::VideoMode(settings::windowSizeX, settings::windowSizeY), settings::windowName){
+        //labyrinthDrawer(&labyrinth){
+        //playerDrawer(&player){
     window.setPosition(sf::Vector2i(settings::windowPositionX, settings::windowPositionY));
 }
 
@@ -52,6 +55,7 @@ void Game::update(sf::Time deltaTime){
 void Game::render(){
     window.clear();
 
+    //window.draw(labyrinth);
     window.draw(labyrinth);
     window.draw(player);
 
