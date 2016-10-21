@@ -10,6 +10,6 @@ public:
 private:
     sf::CircleShape playerShape;//??? sf::CircleShape shape = {sf::CircleShape(settings::playerRadius)}
     
-    void move(sf::Vector2i &movement);
-    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+    void move(sf::Vector2i &movement) override;
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 };
