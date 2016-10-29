@@ -97,6 +97,15 @@ std::string Socket::my_recv(size_t bytes) throw (std::exception)
     return ret;
 }
 
+void Socket::setRcvTimeout(int sec, int microsec) throw (std::exception)
+{
+    struct timeval tv;
+    tv.tv_sec = sec;
+    tv.tv_usec = microsec;
+
+    if (setsockopt(m_Sd, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof(tv)) != 0)
+        throw std::runtime_error("set rcvtimeout: " + std::string(strerror(errno)));
+}
 
 void Socket::send(const std::string &str) throw (std::exception)
 {

@@ -26,4 +26,7 @@ private:
 
 
     Game game;
+    
+    
+    void client_work(std::shared_ptr<Socket> client);
 };

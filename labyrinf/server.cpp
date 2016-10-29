@@ -2,6 +2,29 @@
 
 Server::Server(int p) :
         port(p){
+    try
+    {
+        //Socket s;
+        my_socket.createServerSocket(port, 1);
+
+        while(true)
+        {
+            std::shared_ptr<Socket> client = my_socket.accept();
+            client_work(client);
+        }
+    }
+    catch(const std::exception &e)
+    {
+        std::cerr << e.what() << std::endl;
+    }
+    
+    
+    
+    
+    
+    
+    
+    /*
     server_fd = socket(AF_INET, SOCK_STREAM, 0);
     if (server_fd < 0){
         //on_error("Could not create socket\n");
@@ -53,5 +76,21 @@ Server::Server(int p) :
                 printf("Client write failed\n");
             }
         }
+    }
+    */
+}
+
+void Server::client_work(std::shared_ptr<Socket> client)
+{
+    client->setRcvTimeout(/*sec*/30, /*microsec*/0);
+    while (true) try
+    {
+        std::string line = client->my_recv();
+        client->send("echo: " + line + "\n");
+    }
+    catch(const std::exception &e)
+    {
+        std::cerr << "exception: " << e.what() << std::endl;
+        return;
     }
 }
