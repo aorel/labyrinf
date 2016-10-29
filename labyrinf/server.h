@@ -7,12 +7,16 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <unistd.h>
+#include "socket.h"
 
 class Server{
 public:
     Server(int port);
+
 private:
+
     int port = settings::server_defualt_port;
+    Socket my_socket;
 
     //int buffer_size = settings::buffer_size;
     char buffer[settings::server_buffer_size];
