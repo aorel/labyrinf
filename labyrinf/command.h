@@ -7,13 +7,3 @@ typedef enum Command
     PlayerLeft,
     PlayerRight,
 } Command;
-
-/*
-class Command{
-public:
-    const Commands command;
-    Command(Commands c);
-private:
-    Command();
-};
-*/

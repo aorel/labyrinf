@@ -1,6 +1,7 @@
 #include "labyrinth.h"
 
-Labyrinth::Labyrinth() : cells(settings::labyrinthSizeX, std::vector<Cell> (settings::labyrinthSizeY, Cell())){
+Labyrinth::Labyrinth() :
+        cells(settings::labyrinthSizeX, std::vector<Cell> (settings::labyrinthSizeY, Cell())){
     /*for(int i(0); i<settings::labyrinthSizeX; ++i){
         for(int j(0); j<settings::labyrinthSizeY; ++j){
             cells[i][j].setPosition(settings::cellOffsetX+i*settings::cellSize, settings::cellOffsetY+j*settings::cellSize);

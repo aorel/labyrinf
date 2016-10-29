@@ -3,6 +3,9 @@
 #include <SFML/Graphics.hpp>
 
 namespace settings{
+    const int server_defualt_port = 8080;
+    const int server_buffer_size = 1024;
+
     const std::string windowName = {"Labyrinf"};
     const int windowSizeX = {800};
     const int windowSizeY = {800};
