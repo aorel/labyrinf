@@ -1,19 +1,15 @@
 #include "gameDrawable.h"
 
-
-GameDrawable::GameDrawable(CommandFunction vCC) :
-        Game(vCC){
+/*
+GameDrawable::GameDrawable(CommandFunction vCC){
+        //Game(vCC){
         //verifyCommandCallback(vCC){
-
 }
 
-
-/*
 GameDrawable::GameDrawable(){
         //window(sf::VideoMode(settings::windowSizeX, settings::windowSizeY), settings::windowName){
     //window.setPosition(sf::Vector2i(settings::windowPositionX, settings::windowPositionY));
 }
-
 
 void GameDrawable::run(){
     while (window.isOpen())
@@ -89,5 +85,5 @@ void GameDrawable::drawCurrent(sf::RenderTarget& target, sf::RenderStates states
 void GameDrawable::draw(sf::RenderTarget& target, sf::RenderStates states) const{
     drawCurrent(target, states);
     target.draw(labyrinth);
-    target.draw(player);
+    target.draw(currentPlayer);
 }

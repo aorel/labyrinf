@@ -1,15 +1,10 @@
 #include "game.h"
 
-
-Game::Game(CommandFunction vCC) :
-        verifyCommandCallback(vCC){
+/*
+Game::Game(CommandFunction vCC){
+        //verifyCommandCallback(vCC){
 }
 
-
-
-
-
-/*
 void Game::checkCommand(Command command){
     if(currentPlayer.readyForNewCommand()){
         if(labyrinth.checkCommand(currentPlayer, command)){
@@ -22,10 +17,10 @@ void Game::checkCommand(Command command){
 }
 */
 
-
 bool Game::checkCommand(Command command){
     if(currentPlayer.readyForNewCommand()){
         if(labyrinth.checkCommand(currentPlayer, command)){
+            std::cout << "true" << std::endl;
             return true;
 
             //verifyCommandCallback(command);
@@ -36,8 +31,7 @@ bool Game::checkCommand(Command command){
     return false;
 }
 
-void Game::verifyCommand(Command command){
-    if(checkCommand(command)){
-        //verifyCommandCallback(command);//TODO
-    }
+void Game::applyCommand(Command command){
+    std::cout << "applyCommand" << std::endl;
+    currentPlayer.applyCommand(command);
 }

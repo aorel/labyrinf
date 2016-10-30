@@ -12,14 +12,12 @@
 class Game{
 public:
     Game() = default;//TODO on server side
-    Game(CommandFunction vCC);//TODO
     
     bool checkCommand(Command command);
-    void verifyCommand(Command command);
-    void acceptCommand(Command command);//TODO
+    //void verifyCommand(Command command);
+    void applyCommand(Command command);//TODO
     
 protected:
-    CommandFunction verifyCommandCallback;
 
     Labyrinth labyrinth;
     std::vector<Player> players;

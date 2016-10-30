@@ -22,15 +22,18 @@ private:
 
     //std::function< void(Command) > verifyCommandCallback = std::bind( &GameDrawable::blah, game );
     CommandFunction verifyCommandCallback;
+    
+
     //MenuDrawable menu;//TODO
     GameDrawable game;
-
+    std::function< void(Command command) > commandHandler;
 
 
     void eventLoop();
     void events();
     void update();
-    void commandHandler(Command command);
+    void menuCommandHandler(Command command);
+    void gameCommandHandler(Command command);
     void render();
 
 public:

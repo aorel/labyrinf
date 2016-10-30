@@ -10,7 +10,6 @@
 class GameDrawable : public Game, public sf::Drawable{
 public:
     GameDrawable() = default;
-    GameDrawable(CommandFunction vCC);
     
     //GameDrawable(std::function< void(Command) > vCC);
     //void run();
@@ -18,7 +17,8 @@ private:
     //std::function< void(Command) > verifyCommandCallback;
 
     LabyrinthDrawable labyrinth;
-    PlayerDrawable player;
+    std::vector<Player> players;
+    PlayerDrawable currentPlayer;
 
     /*sf::RenderWindow window;
     sf::Event event;

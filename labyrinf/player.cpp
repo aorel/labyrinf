@@ -14,7 +14,7 @@ bool Player::readyForNewCommand(){
     }
 }
 
-void Player::command(Command &command){
+void Player::applyCommand(Command &command){
     sf::Vector2i movement(0, 0);
     if(command == PlayerUp)
         movement.y -= 1;
@@ -35,5 +35,6 @@ sf::Vector2i Player::getPosition() const{
 }
 
 void Player::move(sf::Vector2i &movement){
+    std::cout << "Player::move position.x " << position.x << std::endl;
     position += movement;
 }

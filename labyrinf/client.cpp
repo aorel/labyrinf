@@ -7,7 +7,8 @@ Client::Client() :
         //game( std::bind( &Client::commandSendTest, this ) )
 
         //[lambda callback]
-        game( [this](Command command){ commandSend(command); } ){
+        //game( [this](Command command){ commandSend(command); } ),
+        commandHandler( [this](Command command){ gameCommandHandler(command); } ){
     window.setPosition(sf::Vector2i(settings::windowPositionX, settings::windowPositionY));
     
     //game.run();
@@ -50,20 +51,30 @@ void Client::events(){
 
 void Client::update(){
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
-        //verifyCommand(Command::PlayerUp);
+        commandHandler(Command::PlayerUp);
     }
     else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
-        //verifyCommand(Command::PlayerDown);
+        commandHandler(Command::PlayerDown);
     }
     else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
-        //verifyCommand(Command::PlayerLeft);
+        commandHandler(Command::PlayerLeft);
     }
     else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
-        //verifyCommand(Command::PlayerRight);
+        commandHandler(Command::PlayerRight);
     }
 }
 
-void Client::commandHandler(Command command){
+void Client::menuCommandHandler(Command command){
+    //TODO
+}
+
+void Client::gameCommandHandler(Command command){
+    if(game.checkCommand(command)){
+        //if(verifyСommand(server_socket, player, command)){//TODO
+        //}
+        game.applyCommand(command);
+    }
+
     /*if(player.readyForNewCommand()){
         if(labyrinth.verifyCommand(player, command)){
             //if(serverVerify(player, command))...

@@ -6,7 +6,8 @@ PlayerDrawable::PlayerDrawable() : playerShape(settings::playerRadius){
 }
 
 void PlayerDrawable::move(sf::Vector2i &movement){
-    Player::move(movement);
+    std::cout << "PlayerDrawable::move position.x " << position.x << std::endl;
+    //Player::move(movement);
     playerShape.move(movement.x * settings::cellSize, movement.y * settings::cellSize);
 }
 

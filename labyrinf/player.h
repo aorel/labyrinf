@@ -9,7 +9,7 @@ class Player{
 public:
     Player();
     bool readyForNewCommand();
-    void command(Command &command);
+    void applyCommand(Command &command);
     sf::Vector2i getPosition() const;
 
 protected:
