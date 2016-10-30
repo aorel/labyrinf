@@ -1,9 +1,19 @@
 #include "gameDrawable.h"
 
-GameDrawable::GameDrawable() :
-        window(sf::VideoMode(settings::windowSizeX, settings::windowSizeY), settings::windowName){
-    window.setPosition(sf::Vector2i(settings::windowPositionX, settings::windowPositionY));
+
+GameDrawable::GameDrawable(CommandFunction vCC) :
+        Game(vCC){
+        //verifyCommandCallback(vCC){
+
 }
+
+
+/*
+GameDrawable::GameDrawable(){
+        //window(sf::VideoMode(settings::windowSizeX, settings::windowSizeY), settings::windowName){
+    //window.setPosition(sf::Vector2i(settings::windowPositionX, settings::windowPositionY));
+}
+
 
 void GameDrawable::run(){
     while (window.isOpen())
@@ -60,6 +70,8 @@ void GameDrawable::render(){
     window.display();
 }
 
+
+
 void GameDrawable::verifyCommand(Command command){
     if(player.readyForNewCommand()){
         if(labyrinth.verifyCommand(player, command)){
@@ -67,4 +79,15 @@ void GameDrawable::verifyCommand(Command command){
             player.command(command);
         }
     }
+}
+*/
+
+void GameDrawable::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const{
+    //TODO draw scope, time, top menu, etc
+}
+
+void GameDrawable::draw(sf::RenderTarget& target, sf::RenderStates states) const{
+    drawCurrent(target, states);
+    target.draw(labyrinth);
+    target.draw(player);
 }

@@ -12,7 +12,7 @@
 class Labyrinth{
 public:
     Labyrinth();
-    bool verifyCommand(Player &p, Command &command);
+    bool checkCommand(Player &p, Command &command);
     //const std::vector<std::vector<Cell>>& getCells() const;
 
 private:

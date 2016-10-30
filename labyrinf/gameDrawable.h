@@ -7,13 +7,20 @@
 #include "labyrinthDrawable.h"
 #include "playerDrawable.h"
 
-class GameDrawable : public Game
-{
+class GameDrawable : public Game, public sf::Drawable{
 public:
-    GameDrawable();
-    void run();
+    GameDrawable() = default;
+    GameDrawable(CommandFunction vCC);
+    
+    //GameDrawable(std::function< void(Command) > vCC);
+    //void run();
 private:
-    sf::RenderWindow window;
+    //std::function< void(Command) > verifyCommandCallback;
+
+    LabyrinthDrawable labyrinth;
+    PlayerDrawable player;
+
+    /*sf::RenderWindow window;
     sf::Event event;
 
     LabyrinthDrawable labyrinth;
@@ -25,7 +32,10 @@ private:
     void events();
     void handler();
     void update(sf::Time);
-    void render();
+    void render();*/
 
-    void verifyCommand(Command);
+    //void verifyCommand(Command);
+    
+    void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 };

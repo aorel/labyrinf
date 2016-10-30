@@ -9,7 +9,7 @@ Labyrinth::Labyrinth() :
     }*/
 }
 
-bool Labyrinth::verifyCommand(Player &p, Command &command){
+bool Labyrinth::checkCommand(Player &p, Command &command){
     sf::Vector2i position = p.getPosition();
     if(position.x == 0 && command == PlayerLeft){
         return false;

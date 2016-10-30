@@ -1,27 +1,20 @@
-#include <string>
-#include <unistd.h>     // close()
-#include <memory>
+//#include <string>
+#include <unistd.h>// close()
+#include <memory>// std::shared_ptr
 
-#include <iostream>
-#include <stdexcept>
-#include <thread>
+#include <iostream>// std::cerr
+//#include <stdexcept>
 
-#include <netinet/in.h>
-#include <cstring> //std::error
-
-#include <iostream>
-#include <stdexcept>
+//#include <cstring> //std::error
 
 #include <string.h>
-#include <sys/socket.h> // socket(), AF_INET/PF_INET
-#include <netinet/in.h> // struct sockaddr_in
-#include <arpa/inet.h>  // inet_aton()
-#include <netdb.h>      // gethostbyname
-#include <fcntl.h>
-
+//#include <sys/socket.h>// socket(), AF_INET/PF_INET
+#include <netinet/in.h>// struct sockaddr_in
+//#include <arpa/inet.h>// inet_aton()
+#include <netdb.h>// gethostbyname
+#include <fcntl.h>// fcntl
 
 std::string int2ipv4(uint32_t ip);
-
 
 class Socket{
 public:
@@ -38,7 +31,7 @@ public:
     std::string my_recv()                                           throw (std::exception);
     std::string my_recv(size_t bytes)                               throw (std::exception);
     //std::string recvTimed(int timeout)                            throw (std::exception);
-    void setRcvTimeout(int sec, int microsec)                     throw (std::exception);
+    void setRcvTimeout(int sec, int microsec)                       throw (std::exception);
     //void setNonBlocked(bool opt)                                  throw (std::exception);
     void setReuseAddr(int sd)                                       throw (std::exception);
     void createServerSocket(uint32_t port, uint32_t queue_size)     throw (std::exception);

@@ -2,10 +2,11 @@
 
 Server::Server(int p) :
         port(p){
+        //socket_my(port, 1){
     try
     {
         //Socket s;
-        my_socket.createServerSocket(port, 1);
+        my_socket.createServerSocket(port, 10);
 
         while(true)
         {

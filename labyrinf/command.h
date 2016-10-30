@@ -1,5 +1,7 @@
 #pragma once
 
+#include <functional>
+
 typedef enum Command
 {
     PlayerUp,
@@ -7,3 +9,5 @@ typedef enum Command
     PlayerLeft,
     PlayerRight,
 } Command;
+
+typedef std::function< void(Command) > CommandFunction;
