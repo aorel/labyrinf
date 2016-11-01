@@ -17,16 +17,15 @@ private:
 
     int port = settings::server_defualt_port;
     Socket my_socket;
-
-    //int buffer_size = settings::buffer_size;
-    /*char buffer[settings::server_buffer_size];
-    int server_fd = 0;
-    int client_fd, err;
-    struct sockaddr_in server, client;*/
-
+    
+    std::vector<std::shared_ptr<Socket>> multiplexing_clients;
+    std::vector<std::pair<std::shared_ptr<Socket>, std::shared_ptr<Game>>> clients;
 
     Game game;
-    
-    
-    void client_work(std::shared_ptr<Socket> client);
+
+
+
+    void test_simple_server_();
+    void test_multiplexing_server_();
+    void test_client_work_(std::shared_ptr<Socket> client);
 };
