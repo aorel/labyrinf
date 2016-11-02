@@ -4,11 +4,13 @@
 
 #include "cell.h"
 
-class CellDrawable : public Cell, public sf::Drawable{
+class CellDrawer : public sf::Drawable{
 public:
-    CellDrawable();
+    explicit CellDrawer(const Cell *c);
     void setPosition(float x, float y);
+    void updateType();
 private:
+    const Cell *cell;
     sf::RectangleShape cellShape;
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;

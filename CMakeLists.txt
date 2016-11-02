@@ -12,13 +12,13 @@ add_executable(main main.cpp
 labyrinf/socket.cpp
 labyrinf/server.cpp
 labyrinf/client.cpp
-labyrinf/game.cpp
-labyrinf/gameDrawable.cpp
+labyrinf/serverGame.cpp
+labyrinf/clientGame.cpp
 labyrinf/labyrinth.cpp
-labyrinf/labyrinthDrawable.cpp
+labyrinf/labyrinthDrawer.cpp
 labyrinf/cell.cpp
-labyrinf/cellDrawable.cpp
+labyrinf/cellDrawer.cpp
 labyrinf/player.cpp
-labyrinf/playerDrawable.cpp)
+labyrinf/playerDrawer.cpp)
 
 target_link_libraries(main sfml-graphics sfml-window sfml-system)

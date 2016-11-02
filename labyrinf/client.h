@@ -3,7 +3,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "command.h"
-#include "gameDrawable.h"
+#include "clientGame.h"
 
 class Client{
 public:
@@ -19,13 +19,18 @@ private:
     sf::Time timeSinceLastUpdate = sf::Time::Zero;
 
 
-
-    //std::function< void(Command) > verifyCommandCallback = std::bind( &GameDrawable::blah, game );
-    CommandFunction verifyCommandCallback;
+    typedef enum ClientState{
+        MEMU,
+        GAME,
+    } ClientState;
     
+    ClientState state = GAME;
 
     //MenuDrawable menu;//TODO
-    GameDrawable game;
+    ClientGame game;
+    
+    //std::function< void(Command) > verifyCommandCallback = std::bind( &GameDrawable::blah, game );
+    //CommandFunction verifyCommandCallback;
     std::function< void(Command command) > commandHandler;
 
 
@@ -33,7 +38,7 @@ private:
     void events();
     void update();
     void menuCommandHandler(Command command);
-    void gameCommandHandler(Command command);
+    void playerActionHandler(Command command);
     void render();
 
 public:

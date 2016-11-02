@@ -2,12 +2,11 @@
 
 #include <functional>
 
-typedef enum Command
-{
+typedef enum Command{
     PlayerUp,
     PlayerDown,
     PlayerLeft,
     PlayerRight,
 } Command;
 
-typedef std::function< void(Command) > CommandFunction;
+//typedef std::function< void(Command) > CommandFunction;

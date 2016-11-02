@@ -35,6 +35,6 @@ sf::Vector2i Player::getPosition() const{
 }
 
 void Player::move(sf::Vector2i &movement){
-    std::cout << "Player::move position.x " << position.x << std::endl;
     position += movement;
+    std::cout << "Player::move " << position.x << ' ' << position.y << std::endl;
 }

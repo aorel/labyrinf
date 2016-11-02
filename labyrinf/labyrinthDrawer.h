@@ -3,14 +3,15 @@
 #include <SFML/Graphics.hpp>
 
 #include "labyrinth.h"
-#include "cellDrawable.h"
+#include "cellDrawer.h"
 
-class LabyrinthDrawable : public Labyrinth, public sf::Drawable{
+class LabyrinthDrawer : public sf::Drawable{
 public:
-    LabyrinthDrawable();
+    explicit LabyrinthDrawer(const Labyrinth *l);
 
 private:
-    std::vector<std::vector<CellDrawable>> cells;
+    const Labyrinth *labyrinth;
+    std::vector<std::vector<CellDrawer>> cellDrawers;
 
     void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;

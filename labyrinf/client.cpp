@@ -8,18 +8,11 @@ Client::Client() :
 
         //[lambda callback]
         //game( [this](Command command){ commandSend(command); } ),
-        commandHandler( [this](Command command){ gameCommandHandler(command); } ){
+        commandHandler( [this](Command command){ playerActionHandler(command); } ){
     window.setPosition(sf::Vector2i(settings::windowPositionX, settings::windowPositionY));
     
-    //game.run();
     eventLoop();
 }
-
-/*
-void Client::run(){
-    game.run();
-}
-*/
 
 void Client::eventLoop(){
     while (window.isOpen()){
@@ -30,7 +23,7 @@ void Client::eventLoop(){
             timeSinceLastUpdate -= settings::gameSpf;
 
             events();
-            update();//TODO settings::gameSpf
+            update();
         }
 
         render();
@@ -68,19 +61,16 @@ void Client::menuCommandHandler(Command command){
     //TODO
 }
 
-void Client::gameCommandHandler(Command command){
-    if(game.checkCommand(command)){
-        //if(verifyСommand(server_socket, player, command)){//TODO
-        //}
-        game.applyCommand(command);
-    }
+void Client::playerActionHandler(Command command){
+    //PlayerAction(&currentPlayer, command);
 
-    /*if(player.readyForNewCommand()){
-        if(labyrinth.verifyCommand(player, command)){
-            //if(serverVerify(player, command))...
-            player.command(command);
-        }
-    }*/
+
+    //Player *currentPlayer = game.getCurrentPlayer();
+    int currentPlayerIndex = 0;
+    if(game.checkPlayerAction(currentPlayerIndex, command)){
+        //if(verifyСommand(server_socket, player, command))...//TODO
+        game.applyPlayerAction(currentPlayerIndex, command);
+    }
 }
 
 void Client::render(){
@@ -93,13 +83,10 @@ void Client::render(){
     window.display();
 }
 
-void Client::commandSendTest(){
-    std::cout << "commandSendTest" << std::endl;
-}
-
 void Client::commandSend(Command command){
-
+    //TODO
 }
-void Client::commandRecv(Command command){
 
+void Client::commandRecv(Command command){
+    //TODO
 }

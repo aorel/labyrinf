@@ -23,3 +23,15 @@ protected:
 private:
     sf::Clock lastStepTime;
 };
+
+
+class PlayerAction{
+public:
+    PlayerAction(Player *p, Command c) : player(p), command(c){}
+    Player* getPlayer(){
+        return player;
+    }
+private:
+    Player *player;
+    Command command;
+};

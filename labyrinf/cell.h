@@ -2,9 +2,17 @@
 
 #include "settings.h"
 
+typedef enum CellType{
+    WALL,
+    GROUND,
+    WATER,
+    FIRE,
+} CellType;
+
 class Cell{
 public:
-    //Cell();//TODO
+    void setType(CellType t);
+    CellType getType() const;
 private:
-    int type = {0};//TODO
+    CellType type = GROUND;
 };

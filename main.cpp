@@ -2,7 +2,6 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "labyrinf/game.h"
 #include "labyrinf/client.h"
 #include "labyrinf/server.h"
 
@@ -12,7 +11,7 @@
 2. Позиция перескакивает 0
 3. Как понять, что клиент отвалился?
 4. Неблокрующий сокет для сервера под Linux, для клиента под Windows придется писать другую реализацию сокета
-5.
+5. Добавить сецификатор const где необходимо
 
 */
 
