@@ -30,8 +30,7 @@ void Player::command(Command &command){
         movement.x += 1;
 
     move(movement);
-    //shape.move(movement);
-        
+
     lastStepTime.restart();
     //}
 }
