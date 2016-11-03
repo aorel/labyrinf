@@ -1,4 +1,5 @@
 #include "labyrinth.h"
+#include <fstream>
 
 Labyrinth::Labyrinth() : cells(settings::labyrinthSizeX, std::vector<Cell*> (settings::labyrinthSizeY)){
     for(int i(0); i < settings::labyrinthSizeX; ++i){
@@ -8,20 +9,25 @@ Labyrinth::Labyrinth() : cells(settings::labyrinthSizeX, std::vector<Cell*> (set
         }
     }
 
-    for(auto i = 0; i < 5; ++i)
-    {
-        for(auto j = 0; j < 1; ++j)
-        {
+    std::ifstream labyrinthFile("/home/frozenfoot/Desktop/Labyrinf/labyrinf-feature-game/labyrinf/labyrinth");
+    int cellType;
+    int numberOfScannedCells = 0;
+
+    while(labyrinthFile >> cellType){
+        if(cellType == 1){
+            auto i = numberOfScannedCells / settings::labyrinthSizeX;
+            auto j = numberOfScannedCells % settings::labyrinthSizeX;
+            std::cout << "i:" << i << "\tj:" << j << std::endl;
             cells[i][j] = new Wall;
-            cells[i][j]->setPosition(settings::cellOffsetX+i*settings::cellSize, settings::cellOffsetY+j*settings::cellSize);
+            cells[i][j]->
+            setPosition(settings::cellOffsetX+i*settings::cellSize, settings::cellOffsetY+j*settings::cellSize);
         }
 
-        for(auto j = 3; j < 5; ++j)
-        {
-            cells[i][j] = new Wall;
-            cells[i][j]->setPosition(settings::cellOffsetX+i*settings::cellSize, settings::cellOffsetY+j*settings::cellSize);
-        }
+        ++numberOfScannedCells;
     }
+
+    labyrinthFile.close();
+
 }
 
 bool Labyrinth::verifyCommand(Player &p, Command &command){
