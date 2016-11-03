@@ -1,7 +1,14 @@
 #include "clientGame.h"
 
 ClientGame::ClientGame() :
-        labyrinthDrawer(&labyrinth){
+    ServerGame(new LabyrinthDrawable(), new PlayerDrawable()),
+    labyrinthDrawer(&labyrinth){
+        
+    //l( new LabyrinthDrawable::LabyrinthDrawable() ),
+    //p( new PlayerDrawable() ){
+    
+
+
     players.emplace_back();
     
     playerDrawer.emplace_back(&players[0]);

@@ -4,6 +4,9 @@ Server::Server(int p) :
         port(p){
     //socket_my(port, 1){
     
+    
+    
+    //test_simple_server_();
     test_multiplexing_server_();
 }
 

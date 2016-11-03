@@ -12,7 +12,8 @@
 
 class ServerGame{
 public:
-    ServerGame() = default;//TODO on server side
+    ServerGame();//TODO on server side
+    ServerGame(Labyrinth *_l, Player *_p);
 
     bool checkPlayerAction(int &playerIndex, Command &command);
     virtual void applyPlayerAction(int &playerIndex, Command &command);
@@ -20,4 +21,7 @@ public:
 protected:
     Labyrinth labyrinth;
     std::vector<Player> players;
+
+    Labyrinth *l;//TODO protected
+    Player *p;//TODO protected
 };

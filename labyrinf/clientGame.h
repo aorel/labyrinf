@@ -6,6 +6,9 @@
 #include "labyrinthDrawer.h"
 #include "playerDrawer.h"
 
+#include "labyrinthDrawable.h"
+#include "playerDrawable.h"
+
 class ClientGame : public ServerGame, public sf::Drawable{
 public:
     ClientGame();

@@ -16,9 +16,12 @@ labyrinf/serverGame.cpp
 labyrinf/clientGame.cpp
 labyrinf/labyrinth.cpp
 labyrinf/labyrinthDrawer.cpp
+labyrinf/labyrinthDrawable.cpp
 labyrinf/cell.cpp
 labyrinf/cellDrawer.cpp
+labyrinf/cellDrawable.cpp
 labyrinf/player.cpp
-labyrinf/playerDrawer.cpp)
+labyrinf/playerDrawer.cpp
+labyrinf/playerDrawable.cpp)
 
 target_link_libraries(main sfml-graphics sfml-window sfml-system)
