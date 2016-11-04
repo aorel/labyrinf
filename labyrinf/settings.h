@@ -32,6 +32,14 @@ namespace settings{
     const int playerStartPositionX = 1;
     const int playerStartPositionY = 1;
     const float playerRadius = 10.0;
+    const sf::Color playerColor = sf::Color(25, 25, 244);
     const float playerOffsetX = cellOffsetX + (cellSize - 2.0*playerRadius)/2.0;//float(35.0/4.0);
     const float playerOffsetY = cellOffsetY + (cellSize - 2.0*playerRadius)/2.0;//float(35.0/4.0);
+    
+    const std::vector<std::vector<int>> testLabyrinth1 =
+        {{1,1,1},
+         {1,0,1},
+         {1,0,1},
+         {1,0,1},
+         {1,1,1}};
 }

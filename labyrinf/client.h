@@ -3,7 +3,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "command.h"
-#include "clientGame.h"
+#include "gameDrawable.h"
 
 class Client{
 public:
@@ -27,7 +27,7 @@ private:
     ClientState state = GAME;
 
     //MenuDrawable menu;//TODO
-    ClientGame game;
+    GameDrawable game;
     
     //std::function< void(Command) > verifyCommandCallback = std::bind( &GameDrawable::blah, game );
     //CommandFunction verifyCommandCallback;

@@ -1,7 +1,7 @@
 #include "playerDrawable.h"
 
-PlayerDrawable::PlayerDrawable() : playerShape(settings::playerRadius){
-    playerShape.setFillColor(sf::Color::Red);
+PlayerDrawable::PlayerDrawable(){
+    playerShape.setFillColor(settings::playerColor);
     playerShape.setPosition(settings::playerOffsetX + position.x * settings::cellSize, settings::playerOffsetY + position.y * settings::cellSize);
 }
 

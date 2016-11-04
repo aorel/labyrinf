@@ -2,6 +2,8 @@
 
 #include "settings.h"
 
+#include <iostream>
+
 typedef enum CellType{
     WALL,
     GROUND,
@@ -11,8 +13,13 @@ typedef enum CellType{
 
 class Cell{
 public:
-    void setType(CellType t);
+    Cell() = default;
+    //Cell(CellType t);
+    virtual ~Cell() = default;
+
     CellType getType() const;
-private:
+    virtual void setType(CellType t);
+
+protected:
     CellType type = GROUND;
 };

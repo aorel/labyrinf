@@ -28,7 +28,6 @@ int main(int argc, char *argv[]){
         if(argc == 2){
             int port = std::stoi(std::string(argv[1]));
             std::cout << "server starting on port " << port << "..." << std::endl;
-            //port = 0;
             Server server(port);
         }
         else if(argc == 3){
@@ -36,7 +35,6 @@ int main(int argc, char *argv[]){
             int port = std::stoi(argv[2]);
             std::cout << "client trying to connect " << host << ":" << port << "..." << std::endl;
             Client client;
-            //client.run();
         }
         else{
             std::cout << "[error] wrong arguments" << std::endl;
@@ -45,7 +43,6 @@ int main(int argc, char *argv[]){
     else{
         std::cout << "client starting on localhost..." << std::endl;
         Client client;
-        //client.run();
     }
 
     return 0;

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "serverGame.h"
+#include "game.h"
 /*
 #include <stdlib.h>
 #include <sys/types.h>
@@ -19,9 +19,9 @@ private:
     Socket my_socket;
     
     std::vector<std::shared_ptr<Socket>> multiplexing_clients;
-    std::vector<std::pair<std::shared_ptr<Socket>, std::shared_ptr<ServerGame>>> clients;
+    std::vector<std::pair<std::shared_ptr<Socket>, std::shared_ptr<Game>>> clients;
 
-    ServerGame game;
+    Game game;
 
 
 
