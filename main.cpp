@@ -2,8 +2,8 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "labyrinf/client.h"
-#include "labyrinf/server.h"
+#include "src/client.h"
+#include "src/server.h"
 
 /*
 

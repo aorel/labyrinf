@@ -1,8 +1,6 @@
 #pragma once
 
-#include "settings.h"
-
-#include <iostream>
+#include "../settings.h"
 
 typedef enum CellType{
     WALL,

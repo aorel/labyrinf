@@ -4,7 +4,7 @@
 #include <functional>
 #include <vector>
 
-#include "command.h"
+#include "../command.h"
 #include "labyrinth.h"
 #include "player.h"
 

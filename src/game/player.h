@@ -2,8 +2,8 @@
 
 #include <iostream>
 
-#include "command.h"
-#include "settings.h"
+#include "../command.h"
+#include "../settings.h"
 
 class Player{
 public:

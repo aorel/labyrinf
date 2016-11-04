@@ -1,13 +1,7 @@
 #pragma once
 
-#include "game.h"
-/*
-#include <stdlib.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <unistd.h>*/
-#include "socket.h"
+#include "game/game.h"
+#include "network/socket.h"
 
 class Server{
 public:

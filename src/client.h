@@ -3,7 +3,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "command.h"
-#include "gameDrawable.h"
+#include "game/gameDrawable.h"
 
 class Client{
 public:

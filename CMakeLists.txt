@@ -1,24 +1,20 @@
 cmake_minimum_required(VERSION 2.6)
-project (test)
+project (labyrinf)
 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Werror")
 
-#set(CMAKE_VERBOSE_MAKEFILE ON)
-#message(STATUS "CMAKE_SOURCE_DIR ${CMAKE_SOURCE_DIR}")
-
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Werror -g")
-
-
-add_executable(main main.cpp
-labyrinf/socket.cpp
-labyrinf/server.cpp
-labyrinf/client.cpp
-labyrinf/game.cpp
-labyrinf/gameDrawable.cpp
-labyrinf/labyrinth.cpp
-labyrinf/labyrinthDrawable.cpp
-labyrinf/cell.cpp
-labyrinf/cellDrawable.cpp
-labyrinf/player.cpp
-labyrinf/playerDrawable.cpp)
+add_executable(
+main main.cpp
+src/network/socket.cpp
+src/server.cpp
+src/client.cpp
+src/game/game.cpp
+src/game/gameDrawable.cpp
+src/game/labyrinth.cpp
+src/game/labyrinthDrawable.cpp
+src/game/cell.cpp
+src/game/cellDrawable.cpp
+src/game/player.cpp
+src/game/playerDrawable.cpp)
 
 target_link_libraries(main sfml-graphics sfml-window sfml-system)

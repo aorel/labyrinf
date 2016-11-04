@@ -3,10 +3,9 @@
 #include <vector>
 
 #include "cell.h"
-//#include "cellDrawable.h"
 #include "player.h"
-#include "command.h"
-#include "settings.h"
+#include "../command.h"
+#include "../settings.h"
 
 class Labyrinth{
 public:
@@ -15,7 +14,6 @@ public:
     virtual ~Labyrinth() = default;
     
     bool checkCommand(const Player &p, Command &command);
-    //const std::vector<std::vector<Cell>>& getCells() const;
 
 protected:
     std::vector<std::vector<std::unique_ptr<Cell>>> cells;
