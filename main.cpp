@@ -2,162 +2,47 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "labyrinf/game.h"
-#include "labyrinf/client.h"
-#include "labyrinf/server.h"
-
-
-
-int main()
-{
-    /*if(arg == ...){
-        Server server(ip, port, ...);
-    }
-    else{
-        Client client();
-    }*/
-
-    Game game;
-    game.run();
-
-    return 0;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-int main1()
-{
-    sf::RenderWindow window(sf::VideoMode(800, 800), "SFML works!");
-    //sf::CircleShape shape(100.f);
-    //shape.setFillColor(sf::Color::Green);
-    sf::CircleShape triangle(25, 3);
-    triangle.setFillColor(sf::Color::Blue);
-    //float velocity = 10;
-
-    float vel = 0.25;
-    float vel_x = 0;
-    float vel_y = 0;
-    float pos_x = 50;
-    float pos_y = 50;
-    triangle.setPosition(pos_x, pos_y);
-
-    while (window.isOpen())
-    {
-        sf::Event event;
-
-
+#include "src/client.h"
+#include "src/server.h"
 
 /*
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-            {
-                pos_x -= velocity;
-                triangle.setPosition(pos_x, pos_y);
-            }
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-            {
-                pos_x += velocity;
-                triangle.setPosition(pos_x, pos_y);
-            }
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-            {
-                pos_y -= velocity;
-                triangle.setPosition(pos_x, pos_y);
-            }
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-            {
-                pos_y += velocity;
-                triangle.setPosition(pos_x, pos_y);
-            }
+
+1. Сделать рисователь игры (дружественный к классу Game???), удалить все все классы "*Drawable.*"
+2. Позиция перескакивает 0
+3. Как понять, что клиент отвалился?
+4. Неблокрующий сокет для сервера под Linux, для клиента под Windows придется писать другую реализацию сокета
+5. Добавить сецификатор const где необходимо
+
 */
 
 
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed){
-                window.close();
-            }
+int main(int argc, char *argv[]){
+    std::cout << "arguments:";
+    for(int i(1); i<argc; ++i){
+        std::cout << ' ' << argv[i];
+    }
+    std::cout << std::endl;
+    std::cout << std::endl;
 
-            /*if(event.type == sf::Event::KeyPressed){
-                if(event.key.code == sf::Keyboard::Left){
-                    pos_x -= velocity;
-                    triangle.setPosition(pos_x, pos_y);
-                }
-                else if(event.key.code == sf::Keyboard::Right){
-                    pos_x += velocity;
-                    triangle.setPosition(pos_x, pos_y);
-                }
-                else if(event.key.code == sf::Keyboard::Up){
-                    pos_y -= velocity;
-                    triangle.setPosition(pos_x, pos_y);
-                }
-                else if(event.key.code == sf::Keyboard::Down){
-                    pos_y += velocity;
-                    triangle.setPosition(pos_x, pos_y);
-                }
-                else{
-                }
-            }*/
-
-            if(event.type == sf::Event::KeyPressed){
-                if(event.key.code == sf::Keyboard::Left){
-                    vel_x = -vel;
-                }
-                else if(event.key.code == sf::Keyboard::Right){
-                    vel_x = vel;
-                }
-                else if(event.key.code == sf::Keyboard::Up){
-                    vel_y = -vel;
-                }
-                else if(event.key.code == sf::Keyboard::Down){
-                    vel_y = vel;
-                }
-                else{
-                }
-            }
-            if(event.type == sf::Event::KeyReleased){
-                if(event.key.code == sf::Keyboard::Left){
-                    vel_x = 0;
-                }
-                else if(event.key.code == sf::Keyboard::Right){
-                    vel_x = 0;
-                }
-                else if(event.key.code == sf::Keyboard::Up){
-                    vel_y = 0;
-                }
-                else if(event.key.code == sf::Keyboard::Down){
-                    vel_y = 0;
-                }
-                else{
-                }
-            }
-
-
+    if(argc > 1){
+        if(argc == 2){
+            int port = std::stoi(std::string(argv[1]));
+            std::cout << "server starting on port " << port << "..." << std::endl;
+            Server server(port);
         }
-        pos_x += vel_x;
-        pos_y += vel_y;
-        triangle.setPosition(pos_x, pos_y);
-
-
-
-
-        window.clear();
-        //window.draw(shape);
-        window.draw(triangle);
-        window.display();
+        else if(argc == 3){
+            std::string host(argv[1]);
+            int port = std::stoi(argv[2]);
+            std::cout << "client trying to connect " << host << ":" << port << "..." << std::endl;
+            Client client;
+        }
+        else{
+            std::cout << "[error] wrong arguments" << std::endl;
+        }
+    }
+    else{
+        std::cout << "client starting on localhost..." << std::endl;
+        Client client;
     }
 
     return 0;
