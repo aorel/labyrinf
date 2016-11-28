@@ -14,15 +14,17 @@ bool Player::readyForNewCommand(){
     }
 }
 
-void Player::applyCommand(Command &command){
+void Player::applyCommand(const PlayerEvent& playerEvent){
     sf::Vector2i movement(0, 0);
-    if(command == PlayerUp)
+    
+    PressedKey key = playerEvent.getKey();
+    if(key == PressedKey::Up)
         movement.y -= 1;
-    else if(command == PlayerDown)
+    else if(key == PressedKey::Down)
         movement.y += 1;
-    else if(command == PlayerLeft)
+    else if(key == PressedKey::Left)
         movement.x -= 1;
-    else if(command == PlayerRight)
+    else if(key == PressedKey::Right)
         movement.x += 1;
 
     move(movement);

@@ -8,13 +8,13 @@ Client::Client() :
 
         //[lambda callback]
         //game( [this](Command command){ commandSend(command); } ),
-        commandHandler( [this](Command command){ playerActionHandler(command); } ){
+        keyboardHandler( [this](PressedKey key){ gameKeyboardHandler(key); } ){
     window.setPosition(sf::Vector2i(settings::windowPositionX, settings::windowPositionY));
-    
-    eventLoop();
+
+    run();
 }
 
-void Client::eventLoop(){
+void Client::run(){
     while (window.isOpen()){
         events();
 
@@ -43,50 +43,52 @@ void Client::events(){
 }
 
 void Client::update(){
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
-        commandHandler(Command::PlayerUp);
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)){
+        keyboardHandler(PressedKey::Escape);
+    }
+    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
+        keyboardHandler(PressedKey::Up);
     }
     else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
-        commandHandler(Command::PlayerDown);
+        keyboardHandler(PressedKey::Down);
     }
     else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
-        commandHandler(Command::PlayerLeft);
+        keyboardHandler(PressedKey::Left);
     }
     else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
-        commandHandler(Command::PlayerRight);
+        keyboardHandler(PressedKey::Right);
     }
 }
 
-void Client::menuCommandHandler(Command command){
+void Client::menuKeyboardHandler(PressedKey key){
     //TODO
 }
 
-void Client::playerActionHandler(Command command){
-    //PlayerAction(&currentPlayer, command);
+void Client::gameKeyboardHandler(PressedKey key){
+    if(key == PressedKey::Escape){
+        std::cout << "ECS" << std::endl;
+    }
+    else{
+        PlayerEvent playerEvent(key);
 
-
-    //Player *currentPlayer = game.getCurrentPlayer();
-    int currentPlayerIndex = 0;
-    if(game.checkPlayerAction(currentPlayerIndex, command)){
-        //if(verifyСommand(server_socket, player, command))...//TODO
-        game.applyPlayerAction(currentPlayerIndex, command);
+        int currentPlayerIndex = 0;
+        if(game.checkPlayerAction(currentPlayerIndex, playerEvent)){
+            //if(verifyСommand(server_socket, player, command))...//TODO
+            game.applyPlayerAction(currentPlayerIndex, playerEvent);
+        }
     }
 }
 
 void Client::render(){
     window.clear();
-
-    //window.draw(labyrinth);
-    //window.draw(player);
     window.draw(game);
-
     window.display();
 }
 
-void Client::commandSend(Command command){
-    //TODO
+/*void Client::commandSend(Command command){
+    //TODO class Connection -> connection.sendData(event.data())
 }
 
 void Client::commandRecv(Command command){
-    //TODO
-}
+    //TODO class Connection -> parser = connection.recvData() -> parser.callback()
+}*/

@@ -1,14 +1,14 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <functional>
 
-#include "command.h"
+#include "events/pressedKey.h"
 #include "game/gameDrawable.h"
 
 class Client{
 public:
     Client();
-    //void run();
 private:
     //int id = {0};
 
@@ -29,20 +29,19 @@ private:
     //MenuDrawable menu;//TODO
     GameDrawable game;
     
-    //std::function< void(Command) > verifyCommandCallback = std::bind( &GameDrawable::blah, game );
+    //std::function<void(Command)> verifyCommandCallback = std::bind( &GameDrawable::blah, game );
     //CommandFunction verifyCommandCallback;
-    std::function< void(Command command) > commandHandler;
+    std::function<void(PressedKey key)> keyboardHandler;
 
-
-    void eventLoop();
+    void run();
     void events();
     void update();
-    void menuCommandHandler(Command command);
-    void playerActionHandler(Command command);
+    void menuKeyboardHandler(PressedKey key);
+    void gameKeyboardHandler(PressedKey key);
     void render();
 
 public:
     void commandSendTest();
-    void commandSend(Command command);
-    void commandRecv(Command command);
+    /*void commandSend(Command command);
+    void commandRecv(Command command);*/
 };

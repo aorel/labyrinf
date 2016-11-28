@@ -9,15 +9,15 @@ Game::Game(Labyrinth *_l) :
 }
 
 //TODO command заменить на полное поисание действия: объект, действие
-bool Game::checkPlayerAction(int &playerIndex, Command &command){
+bool Game::checkPlayerAction(int &playerIndex, const PlayerEvent& playerEvent){
     if(players[playerIndex]->readyForNewCommand()){
-        if(labyrinth->checkCommand(*players[playerIndex], command)){
+        if(labyrinth->checkCommand(*players[playerIndex], playerEvent)){
             return true;
         }
     }
     return false;
 }
 
-void Game::applyPlayerAction(int &playerIndex, Command &command){
-    players[playerIndex]->applyCommand(command);
+void Game::applyPlayerAction(int &playerIndex, const PlayerEvent& playerEvent){
+    players[playerIndex]->applyCommand(playerEvent);
 }

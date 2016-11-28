@@ -2,7 +2,8 @@
 
 #include <iostream>
 
-#include "../command.h"
+//#include "../command.h"
+#include "../events/playerEvent.h"
 #include "../settings.h"
 
 class Player{
@@ -11,7 +12,7 @@ public:
     virtual ~Player() = default;
 
     bool readyForNewCommand();
-    void applyCommand(Command &command);
+    void applyCommand(const PlayerEvent&);
     sf::Vector2i getPosition() const;
 
 protected:
@@ -25,7 +26,7 @@ protected:
     virtual void move(sf::Vector2i &movement);
 };
 
-
+/*
 class PlayerAction{
 public:
     PlayerAction(Player *p, Command c) : player(p), command(c){}
@@ -36,3 +37,4 @@ private:
     Player *player;
     Command command;
 };
+*/

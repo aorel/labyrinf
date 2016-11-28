@@ -4,7 +4,7 @@ Labyrinth::Labyrinth() : Labyrinth( [](){return new Cell;} ){
     test_init();
 }
 
-Labyrinth::Labyrinth(std::function< Cell* () > cellFactory){
+Labyrinth::Labyrinth(std::function<Cell*()> cellFactory){
     for(int i(0); i<settings::labyrinthSizeX; ++i){
         std::vector<std::unique_ptr<Cell>> cellRow;
         for(int j(0); j<settings::labyrinthSizeY; ++j){
@@ -14,18 +14,20 @@ Labyrinth::Labyrinth(std::function< Cell* () > cellFactory){
     }
 }
 
-bool Labyrinth::checkCommand(const Player &p, Command &command){
+bool Labyrinth::checkCommand(const Player &p, const PlayerEvent& playerEvent){
+
+    PressedKey key = playerEvent.getKey();
     sf::Vector2i position = p.getPosition();
-    if(command == PlayerUp && position.y == 0){
+    if(key == PressedKey::Up && position.y == 0){
         return false;
     }
-    else if(command == PlayerDown && position.y == (settings::labyrinthSizeY-1)){
+    else if(key == PressedKey::Down && position.y == (settings::labyrinthSizeY-1)){
         return false;
     }
-    else if(command == PlayerLeft && position.x == 0){
+    else if(key == PressedKey::Left && position.x == 0){
         return false;
     }
-    else if(command == PlayerRight && position.x == (settings::labyrinthSizeX-1)){
+    else if(key == PressedKey::Right && position.x == (settings::labyrinthSizeX-1)){
         return false;
     }
     else{
@@ -34,16 +36,16 @@ bool Labyrinth::checkCommand(const Player &p, Command &command){
 
 
 
-    if(command == PlayerUp && cells[position.x][position.y-1]->getType() == WALL){
+    if(key == PressedKey::Up && cells[position.x][position.y-1]->getType() == WALL){
         return false;
     }
-    else if(command == PlayerDown && cells[position.x][position.y+1]->getType() == WALL){
+    else if(key == PressedKey::Down && cells[position.x][position.y+1]->getType() == WALL){
         return false;
     }
-    else if(command == PlayerLeft && cells[position.x-1][position.y]->getType() == WALL){
+    else if(key == PressedKey::Left && cells[position.x-1][position.y]->getType() == WALL){
         return false;
     }
-    else if(command == PlayerRight && cells[position.x+1][position.y]->getType() == WALL){
+    else if(key == PressedKey::Right && cells[position.x+1][position.y]->getType() == WALL){
         return false;
     }
     return true;
