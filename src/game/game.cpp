@@ -20,4 +20,17 @@ bool Game::checkPlayerAction(int &playerIndex, Command &command){
 
 void Game::applyPlayerAction(int &playerIndex, Command &command){
     players[playerIndex]->applyCommand(command);
+    sf::Vector2i position = players[playerIndex]->getPosition();
+    if (labyrinth->getBonus(position) == FIRE){
+        players[playerIndex]->addHealth(-1);
+        std::cout << " firee ";
+    }
+    else if (labyrinth->getBonus(position) == WATER){
+        players[playerIndex]->changeWet();
+        std::cout << " water ";
+    }
+    else if (labyrinth->getBonus(position) == HEART){
+        players[playerIndex]->addHealth(1);
+        std::cout << " heart ";
+    }
 }

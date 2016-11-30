@@ -4,7 +4,7 @@ Player::Player() :
         position(settings::playerStartPositionX, settings::playerStartPositionY){
     lastStepTime.restart();
     health = 5;
-    isWet = 0;
+    wet = 0;
 }
 
 bool Player::readyForNewCommand(){
@@ -40,9 +40,24 @@ sf::Vector2i Player::getPosition() const{
 
 void Player::move(sf::Vector2i &movement){
     position += movement;
-    /*if (Labyrinth::getBonus(position) == FIRE){
-        health--;
-        std::cout << " firee ";
-    }*/
     std::cout << "Player::move " << position.x << ' ' << position.y << std::endl;
+}
+
+void Player::addHealth(int add)
+{
+    health += add;
+}
+int Player::getHealth() const
+{
+    return health;
+}
+
+void Player::changeWet()
+{
+    wet = !wet;
+}
+
+bool Player::isWet() const
+{
+    return wet;
 }

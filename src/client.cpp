@@ -1,5 +1,5 @@
 #include "client.h"
-
+//using namespace sf;
 Client::Client() :
         window(sf::VideoMode(settings::windowSizeX, settings::windowSizeY), settings::windowName),
 
@@ -58,7 +58,14 @@ void Client::update(){
 }
 
 void Client::menuCommandHandler(Command command){
-    //TODO
+    sf::Image listImage;
+    listImage.loadFromFile("/home/ivyazmin/park/labyrinf_new/labyrinf/src/list.jpg");
+    //listImage.createMaskFromColor(Color(255,255,255));
+    sf::Texture listTexture;
+    listTexture.loadFromImage(listImage);
+    sf::Sprite listSprite;
+    listSprite.setTexture(listTexture);
+    //listSprite.setScale(Vector2f(0.12f, 0.12f));
 }
 
 void Client::playerActionHandler(Command command){

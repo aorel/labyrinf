@@ -18,6 +18,9 @@ void GameDrawable::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
     for(const auto &player : players){
         const PlayerDrawable* playerDrawable = dynamic_cast<PlayerDrawable*>(player.get());
-        target.draw(*playerDrawable);
+        if (playerDrawable->getHealth() > 0){
+            target.draw(*playerDrawable);
+        }
+        
     }
 }

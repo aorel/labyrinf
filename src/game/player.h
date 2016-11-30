@@ -15,6 +15,10 @@ public:
     bool readyForNewCommand();
     void applyCommand(Command &command);
     sf::Vector2i getPosition() const;
+    void addHealth(int add);
+    int getHealth() const;
+    void changeWet();
+    bool isWet() const;
 
 protected:
     sf::Clock lastStepTime;
@@ -23,7 +27,7 @@ protected:
     //int id = {0};
     sf::Vector2i position;
     int health;
-    bool isWet;//TODO bonus, health, etc
+    bool wet;//TODO bonus, health, etc
     
     virtual void move(sf::Vector2i &movement);
 };

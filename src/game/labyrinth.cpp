@@ -16,6 +16,10 @@ Labyrinth::Labyrinth(std::function< Cell* () > cellFactory){
 
 CellType Labyrinth::getBonus(sf::Vector2i place)
 {
+    if (cells[place.x][place.y]->getType() == HEART){
+        cells[place.x][place.y]->setType(GROUND);
+        return HEART;
+    }
     return cells[place.x][place.y]->getType();
 }
 
