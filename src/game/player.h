@@ -4,8 +4,8 @@
 
 #include "../command.h"
 #include "../settings.h"
-#include "cellDrawable.h"
-#include "labyrinth.h"
+//#include "cellDrawable.h"
+//#include "labyrinth.h"
 
 class Player{
 public:

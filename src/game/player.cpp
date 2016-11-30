@@ -40,9 +40,9 @@ sf::Vector2i Player::getPosition() const{
 
 void Player::move(sf::Vector2i &movement){
     position += movement;
-    if (Labyrinth::getBonus(position) == FIRE){
+    /*if (Labyrinth::getBonus(position) == FIRE){
         health--;
         std::cout << " firee ";
-    }
+    }*/
     std::cout << "Player::move " << position.x << ' ' << position.y << std::endl;
 }
