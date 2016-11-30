@@ -30,9 +30,6 @@ bool Labyrinth::checkCommand(const Player &p, const PlayerEvent& playerEvent){
     else if(key == PressedKey::Right && position.x == (settings::labyrinthSizeX-1)){
         return false;
     }
-    else{
-        ;
-    }
 
 
 

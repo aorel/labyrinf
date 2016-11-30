@@ -1,6 +1,8 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Network.hpp>
+
 #include <functional>
 
 #include "events/pressedKey.h"
@@ -17,6 +19,8 @@ private:
 
     sf::Clock clock;
     sf::Time timeSinceLastUpdate = sf::Time::Zero;
+
+    sf::TcpSocket socket;
 
 
     typedef enum ClientState{
@@ -39,6 +43,8 @@ private:
     void menuKeyboardHandler(PressedKey key);
     void gameKeyboardHandler(PressedKey key);
     void render();
+    
+    bool verifyCommand(const PlayerEvent&);
 
 public:
     void commandSendTest();
