@@ -3,6 +3,8 @@
 Player::Player() :
         position(settings::playerStartPositionX, settings::playerStartPositionY){
     lastStepTime.restart();
+    health = 5;
+    isWet = 0;
 }
 
 bool Player::readyForNewCommand(){
@@ -25,6 +27,8 @@ void Player::applyCommand(Command &command){
     else if(command == PlayerRight)
         movement.x += 1;
 
+    
+
     move(movement);
 
     lastStepTime.restart();
@@ -36,5 +40,9 @@ sf::Vector2i Player::getPosition() const{
 
 void Player::move(sf::Vector2i &movement){
     position += movement;
+    if (cells[position.x][position.y]->getTypy == FIRE){
+        health--;
+        std::cout << " firee ";
+    }
     std::cout << "Player::move " << position.x << ' ' << position.y << std::endl;
 }

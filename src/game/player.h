@@ -20,7 +20,8 @@ protected:
     //int socket = {0};
     //int id = {0};
     sf::Vector2i position;
-    int state = {0};//TODO bonus, health, etc
+    int health;
+    bool isWet;//TODO bonus, health, etc
     
     virtual void move(sf::Vector2i &movement);
 };

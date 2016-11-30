@@ -16,24 +16,9 @@ Labyrinth::Labyrinth(std::function< Cell* () > cellFactory){
 
 bool Labyrinth::checkCommand(const Player &p, Command &command){
     sf::Vector2i position = p.getPosition();
-    if(command == PlayerUp && position.y == 0){
-        return false;
-    }
-    else if(command == PlayerDown && position.y == (settings::labyrinthSizeY-1)){
-        return false;
-    }
-    else if(command == PlayerLeft && position.x == 0){
-        return false;
-    }
-    else if(command == PlayerRight && position.x == (settings::labyrinthSizeX-1)){
-        return false;
-    }
-    else{
-        ;
-    }
+    
 
-
-
+    
     if(command == PlayerUp && cells[position.x][position.y-1]->getType() == WALL){
         return false;
     }
@@ -57,8 +42,10 @@ void Labyrinth::test_init(){
             }
             else if( i == j){
                 cells[i][j]->setType(WATER);
+            }else if( i+1 == j){
+                cells[i][j]->setType(HEART);
             }
-            else if( i+1 == j){
+            else if( i+2 == j){
                 cells[i][j]->setType(FIRE);
             }
             else{
