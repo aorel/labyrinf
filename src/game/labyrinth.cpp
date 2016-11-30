@@ -14,11 +14,14 @@ Labyrinth::Labyrinth(std::function< Cell* () > cellFactory){
     }
 }
 
+CellType Labyrinth::getBonus(sf::Vector2i place)
+{
+    return cells[place.x][place.y]->getType();
+}
+
 bool Labyrinth::checkCommand(const Player &p, Command &command){
     sf::Vector2i position = p.getPosition();
-    
 
-    
     if(command == PlayerUp && cells[position.x][position.y-1]->getType() == WALL){
         return false;
     }

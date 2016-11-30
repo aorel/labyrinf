@@ -14,6 +14,7 @@ public:
     virtual ~Labyrinth() = default;
     
     bool checkCommand(const Player &p, Command &command);
+    CellType getBonus(sf::Vector2i place);
 
 protected:
     std::vector<std::vector<std::unique_ptr<Cell>>> cells;
