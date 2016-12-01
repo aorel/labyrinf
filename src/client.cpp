@@ -100,7 +100,7 @@ void Client::gameKeyboardHandler(PressedKey key){
             std::string str = playerEvent.generateMessage();
             clientConnection.write(str);
 
-            //game.applyPlayerAction(currentPlayerIndex, playerEvent);
+            game.applyPlayerAction(currentPlayerIndex, playerEvent);
         }
     }
 }
