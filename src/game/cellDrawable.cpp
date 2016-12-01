@@ -42,7 +42,7 @@ public:
     Sprite sprite;
     Heart()
     {
-        image.loadFromFile("/home/ivyazmin/park/labyrinf_new/labyrinf/src/heart.png");
+        image.loadFromFile("../src/heart.png");
         texture.loadFromImage(image);
         sprite.setTexture(texture);
         sprite.setScale(Vector2f(0.4f, 0.4f));
@@ -57,7 +57,7 @@ public:
     Sprite sprite;
     Fire()
     {
-        image.loadFromFile("/home/ivyazmin/park/labyrinf_new/labyrinf/src/fire.jpg");
+        image.loadFromFile("../src/fire.jpg");
         image.createMaskFromColor(Color(255,255,255));
         texture.loadFromImage(image);
         sprite.setTexture(texture);
@@ -73,7 +73,7 @@ public:
     Sprite sprite;
     Water()
     {
-        image.loadFromFile("/home/ivyazmin/park/labyrinf_new/labyrinf/src/water.jpg");
+        image.loadFromFile("../src/water.jpg");
         texture.loadFromImage(image);
         sprite.setTexture(texture);
         sprite.setTextureRect(IntRect(0, 0, settings::cellSize, settings::cellSize));

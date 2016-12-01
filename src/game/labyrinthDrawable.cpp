@@ -2,7 +2,7 @@
 
 LabyrinthDrawable::LabyrinthDrawable() :
         Labyrinth( [](){return new CellDrawable;} ){
-    test_init();
+    generator_init();
     for(int i(0); i<settings::labyrinthSizeX; ++i){
         for(int j(0); j<settings::labyrinthSizeY; ++j){
             CellDrawable* cellDrawable = dynamic_cast<CellDrawable*>(cells[i][j].get());

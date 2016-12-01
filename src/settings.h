@@ -15,8 +15,8 @@ namespace settings{
     const float gameFps = 60.0f;
     const sf::Time gameSpf = sf::seconds(1.f/gameFps);
 
-    const int labyrinthSizeX = 15;
-    const int labyrinthSizeY = 17;
+    const int labyrinthSizeX = 20;
+    const int labyrinthSizeY = 20;
 
     const float cellSize = 40.0;
     const float cellOffsetX = 0.0;//2;

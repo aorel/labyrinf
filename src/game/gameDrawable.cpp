@@ -23,7 +23,7 @@ void GameDrawable::draw(sf::RenderTarget& target, sf::RenderStates states) const
     if (!isGame)
     {
         sf::Image listImage;
-        listImage.loadFromFile("/home/ivyazmin/park/labyrinf_new/labyrinf/src/list.png");
+        listImage.loadFromFile("../src/list.png");
         sf::Texture listTexture;
         listTexture.loadFromImage(listImage);
         sf::Sprite listSprite;
@@ -32,7 +32,7 @@ void GameDrawable::draw(sf::RenderTarget& target, sf::RenderStates states) const
         //listSprite.setScale(Vector2f(0.12f, 0.12f));
         target.draw(listSprite);
         sf::Font font;
-        font.loadFromFile("/home/ivyazmin/park/labyrinf_new/labyrinf/src/Bellico.ttf");
+        font.loadFromFile("../src/Bellico.ttf");
         sf::Text text("", font, 70);
         text.setString("NEW GAME\n    EXIT\n");
         text.setPosition(sf::Vector2f(130, 250));

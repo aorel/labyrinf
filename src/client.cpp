@@ -32,7 +32,6 @@ void Client::eventLoop(){
     }
 }
 
-
 void Client::events(){
     sf::Vector2i mouse = sf::Mouse::getPosition(window);
     while (window.pollEvent(event)){
