@@ -1,24 +1,24 @@
 #include "cellDrawable.h"
 
 CellDrawable::CellDrawable() :
-        cellShape(sf::Vector2f(settings::cellSize, settings::cellSize)){
+        cellShape(sf::Vector2f(settings::cellDrawableSize, settings::cellDrawableSize)){
 }
 
 void CellDrawable::setType(CellType t){
     type = t;
-    
+
     switch(type){
         case WALL:
-            cellShape.setFillColor(settings::cellTypeWall);
+            cellShape.setFillColor(settings::cellDrawableTypeWall);
             break;
         case GROUND:
-            cellShape.setFillColor(settings::cellTypeGround);
+            cellShape.setFillColor(settings::cellDrawableTypeGround);
             break;
         case WATER:
-            cellShape.setFillColor(settings::cellTypeWater);
+            cellShape.setFillColor(settings::cellDrawableTypeWater);
             break;
         case FIRE:
-            cellShape.setFillColor(settings::cellTypeFire);
+            cellShape.setFillColor(settings::cellDrawableTypeFire);
             break;
         default:
             break;

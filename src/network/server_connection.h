@@ -8,7 +8,7 @@
 #include <utility>
 #include <boost/asio.hpp>
 
-#include "network/chat_message.h"
+#include "chat_message.h"
 
 //----------------------------------------------------------------------
 
@@ -23,6 +23,8 @@ typedef std::shared_ptr<Participant> Participant_ptr;
 
 //----------------------------------------------------------------------
 
+#include "../game/game.h"
+
 class Room
 {
 public:
@@ -31,21 +33,27 @@ public:
     void leave(Participant_ptr participant);
 
     void deliver(const Message& msg);
+    void readHandler(Participant_ptr p, const Message& msg);
 
 private:
     std::set<Participant_ptr> participants_;
+
+    Game game;
+    int counter_{0};
+    std::map<Participant_ptr, int> map_;
+
     /*enum { max_recent_msgs = 100 };
     Message_deque recent_msgs_;*/
 };
 
 //----------------------------------------------------------------------
-
-class Session :
+class Room;
+class ServerConnection :
     public Participant,
-    public std::enable_shared_from_this<Session>
+    public std::enable_shared_from_this<ServerConnection>
 {
 public:
-    Session(boost::asio::ip::tcp::socket socket, Room& room);
+    ServerConnection(boost::asio::ip::tcp::socket socket, Room& room);
 
     void start();
 
@@ -62,20 +70,4 @@ private:
     Room& room_;
     Message read_msg_;
     Message_deque write_msgs_;
-};
-
-//----------------------------------------------------------------------
-
-class Server
-{
-public:
-    Server(boost::asio::io_service& io_service,
-        const boost::asio::ip::tcp::endpoint& endpoint);
-
-private:
-    void do_accept();
-
-    boost::asio::ip::tcp::acceptor acceptor_;
-    boost::asio::ip::tcp::socket socket_;
-    Room room_;
 };

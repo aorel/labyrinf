@@ -9,7 +9,12 @@
 class GameDrawable : public Game, public sf::Drawable{
 public:
     GameDrawable();
+    void builder() override;
     //void applyPlayerAction(int &playerIndex, Command &command) override;//TODO !!!
+
+protected:
+    std::unique_ptr<Labyrinth> labyrinthBuilder() override;
+    std::unique_ptr<Player> playerBuilder() override;
 
 private:
     void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;

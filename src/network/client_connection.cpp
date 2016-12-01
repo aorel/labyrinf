@@ -1,14 +1,28 @@
-#include "chat_client.h"
+#include "client_connection.h"
 
-Client::Client(boost::asio::io_service& io_service,
+ClientConnection::ClientConnection(boost::asio::io_service& io_service,
     boost::asio::ip::tcp::resolver::iterator endpoint_iterator) :
         io_service_(io_service),
-        socket_(io_service)
+        socket_(io_service),
+        readHandler([](const std::string msg){})
 {
     do_connect(endpoint_iterator);
 }
 
-void Client::write(const Message& msg)
+ClientConnection::ClientConnection(boost::asio::io_service& io_service,
+    boost::asio::ip::tcp::resolver::iterator endpoint_iterator,
+    ReadHandler rh) :
+        ClientConnection(io_service, endpoint_iterator)
+        //io_service_(io_service),
+        //socket_(io_service),
+        //readHandler(rh)
+
+{
+    //do_connect(endpoint_iterator);
+    readHandler = rh;
+}
+
+void ClientConnection::write(const Message& msg)
 {
     io_service_.post(
         [this, msg]()
@@ -23,13 +37,22 @@ void Client::write(const Message& msg)
     );
 }
 
-void Client::close()
+void ClientConnection::write(const std::string& str){
+    Message msg;
+    msg.body_length(std::strlen(str.c_str()));
+    std::memcpy(msg.body(), str.c_str(), msg.body_length());
+    msg.encode_header();
+    write(msg);
+}
+
+
+void ClientConnection::close()
 {
     io_service_.post([this]() { socket_.close(); });
 }
 
 
-void Client::do_connect(boost::asio::ip::tcp::resolver::iterator endpoint_iterator)
+void ClientConnection::do_connect(boost::asio::ip::tcp::resolver::iterator endpoint_iterator)
 {
     boost::asio::async_connect(socket_, endpoint_iterator,
         [this](boost::system::error_code ec, boost::asio::ip::tcp::resolver::iterator)
@@ -42,7 +65,7 @@ void Client::do_connect(boost::asio::ip::tcp::resolver::iterator endpoint_iterat
     );
 }
 
-void Client::do_read_header()
+void ClientConnection::do_read_header()
 {
     boost::asio::async_read(socket_,
         boost::asio::buffer(read_msg_.data(), Message::header_length),
@@ -60,7 +83,7 @@ void Client::do_read_header()
     );
 }
 
-void Client::do_read_body()
+void ClientConnection::do_read_body()
 {
     boost::asio::async_read(socket_,
         boost::asio::buffer(read_msg_.body(), read_msg_.body_length()),
@@ -70,6 +93,11 @@ void Client::do_read_body()
           {
             std::cout.write(read_msg_.body(), read_msg_.body_length());
             std::cout << "\n";
+
+            std::string str(read_msg_.body(), read_msg_.body_length());
+            readHandler(str);
+
+
             do_read_header();
           }
           else
@@ -80,7 +108,7 @@ void Client::do_read_body()
     );
 }
 
-void Client::do_write()
+void ClientConnection::do_write()
 {
     boost::asio::async_write(socket_,
         boost::asio::buffer(write_msgs_.front().data(),

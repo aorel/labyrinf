@@ -1,13 +1,19 @@
 #include "playerDrawable.h"
 
 PlayerDrawable::PlayerDrawable(){
-    playerShape.setFillColor(settings::playerColor);
-    playerShape.setPosition(settings::playerOffsetX + position.x * settings::cellSize, settings::playerOffsetY + position.y * settings::cellSize);
+    playerShape.setFillColor(settings::playerDrawableColor);
+    playerShape.setPosition(
+        settings::playerDrawableOffsetX + position.x * settings::cellDrawableSize,
+        settings::playerDrawableOffsetY + position.y * settings::cellDrawableSize
+    );
 }
 
 void PlayerDrawable::move(sf::Vector2i &movement){
     Player::move(movement);
-    playerShape.move(movement.x * settings::cellSize, movement.y * settings::cellSize);
+    playerShape.move(
+        movement.x * settings::cellDrawableSize,
+        movement.y * settings::cellDrawableSize
+    );
 }
 
 void PlayerDrawable::draw(sf::RenderTarget& target, sf::RenderStates states) const{

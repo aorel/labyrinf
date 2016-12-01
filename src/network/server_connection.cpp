@@ -1,8 +1,15 @@
-#include "chat_server.h"
+#include "server_connection.h"
+
 
 void Room::join(Participant_ptr participant)
 {
     participants_.insert(participant);
+
+    //map_[participant] = counter_;
+    map_.insert({participant, counter_});
+    ++counter_;
+
+    game._join();
     /*for (auto msg: recent_msgs_)
         participant->deliver(msg);*/
 }
@@ -22,21 +29,55 @@ void Room::deliver(const Message& msg)
         participant->deliver(msg);
 }
 
+
+void Room::readHandler(Participant_ptr p, const Message& msg)
+{
+
+    std::string msgString(msg.body(), msg.body_length());
+
+    //std::cout << "readHandler start" << std::endl;
+    /*int i(0);
+    for (auto participant: participants_){
+        if(p == participant){
+
+            game._move(i, msgString);
+        }
+        ++i;
+    }*/
+    int j = map_.at(p);
+    game._move(j, msgString);
+    //std::cout << "readHandler stop" << std::endl;
+
+    std::string stateString(game._state());
+    Message stateMsg;
+    stateMsg.body_length(std::strlen(stateString.c_str()));
+    std::memcpy(stateMsg.body(), stateString.c_str(), stateMsg.body_length());
+    stateMsg.encode_header();
+
+
+    for (auto participant: participants_)
+        participant->deliver(stateMsg);
+
+    //deliver(response_msg_);// отправить всем
+    //participant->deliver(response_msg_);// отправить конкретному игроку
+}
+
+
 //----------------------------------------------------------------------
 
-Session::Session(boost::asio::ip::tcp::socket socket, Room& room) :
+ServerConnection::ServerConnection(boost::asio::ip::tcp::socket socket, Room& room) :
         socket_(std::move(socket)),
         room_(room)
 {
 }
 
-void Session::start()
+void ServerConnection::start()
 {
     room_.join(shared_from_this());
     do_read_header();
 }
 
-void Session::deliver(const Message& msg)
+void ServerConnection::deliver(const Message& msg)
 {
     bool write_in_progress = !write_msgs_.empty();
     write_msgs_.push_back(msg);
@@ -46,7 +87,7 @@ void Session::deliver(const Message& msg)
     }
 }
 
-void Session::do_read_header()
+void ServerConnection::do_read_header()
 {
     auto self(shared_from_this());
     boost::asio::async_read(socket_,
@@ -65,7 +106,7 @@ void Session::do_read_header()
     );
 }
 
-void Session::do_read_body()
+void ServerConnection::do_read_body()
 {
     auto self(shared_from_this());
     boost::asio::async_read(socket_,
@@ -74,8 +115,23 @@ void Session::do_read_body()
         {
             if (!ec)
             {
-                room_.deliver(read_msg_);
+                //room_.deliver(read_msg_);
+                room_.readHandler(shared_from_this(), read_msg_);
                 do_read_header();
+
+
+                //=========================== NEW BEGIN
+                /*
+                //game.handler(read_msg_)
+                room_.gameHandler(shared_from_this(), read_msg_);{
+                    response_msg_ = ...
+
+                    room_.deliver(response_msg_);// отправить всем
+                    deliver(response_msg_);// отправить конкретному игроку
+                }
+                do_read_header();
+                */
+                //=========================== NEW END
             }
             else
             {
@@ -85,7 +141,7 @@ void Session::do_read_body()
     );
 }
 
-void Session::do_write()
+void ServerConnection::do_write()
 {
     auto self(shared_from_this());
     boost::asio::async_write(socket_,
@@ -105,31 +161,6 @@ void Session::do_write()
             {
                 room_.leave(shared_from_this());
             }
-        }
-    );
-}
-
-//----------------------------------------------------------------------
-
-Server::Server(boost::asio::io_service& io_service,
-    const boost::asio::ip::tcp::endpoint& endpoint) :
-        acceptor_(io_service, endpoint),
-        socket_(io_service)
-{
-    do_accept();
-}
-
-void Server::do_accept()
-{
-    acceptor_.async_accept(socket_,
-        [this](boost::system::error_code ec)
-        {
-            if (!ec)
-            {
-                std::make_shared<Session>(std::move(socket_), room_)->start();
-            }
-
-            do_accept();
         }
     );
 }

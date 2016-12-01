@@ -1,4 +1,4 @@
-#include "src/chat_server.h"
+#include "src/server.h"
 
 int main(int argc, char* argv[])
 {

@@ -1,4 +1,4 @@
-#include "src/chat_client.h"
+#include "src/client.h"
 
 int main(int argc, char* argv[])
 {
@@ -14,7 +14,10 @@ int main(int argc, char* argv[])
 
         boost::asio::ip::tcp::resolver resolver(io_service);
         auto endpoint_iterator = resolver.resolve({ argv[1], argv[2] });
-        Client c(io_service, endpoint_iterator);
+
+
+        /*
+        Chat_client chat_client(io_service, endpoint_iterator);
 
         std::thread t([&io_service](){ io_service.run(); });
 
@@ -25,10 +28,17 @@ int main(int argc, char* argv[])
             msg.body_length(std::strlen(line));
             std::memcpy(msg.body(), line, msg.body_length());
             msg.encode_header();
-            c.write(msg);
+            chat_client.write(msg);
         }
 
-        c.close();
+        chat_client.close();
+        t.join();
+        */
+
+
+        Client c(io_service, endpoint_iterator);
+        std::thread t([&io_service](){ io_service.run(); });
+        c.run();
         t.join();
     }
     catch (std::exception& e)

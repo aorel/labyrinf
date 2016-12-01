@@ -1,6 +1,10 @@
 #include "client.h"
 
-Client::Client() :
+Client::Client(boost::asio::io_service& io_service,
+        boost::asio::ip::tcp::resolver::iterator endpoint_iterator) :
+        //client_connection(io_service, endpoint_iterator),
+        clientConnection(io_service, endpoint_iterator, std::bind(&Client::connectionReadHandler, this, std::placeholders::_1)),//, &Client::connectionReadHandler
+
         window(sf::VideoMode(settings::windowSizeX, settings::windowSizeY), settings::windowName),
 
         //[bind callback]
@@ -9,21 +13,18 @@ Client::Client() :
         //[lambda callback]
         //game( [this](Command command){ commandSend(command); } ),
         keyboardHandler( [this](PressedKey key){ gameKeyboardHandler(key); } ){
-    
-    sf::Socket::Status status = socket.connect("127.0.0.1", 5001);
-    std::cout << "connecting...";
-    if (status == sf::Socket::Done){
-        std::cout << "OK" << std::endl;
-    }
-    else{
-        std::cout << "ERROR" << std::endl;
-    }
-    
-    
+    game.builder();
+
     window.setPosition(sf::Vector2i(settings::windowPositionX, settings::windowPositionY));
-    
-    run();
+    //run();
+
+    //game._join();
 }
+
+Client::~Client(){
+    clientConnection.close();
+}
+
 
 void Client::run(){
     while (window.isOpen()){
@@ -33,8 +34,10 @@ void Client::run(){
         while (timeSinceLastUpdate > settings::gameSpf){
             timeSinceLastUpdate -= settings::gameSpf;
 
+
             events();
-            update();
+            //update();
+            if(window.hasFocus()) update();
         }
 
         render();
@@ -46,6 +49,12 @@ void Client::events(){
         switch(event.type){
             case sf::Event::Closed:
                 window.close();
+                break;
+            case sf::Event::GainedFocus:
+                //std::cout << "Gained" << std::endl;
+                break;
+            case sf::Event::LostFocus:
+                //std::cout << "Lost" << std::endl;
                 break;
             default:
                 break;
@@ -85,12 +94,13 @@ void Client::gameKeyboardHandler(PressedKey key){
         int currentPlayerIndex = 0;
         if(game.checkPlayerAction(currentPlayerIndex, playerEvent)){
             //if(verifyСommand(server_socket, player, command))...//TODO
-            
-            if(verifyCommand(playerEvent)){
-                
-            }
-            
-            game.applyPlayerAction(currentPlayerIndex, playerEvent);
+
+            //if(verifyCommand(playerEvent)){
+            //}
+            std::string str = playerEvent.generateMessage();
+            clientConnection.write(str);
+
+            //game.applyPlayerAction(currentPlayerIndex, playerEvent);
         }
     }
 }
@@ -101,33 +111,7 @@ void Client::render(){
     window.display();
 }
 
-bool Client::verifyCommand(const PlayerEvent& playerEvent){
-    std::string data = playerEvent.generateMessage();
-    
-    //char bufToSend* data;
-    char bufToRecv[512];
-    std::size_t received;
-    if(socket.send(data.c_str(), data.size()) == sf::Socket::Done){
-        std::cout << "sending message: " << data << "...";
-        if(socket.receive(bufToRecv, data.size(), received) == sf::Socket::Done){
-            std::cout << "OK" << std::endl;
-            return true;
-        }
-        else{
-            std::cout << "RECV ERROR" << std::endl;
-            return false;
-        }
-    }
-    else{
-        std::cout << "SEND ERROR" << std::endl;
-        return false;
-    }
-}
+void Client::connectionReadHandler(const std::string& msg){
+    std::cout << '[' << msg << ']' << std::endl;
 
-/*void Client::commandSend(Command command){
-    //TODO class Connection -> connection.sendData(event.data())
 }
-
-void Client::commandRecv(Command command){
-    //TODO class Connection -> parser = connection.recvData() -> parser.callback()
-}*/
