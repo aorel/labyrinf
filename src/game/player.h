@@ -4,6 +4,8 @@
 
 #include "../command.h"
 #include "../settings.h"
+//#include "cellDrawable.h"
+//#include "labyrinth.h"
 
 class Player{
 public:
@@ -13,6 +15,10 @@ public:
     bool readyForNewCommand();
     void applyCommand(Command &command);
     sf::Vector2i getPosition() const;
+    void addHealth(int add);
+    int getHealth() const;
+    void changeWet();
+    bool isWet() const;
 
 protected:
     sf::Clock lastStepTime;
@@ -20,7 +26,8 @@ protected:
     //int socket = {0};
     //int id = {0};
     sf::Vector2i position;
-    int state = {0};//TODO bonus, health, etc
+    int health;
+    bool wet;//TODO bonus, health, etc
     
     virtual void move(sf::Vector2i &movement);
 };

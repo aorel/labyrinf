@@ -7,6 +7,7 @@ typedef enum CellType{
     GROUND,
     WATER,
     FIRE,
+    HEART
 } CellType;
 
 class Cell{

@@ -3,6 +3,8 @@
 Player::Player() :
         position(settings::playerStartPositionX, settings::playerStartPositionY){
     lastStepTime.restart();
+    health = 2;
+    wet = 0;
 }
 
 bool Player::readyForNewCommand(){
@@ -25,6 +27,8 @@ void Player::applyCommand(Command &command){
     else if(command == PlayerRight)
         movement.x += 1;
 
+    
+
     move(movement);
 
     lastStepTime.restart();
@@ -37,4 +41,23 @@ sf::Vector2i Player::getPosition() const{
 void Player::move(sf::Vector2i &movement){
     position += movement;
     std::cout << "Player::move " << position.x << ' ' << position.y << std::endl;
+}
+
+void Player::addHealth(int add)
+{
+    health += add;
+}
+int Player::getHealth() const
+{
+    return health;
+}
+
+void Player::changeWet()
+{
+    wet = !wet;
+}
+
+bool Player::isWet() const
+{
+    return wet;
 }
