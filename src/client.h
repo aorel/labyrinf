@@ -1,9 +1,17 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <vector>
 
 #include "command.h"
 #include "game/gameDrawable.h"
+
+struct CurrentPlay
+{
+    int index;
+    bool isLife;
+    CurrentPlay(int _index = 0, bool _isLife = 1) : index(_index), isLife(_isLife) {}
+};
 
 class Client{
 public:
@@ -32,7 +40,8 @@ private:
     //std::function< void(Command) > verifyCommandCallback = std::bind( &GameDrawable::blah, game );
     //CommandFunction verifyCommandCallback;
     std::function< void(Command command) > commandHandler;
-
+    
+    std::vector<CurrentPlay> arrayPlayers;
 
     void eventLoop();
     void events();
@@ -46,3 +55,5 @@ public:
     void commandSend(Command command);
     void commandRecv(Command command);
 };
+
+

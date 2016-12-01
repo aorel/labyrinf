@@ -218,4 +218,8 @@ std::vector<std::vector<int>> Labyrinth::generator(int width, int height)
 
     return maze;
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 9dca61d73ba7dc92ecc72aaad9cd672d370de4d8

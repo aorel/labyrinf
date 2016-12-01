@@ -11,15 +11,16 @@
 
 class Game{
 public:
-    Game();//TODO on server side
-
+    Game();
+    //TODO on server side
     bool checkPlayerAction(int &playerIndex, Command &command);
     //virtual void applyPlayerAction(int &playerIndex, Command &command);
-    void applyPlayerAction(int &playerIndex, Command &command);
-
+    bool applyPlayerAction(int &playerIndex, Command &command);
+    void menu();
 protected:
 
     Game(Labyrinth *_l);
     std::unique_ptr<Labyrinth> labyrinth;
     std::vector<std::unique_ptr<Player>> players;
+    bool isGame;
 };
