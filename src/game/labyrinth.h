@@ -19,4 +19,9 @@ public:
 protected:
     std::vector<std::vector<std::unique_ptr<Cell>>> cells;
     void test_init();
+    void generator_init();
+
+private:
+	std::vector<std::vector<int>> generator(int width, int height);
+	std::vector<std::pair<int, int>> adjacent(std::pair<int, int> cell);
 };
