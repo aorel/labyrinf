@@ -3,7 +3,7 @@
 Player::Player() :
         position(settings::playerStartPositionX, settings::playerStartPositionY){
     lastStepTime.restart();
-    health = 5;
+    health = 2;
     wet = 0;
 }
 

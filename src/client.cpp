@@ -1,6 +1,7 @@
 #include "client.h"
 //using namespace sf;
-Client::Client() :
+
+Client::Client() : 
         window(sf::VideoMode(settings::windowSizeX, settings::windowSizeY), settings::windowName),
 
         //[bind callback]
@@ -10,7 +11,8 @@ Client::Client() :
         //game( [this](Command command){ commandSend(command); } ),
         commandHandler( [this](Command command){ playerActionHandler(command); } ){
     window.setPosition(sf::Vector2i(settings::windowPositionX, settings::windowPositionY));
-    
+    CurrentPlay first(0, true);
+    arrayPlayers.push_back(first);
     eventLoop();
 }
 
@@ -31,10 +33,20 @@ void Client::eventLoop(){
 }
 
 void Client::events(){
+    sf::Vector2i mouse = sf::Mouse::getPosition(window);
     while (window.pollEvent(event)){
         switch(event.type){
             case sf::Event::Closed:
                 window.close();
+                break;
+            case sf::Event::MouseButtonPressed:
+                if ((mouse.x >= 130) && (mouse.x <= 456) && (mouse.y >= 260) && (mouse.y <= 325)){
+                    window.close();
+                    Client client;
+                }
+                else if ((mouse.x >= 222) && (mouse.x <= 366) && (mouse.y >= 325) && (mouse.y <= 390)){
+                    window.close();
+                }
                 break;
             default:
                 break;
@@ -58,26 +70,21 @@ void Client::update(){
 }
 
 void Client::menuCommandHandler(Command command){
-    sf::Image listImage;
-    listImage.loadFromFile("/home/ivyazmin/park/labyrinf_new/labyrinf/src/list.jpg");
-    //listImage.createMaskFromColor(Color(255,255,255));
-    sf::Texture listTexture;
-    listTexture.loadFromImage(listImage);
-    sf::Sprite listSprite;
-    listSprite.setTexture(listTexture);
-    //listSprite.setScale(Vector2f(0.12f, 0.12f));
+    
 }
 
 void Client::playerActionHandler(Command command){
     //PlayerAction(&currentPlayer, command);
-
+    game.menu();
 
     //Player *currentPlayer = game.getCurrentPlayer();
-    int currentPlayerIndex = 0;
-    if(game.checkPlayerAction(currentPlayerIndex, command)){
+    
+    if(game.checkPlayerAction(arrayPlayers[0].index, command) && arrayPlayers[0].isLife){
         //if(verifyСommand(server_socket, player, command))...//TODO
-        game.applyPlayerAction(currentPlayerIndex, command);
+        arrayPlayers[0].isLife = game.applyPlayerAction(arrayPlayers[0].index, command);
     }
+
+
 }
 
 void Client::render(){
