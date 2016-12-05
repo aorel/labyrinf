@@ -3,27 +3,14 @@ project (labyrinf)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Werror -g")
 
-
 add_library(libLabyrinth SHARED
-
     src/events/playerEvent.cpp
-
-    #src/network/socket.cpp
-
     src/game/game.cpp
     src/game/labyrinth.cpp
     src/game/cell.cpp
     src/game/player.cpp
-
-    #src/server.cpp
-    #src/client.cpp
-    
-    #src/chat_server.cpp
-    #src/chat_client.cpp
-    #src/network/chat_message.cpp
 )
 add_library(libLabyrinthDrawable SHARED
-
     src/game/gameDrawable.cpp
     src/game/labyrinthDrawable.cpp
     src/game/cellDrawable.cpp

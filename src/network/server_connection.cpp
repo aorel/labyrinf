@@ -3,19 +3,21 @@
 
 void Room::join(Participant_ptr participant)
 {
+    std::cout << "+connection: " << participant->get_address_string() << std::endl;
     participants_.insert(participant);
 
-    //map_[participant] = counter_;
     map_.insert({participant, counter_});
     ++counter_;
 
     game._join();
+
     /*for (auto msg: recent_msgs_)
         participant->deliver(msg);*/
 }
 
 void Room::leave(Participant_ptr participant)
 {
+    std::cout << "-connection: " << participant->get_address_string() << std::endl;
     participants_.erase(participant);
 }
 
@@ -35,18 +37,8 @@ void Room::readHandler(Participant_ptr p, const Message& msg)
 
     std::string msgString(msg.body(), msg.body_length());
 
-    //std::cout << "readHandler start" << std::endl;
-    /*int i(0);
-    for (auto participant: participants_){
-        if(p == participant){
-
-            game._move(i, msgString);
-        }
-        ++i;
-    }*/
     int j = map_.at(p);
     game._move(j, msgString);
-    //std::cout << "readHandler stop" << std::endl;
 
     std::string stateString(game._state());
     Message stateMsg;
@@ -85,6 +77,11 @@ void ServerConnection::deliver(const Message& msg)
     {
         do_write();
     }
+}
+
+const std::string ServerConnection::get_address_string() const
+{
+    return socket_.remote_endpoint().address().to_string();
 }
 
 void ServerConnection::do_read_header()

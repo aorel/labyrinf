@@ -1,19 +1,18 @@
 #include "game.h"
 
-Game::Game(){
-        //Game(new Labyrinth){
+Game::Game() :
+        Game(new Labyrinth){
     std::cout << "Game()" << std::endl;
-    //gameBuilder();
-    //labyrinth = labyrinthBuilder();
-    //players.emplace_back(playerBuilder());
-}
-void Game::builder(){
-    std::cout << "Game::builder()" << std::endl;
-    labyrinth = labyrinthBuilder();
 }
 
-//TODO command заменить на полное поисание действия: объект, действие
-bool Game::checkPlayerAction(int &playerIndex, const PlayerEvent& playerEvent){
+Game::Game(Labyrinth *_l) :
+    labyrinth(_l){
+}
+
+void Game::init(){
+}
+
+bool Game::checkPlayerAction(const int &playerIndex, const PlayerEvent& playerEvent){
     if(players[playerIndex]->readyForNewCommand()){
         if(labyrinth->checkCommand(*players[playerIndex], playerEvent)){
             return true;
@@ -22,8 +21,12 @@ bool Game::checkPlayerAction(int &playerIndex, const PlayerEvent& playerEvent){
     return false;
 }
 
-void Game::applyPlayerAction(int &playerIndex, const PlayerEvent& playerEvent){
+void Game::applyPlayerAction(const int& playerIndex, const PlayerEvent& playerEvent){
     players[playerIndex]->applyCommand(playerEvent);
+}
+
+void Game::setPlayerPosition(const int& playerIndex, const int& x, const int& y){
+    players[playerIndex]->setPosition(x, y);
 }
 
 
@@ -39,6 +42,7 @@ std::string Game::_state(){
     std::string state;
     int i(0);
     for (const auto& player: players){
+        state.append( {"@"} );
         state.append( std::to_string(i) );
         state.append( {':'} );
         state.append( player->getPositionInString() );
@@ -47,13 +51,4 @@ std::string Game::_state(){
     }
     std::cout << state << std::endl;
     return state;
-}
-
-std::unique_ptr<Labyrinth> Game::labyrinthBuilder(){
-    std::cout << "new Labyrinth" << std::endl;
-    return std::unique_ptr<Labyrinth>(new Labyrinth);
-}
-std::unique_ptr<Player> Game::playerBuilder(){
-    std::cout << "new Player" << std::endl;
-    return std::unique_ptr<Player>(new Player);
 }

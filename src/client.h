@@ -15,6 +15,8 @@
 
 class Client{
 public:
+    Client();
+    Client(boost::asio::ip::tcp::resolver::iterator endpoint_iterator);
     Client(boost::asio::io_service& io_service,
         boost::asio::ip::tcp::resolver::iterator endpoint_iterator);
     ~Client();
@@ -25,16 +27,13 @@ private:
     //MenuDrawable menu;//TODO
     GameDrawable game;
 
-    ClientConnection clientConnection;
+    std::shared_ptr<ClientConnection> clientConnection;
 
     sf::RenderWindow window;
     sf::Event event;
 
     sf::Clock clock;
     sf::Time timeSinceLastUpdate = sf::Time::Zero;
-
-    //sf::TcpSocket socket;
-
 
     typedef enum ClientState{
         MEMU,
@@ -46,8 +45,6 @@ private:
 
 
 
-    //std::function<void(Command)> verifyCommandCallback = std::bind( &GameDrawable::blah, game );
-    //CommandFunction verifyCommandCallback;
     std::function<void(PressedKey key)> keyboardHandler;
 
 
@@ -57,7 +54,10 @@ private:
     void gameKeyboardHandler(PressedKey key);
     void render();
 
-
+    const int currentPlayerIndex = 0;
+    std::function<void(const PlayerEvent&)> sendToServer;
+    void connectionWrite(const PlayerEvent&);
+    void virtualConnectionWrite(const PlayerEvent&);
 
     //void connectionReadHandler(const Message msg);
     void connectionReadHandler(const std::string& msg);

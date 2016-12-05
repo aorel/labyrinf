@@ -16,6 +16,7 @@ class Participant
 {
 public:
     virtual ~Participant() {}
+    virtual const std::string get_address_string() const = 0;
     virtual void deliver(const Message& msg) = 0;
 };
 
@@ -29,7 +30,6 @@ class Room
 {
 public:
     void join(Participant_ptr participant);
-
     void leave(Participant_ptr participant);
 
     void deliver(const Message& msg);
@@ -58,6 +58,8 @@ public:
     void start();
 
     void deliver(const Message& msg);
+
+    const std::string get_address_string() const override;
 
 private:
     void do_read_header();

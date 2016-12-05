@@ -1,6 +1,10 @@
 #include "playerDrawable.h"
 
 PlayerDrawable::PlayerDrawable(){
+    position.x = 1;
+    position.y = 1;
+
+
     playerShape.setFillColor(settings::playerDrawableColor);
     playerShape.setPosition(
         settings::playerDrawableOffsetX + position.x * settings::cellDrawableSize,
@@ -8,7 +12,7 @@ PlayerDrawable::PlayerDrawable(){
     );
 }
 
-void PlayerDrawable::move(sf::Vector2i &movement){
+void PlayerDrawable::move(sf::Vector2i movement){
     Player::move(movement);
     playerShape.move(
         movement.x * settings::cellDrawableSize,

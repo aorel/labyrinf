@@ -4,29 +4,25 @@
 #include <functional>
 #include <vector>
 
-//#include "../command.h"
 #include "../events/playerEvent.h"
 #include "labyrinth.h"
 #include "player.h"
 
-
 class Game{
 public:
     Game();
-    virtual void builder();
+    virtual void init();
 
-    bool checkPlayerAction(int &, const PlayerEvent&);
-    //virtual void applyPlayerAction(int &playerIndex, Command &command);
-    void applyPlayerAction(int &playerIndex, const PlayerEvent&);
-
+    bool checkPlayerAction(const int & playerIndex, const PlayerEvent& playerEvent);
+    void applyPlayerAction(const int& playerIndex, const PlayerEvent& playerEvent);
+    void setPlayerPosition(const int& playerIndex, const int& x, const int& y);
 
     void _join();
     void _move(const int& playerIndex, const std::string& str);
     std::string _state();
 
 protected:
-    virtual std::unique_ptr<Labyrinth> labyrinthBuilder();
-    virtual std::unique_ptr<Player> playerBuilder();
+    Game(Labyrinth *_l);
 
     std::unique_ptr<Labyrinth> labyrinth;
     std::vector<std::unique_ptr<Player>> players;

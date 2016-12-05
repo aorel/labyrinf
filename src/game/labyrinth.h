@@ -5,7 +5,6 @@
 
 #include "cell.h"
 #include "player.h"
-//#include "../command.h"
 #include "../events/playerEvent.h"
 #include "../settings.h"
 
@@ -14,7 +13,7 @@ public:
     Labyrinth();
     Labyrinth(std::function<Cell*()> cellFactory);
     virtual ~Labyrinth() = default;
-    
+
     bool checkCommand(const Player &, const PlayerEvent&);
 
 protected:

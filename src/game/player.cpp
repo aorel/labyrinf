@@ -3,6 +3,7 @@
 Player::Player() :
         position(settings::playerStartPositionX, settings::playerStartPositionY){
     lastStepTime.restart();
+    std::cout << "Player" << std::endl;
 }
 
 bool Player::readyForNewCommand(){
@@ -27,7 +28,19 @@ void Player::applyCommand(const PlayerEvent& playerEvent){
     else if(key == PressedKey::Right)
         movement.x += 1;
 
-    move(movement);
+    this->move(movement);
+
+    lastStepTime.restart();
+}
+
+void Player::setPosition(const int& x, const int& y){
+    int dx = x-position.x;
+    int dy = y-position.y;
+    std::cout << position.x << "_" << position.y << std::endl;
+    std::cout << dx << "_" << dy << std::endl;
+
+    sf::Vector2i movement(dx, dy);
+    this->move(movement);
 
     lastStepTime.restart();
 }
@@ -45,7 +58,7 @@ std::string Player::getPositionInString() const{
     return returnString;
 }
 
-void Player::move(sf::Vector2i &movement){
+void Player::move(sf::Vector2i movement){
     position += movement;
     std::cout << "Player::move " << position.x << ' ' << position.y << std::endl;
 }
