@@ -17,8 +17,8 @@ add_library(libLabyrinthDrawable SHARED
     src/game/playerDrawable.cpp
 )
 
-add_executable(server server.cpp src/server.cpp src/network/server_connection.cpp src/network/chat_message.cpp)
-add_executable(client client.cpp src/client.cpp src/network/client_connection.cpp src/network/chat_message.cpp)
+add_executable(server server.cpp src/server.cpp src/network/serverConnection.cpp src/network/chatMessage.cpp)
+add_executable(client client.cpp src/client.cpp src/network/clientConnection.cpp src/network/chatMessage.cpp)
 
 target_link_libraries(server boost_system pthread sfml-system libLabyrinth)
 target_link_libraries(client boost_system pthread sfml-system sfml-window sfml-graphics libLabyrinth libLabyrinthDrawable)

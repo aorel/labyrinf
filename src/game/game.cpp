@@ -2,12 +2,9 @@
 
 Game::Game() :
         Game(new Labyrinth){
-//<<<<<<< HEAD
     std::cout << "Game()" << std::endl;
-//=======
     players.emplace_back(new Player);
     isGame = 1;
-//>>>>>>> feature/game
 }
 
 Game::Game(Labyrinth *_l) :
@@ -27,16 +24,41 @@ bool Game::checkPlayerAction(const int &playerIndex, const PlayerEvent& playerEv
     return false;
 }
 
-//<<<<<<< HEAD
-/*
 void Game::applyPlayerAction(const int& playerIndex, const PlayerEvent& playerEvent){
     players[playerIndex]->applyCommand(playerEvent);
+    sf::Vector2i position = players[playerIndex]->getPosition();
+    CellType place = labyrinth->getBonus(position);
+    if (place == FIRE){
+        players[playerIndex]->addHealth(-1);
+        std::cout << " fire " << players[playerIndex]->getHealth() << std::endl;
+    }
+    else if (place == WATER){
+        players[playerIndex]->changeWet();
+        std::cout << " water ";
+    }
+    else if (place == HEART){
+        players[playerIndex]->addHealth(1);
+        std::cout << " heart " << players[playerIndex]->getHealth() << std::endl;
+    }
+    if (players[playerIndex]->getHealth() > 0){
+        //return true;
+    }
+    //return false;
+    isGameTest();
 }
-*/
+
+void Game::isGameTest(){
+    isGame = 0;
+    for (const auto &player : players){
+        if (player->getHealth() > 0){
+            isGame = 1;
+        }
+    }
+}
+
 void Game::setPlayerPosition(const int& playerIndex, const int& x, const int& y){
     players[playerIndex]->setPosition(x, y);
 }
-
 
 void Game::_join(){
     players.emplace_back(new Player);
@@ -59,38 +81,4 @@ std::string Game::_state(){
     }
     std::cout << state << std::endl;
     return state;
-}
-//=======
-bool Game::applyPlayerAction(const int& playerIndex, const PlayerEvent& playerEvent){//}int &playerIndex, Command &command){
-    players[playerIndex]->applyCommand(playerEvent);
-    sf::Vector2i position = players[playerIndex]->getPosition();
-    CellType place = labyrinth->getBonus(position);
-    if (place == FIRE){
-        players[playerIndex]->addHealth(-1);
-        std::cout << " firee " << players[playerIndex]->getHealth() << std::endl;
-    }
-    else if (place == WATER){
-        players[playerIndex]->changeWet();
-        std::cout << " water ";
-    }
-    else if (place == HEART){
-        players[playerIndex]->addHealth(1);
-        std::cout << " heart " << players[playerIndex]->getHealth() << std::endl;
-    }
-    if (players[playerIndex]->getHealth() > 0){
-        return true;
-    }
-    return false;
-//>>>>>>> feature/game
-}
-
-void Game::menu()
-{
-    isGame = 0;
-    for (const auto &player : players)
-    {
-        if (player->getHealth() > 0){
-            isGame = 1;
-        }
-    }
 }

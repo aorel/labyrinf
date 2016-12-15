@@ -8,7 +8,7 @@
 #include <utility>
 #include <boost/asio.hpp>
 
-#include "chat_message.h"
+#include "chatMessage.h"
 
 //----------------------------------------------------------------------
 
@@ -16,11 +16,11 @@ class Participant
 {
 public:
     virtual ~Participant() {}
-    virtual const std::string get_address_string() const = 0;
+    virtual const std::string getAddressString() const = 0;
     virtual void deliver(const Message& msg) = 0;
 };
 
-typedef std::shared_ptr<Participant> Participant_ptr;
+typedef std::shared_ptr<Participant> ParticipantPtr;
 
 //----------------------------------------------------------------------
 
@@ -29,18 +29,18 @@ typedef std::shared_ptr<Participant> Participant_ptr;
 class Room
 {
 public:
-    void join(Participant_ptr participant);
-    void leave(Participant_ptr participant);
+    void join(ParticipantPtr participant);
+    void leave(ParticipantPtr participant);
 
     void deliver(const Message& msg);
-    void readHandler(Participant_ptr p, const Message& msg);
+    void readHandler(ParticipantPtr p, const Message& msg);
 
 private:
-    std::set<Participant_ptr> participants_;
+    std::set<ParticipantPtr> participants_;
 
     Game game;
     int counter_{0};
-    std::map<Participant_ptr, int> map_;
+    std::map<ParticipantPtr, int> map_;
 
     /*enum { max_recent_msgs = 100 };
     Message_deque recent_msgs_;*/
@@ -59,17 +59,17 @@ public:
 
     void deliver(const Message& msg);
 
-    const std::string get_address_string() const override;
+    const std::string getAddressString() const override;
 
 private:
-    void do_read_header();
+    void doReadHeader();
 
-    void do_read_body();
+    void doReadBody();
 
-    void do_write();
+    void doWrite();
 
     boost::asio::ip::tcp::socket socket_;
     Room& room_;
-    Message read_msg_;
-    Message_deque write_msgs_;
+    Message readMessage_;
+    MessageDeque writeMessages_;
 };

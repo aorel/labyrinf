@@ -5,6 +5,7 @@
 #include "game.h"
 #include "labyrinthDrawable.h"
 #include "playerDrawable.h"
+#include "../settingsDrawable.h"
 
 class GameDrawable : public Game, public sf::Drawable{
 public:

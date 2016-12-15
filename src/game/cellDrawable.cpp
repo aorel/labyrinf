@@ -1,7 +1,5 @@
 #include "cellDrawable.h"
 
-//using namespace sf;
-
 CellDrawable::CellDrawable() :
         cellShape(sf::Vector2f(settingsDrawable::cellDrawableSize, settingsDrawable::cellDrawableSize)){
 }

@@ -1,9 +1,9 @@
-#include "server_connection.h"
+#include "serverConnection.h"
 
 
-void Room::join(Participant_ptr participant)
+void Room::join(ParticipantPtr participant)
 {
-    std::cout << "+connection: " << participant->get_address_string() << std::endl;
+    std::cout << "+connection: " << participant->getAddressString() << std::endl;
     participants_.insert(participant);
 
     map_.insert({participant, counter_});
@@ -15,9 +15,9 @@ void Room::join(Participant_ptr participant)
         participant->deliver(msg);*/
 }
 
-void Room::leave(Participant_ptr participant)
+void Room::leave(ParticipantPtr participant)
 {
-    std::cout << "-connection: " << participant->get_address_string() << std::endl;
+    std::cout << "-connection: " << participant->getAddressString() << std::endl;
     participants_.erase(participant);
 }
 
@@ -32,19 +32,19 @@ void Room::deliver(const Message& msg)
 }
 
 
-void Room::readHandler(Participant_ptr p, const Message& msg)
+void Room::readHandler(ParticipantPtr p, const Message& msg)
 {
 
-    std::string msgString(msg.body(), msg.body_length());
+    std::string msgString(msg.body(), msg.bodyLength());
 
     int j = map_.at(p);
     game._move(j, msgString);
 
     std::string stateString(game._state());
     Message stateMsg;
-    stateMsg.body_length(std::strlen(stateString.c_str()));
-    std::memcpy(stateMsg.body(), stateString.c_str(), stateMsg.body_length());
-    stateMsg.encode_header();
+    stateMsg.bodyLength(std::strlen(stateString.c_str()));
+    std::memcpy(stateMsg.body(), stateString.c_str(), stateMsg.bodyLength());
+    stateMsg.encodeHeader();
 
 
     for (auto participant: participants_)
@@ -66,34 +66,34 @@ ServerConnection::ServerConnection(boost::asio::ip::tcp::socket socket, Room& ro
 void ServerConnection::start()
 {
     room_.join(shared_from_this());
-    do_read_header();
+    doReadHeader();
 }
 
 void ServerConnection::deliver(const Message& msg)
 {
-    bool write_in_progress = !write_msgs_.empty();
-    write_msgs_.push_back(msg);
+    bool write_in_progress = !writeMessages_.empty();
+    writeMessages_.push_back(msg);
     if (!write_in_progress)
     {
-        do_write();
+        doWrite();
     }
 }
 
-const std::string ServerConnection::get_address_string() const
+const std::string ServerConnection::getAddressString() const
 {
     return socket_.remote_endpoint().address().to_string();
 }
 
-void ServerConnection::do_read_header()
+void ServerConnection::doReadHeader()
 {
     auto self(shared_from_this());
     boost::asio::async_read(socket_,
-        boost::asio::buffer(read_msg_.data(), Message::header_length),
+        boost::asio::buffer(readMessage_.data(), Message::headerLength),
         [this, self](boost::system::error_code ec, std::size_t /*length*/)
         {
-            if (!ec && read_msg_.decode_header())
+            if (!ec && readMessage_.decodeHeader())
             {
-                do_read_body();
+                doReadBody();
             }
             else
             {
@@ -103,24 +103,24 @@ void ServerConnection::do_read_header()
     );
 }
 
-void ServerConnection::do_read_body()
+void ServerConnection::doReadBody()
 {
     auto self(shared_from_this());
     boost::asio::async_read(socket_,
-        boost::asio::buffer(read_msg_.body(), read_msg_.body_length()),
+        boost::asio::buffer(readMessage_.body(), readMessage_.bodyLength()),
         [this, self](boost::system::error_code ec, std::size_t /*length*/)
         {
             if (!ec)
             {
-                //room_.deliver(read_msg_);
-                room_.readHandler(shared_from_this(), read_msg_);
-                do_read_header();
+                //room_.deliver(readMessage_);
+                room_.readHandler(shared_from_this(), readMessage_);
+                doReadHeader();
 
 
                 //=========================== NEW BEGIN
                 /*
-                //game.handler(read_msg_)
-                room_.gameHandler(shared_from_this(), read_msg_);{
+                //game.handler(readMessage_)
+                room_.gameHandler(shared_from_this(), readMessage_);{
                     response_msg_ = ...
 
                     room_.deliver(response_msg_);// отправить всем
@@ -138,20 +138,20 @@ void ServerConnection::do_read_body()
     );
 }
 
-void ServerConnection::do_write()
+void ServerConnection::doWrite()
 {
     auto self(shared_from_this());
     boost::asio::async_write(socket_,
-        boost::asio::buffer(write_msgs_.front().data(),
-          write_msgs_.front().length()),
+        boost::asio::buffer(writeMessages_.front().data(),
+          writeMessages_.front().length()),
         [this, self](boost::system::error_code ec, std::size_t /*length*/)
         {
             if (!ec)
             {
-                write_msgs_.pop_front();
-                if (!write_msgs_.empty())
+                writeMessages_.pop_front();
+                if (!writeMessages_.empty())
                 {
-                    do_write();
+                    doWrite();
                 }
             }
             else

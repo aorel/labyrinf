@@ -9,24 +9,14 @@
 
 #include "events/pressedKey.h"
 #include "game/gameDrawable.h"
-
-//<<<<<<< HEAD
-#include "network/client_connection.h"
-//=======
-struct CurrentPlay
-{
-    int index;
-    bool isLife;
-    CurrentPlay(int _index = 0, bool _isLife = 1) : index(_index), isLife(_isLife) {}
-};
-//>>>>>>> feature/game
+#include "network/clientConnection.h"
 
 class Client{
 public:
     Client();
-    Client(boost::asio::ip::tcp::resolver::iterator endpoint_iterator);
-    Client(boost::asio::io_service& io_service,
-        boost::asio::ip::tcp::resolver::iterator endpoint_iterator);
+    Client(boost::asio::ip::tcp::resolver::iterator endpointIterator);
+    Client(boost::asio::io_service& ioService,
+        boost::asio::ip::tcp::resolver::iterator endpointIterator);
     ~Client();
     void run();
 private:
@@ -48,17 +38,7 @@ private:
 
     ClientState state = GAME;
 
-//<<<<<<< HEAD
-
-//=======
-    //std::function< void(Command command) > commandHandler;
-    
-    std::vector<CurrentPlay> arrayPlayers;
-//>>>>>>> feature/game
-
-
     std::function<void(PressedKey key)> keyboardHandler;
-
 
     void events();
     void update();
@@ -71,6 +51,5 @@ private:
     void connectionWrite(const PlayerEvent&);
     void virtualConnectionWrite(const PlayerEvent&);
 
-    //void connectionReadHandler(const Message msg);
     void connectionReadHandler(const std::string& msg);
 };

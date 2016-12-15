@@ -8,16 +8,16 @@
 #include <utility>
 #include <boost/asio.hpp>
 
-#include "network/server_connection.h"
+#include "network/serverConnection.h"
 
 class Server
 {
 public:
-    Server(boost::asio::io_service& io_service,
+    Server(boost::asio::io_service& ioService,
         const boost::asio::ip::tcp::endpoint& endpoint);
 
 private:
-    void do_accept();
+    void doAccept();
 
     boost::asio::ip::tcp::acceptor acceptor_;
     boost::asio::ip::tcp::socket socket_;

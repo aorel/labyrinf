@@ -11,12 +11,6 @@ Client::Client() :
 Client::Client(boost::asio::io_service& io_service,
     boost::asio::ip::tcp::resolver::iterator endpoint_iterator) :
         window(sf::VideoMode(settings::windowSizeX, settings::windowSizeY), settings::windowName),
-
-        //[bind callback]
-        //game( std::bind( &Client::commandSendTest, this ) )
-
-        //[lambda callback]
-        //game( [this](Command command){ commandSend(command); } ),
         keyboardHandler( [this](PressedKey key){ gameKeyboardHandler(key); } ),
         sendToServer( [this](const PlayerEvent& playerEvent){ connectionWrite(playerEvent); } ){
     game.init();
@@ -28,14 +22,6 @@ Client::Client(boost::asio::io_service& io_service,
     );
 
     window.setPosition(sf::Vector2i(settings::windowPositionX, settings::windowPositionY));
-    
-    
-//<<<<<<< HEAD
-//=======
-    CurrentPlay first(0, true);
-    arrayPlayers.push_back(first);
-    //eventLoop();
-//>>>>>>> feature/game
 }
 
 Client::~Client(){
@@ -44,20 +30,15 @@ Client::~Client(){
     }
 }
 
-
 void Client::run(){
     while (window.isOpen()){
         events();
-
         timeSinceLastUpdate += clock.restart();
         while (timeSinceLastUpdate > settings::gameSpf){
             timeSinceLastUpdate -= settings::gameSpf;
-
-
             events();
             if(window.hasFocus()) update();
         }
-
         render();
     }
 }
@@ -69,11 +50,10 @@ void Client::events(){
             case sf::Event::Closed:
                 window.close();
                 break;
-//<<<<<<< HEAD
             case sf::Event::GainedFocus:
                 break;
             case sf::Event::LostFocus:
-//=======
+                break;
             case sf::Event::MouseButtonPressed:
                 if ((mouse.x >= 130) && (mouse.x <= 456) && (mouse.y >= 260) && (mouse.y <= 325)){
                     window.close();
@@ -82,7 +62,6 @@ void Client::events(){
                 else if ((mouse.x >= 222) && (mouse.x <= 366) && (mouse.y >= 325) && (mouse.y <= 390)){
                     window.close();
                 }
-//>>>>>>> feature/game
                 break;
             default:
                 break;
@@ -108,7 +87,6 @@ void Client::update(){
     }
 }
 
-//<<<<<<< HEAD
 void Client::menuKeyboardHandler(PressedKey key){
     //TODO
 }
@@ -119,35 +97,11 @@ void Client::gameKeyboardHandler(PressedKey key){
     }
     else{
         PlayerEvent playerEvent(key);
-
         if(game.checkPlayerAction(currentPlayerIndex, playerEvent)){
             sendToServer(playerEvent);
         }
-        /*game.menu();
-        if(game.checkPlayerAction(arrayPlayers[0].index, playerEvent) && arrayPlayers[0].isLife){
-            //if(verifyСommand(server_socket, player, command))...//TODO
-            arrayPlayers[0].isLife = game.applyPlayerAction(arrayPlayers[0].index, playerEvent);
-        }*/
     }
 }
-//=======
-/*void Client::menuCommandHandler(Command command){
-    
-}
-*/
-/*
-void Client::playerActionHandler(Command command){
-    //PlayerAction(&currentPlayer, command);
-    game.menu();
-
-    //Player *currentPlayer = game.getCurrentPlayer();
-    
-    if(game.checkPlayerAction(arrayPlayers[0].index, command) && arrayPlayers[0].isLife){
-        //if(verifyСommand(server_socket, player, command))...//TODO
-        arrayPlayers[0].isLife = game.applyPlayerAction(arrayPlayers[0].index, command);
-    }
-}*/
-//>>>>>>> feature/game
 
 void Client::render(){
     window.clear();
@@ -155,15 +109,13 @@ void Client::render(){
     window.display();
 }
 
-void Client::connectionWrite(const PlayerEvent& playerEvent)
-{
+void Client::connectionWrite(const PlayerEvent& playerEvent){
     std::string str = playerEvent.generateMessage();
     std::cout << str << std::endl;
     clientConnection->write(str);
 }
 
-void Client::virtualConnectionWrite(const PlayerEvent& playerEvent)
-{
+void Client::virtualConnectionWrite(const PlayerEvent& playerEvent){
     game.applyPlayerAction(currentPlayerIndex, playerEvent);
 }
 
@@ -176,7 +128,9 @@ void Client::connectionReadHandler(const std::string& msg){
     while(1){
         end = msg.find_first_of('@', start+1);
 
-        if(end == std::string::npos) break;
+        if(end == std::string::npos){
+            break;
+        }
 
         std::cout << '!' << msg.substr(start, end) << std::endl;
 

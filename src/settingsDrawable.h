@@ -16,6 +16,11 @@ namespace settingsDrawable{
     const sf::Color playerDrawableColor {25, 25, 244};
     constexpr float playerDrawableOffsetX {cellDrawableOffsetX + (cellDrawableSize - 2.0*playerDrawableRadius)/2.0};
     constexpr float playerDrawableOffsetY {cellDrawableOffsetY + (cellDrawableSize - 2.0*playerDrawableRadius)/2.0};
+    
+    const std::string imgPathList {"../src/game/img/list.png"};
+    const std::string fontPathBellico {"../src/game/img/Bellico.ttf"};
+    const sf::Vector2f textPosition {130, 250};
+    const sf::Color textColor {255, 0, 0};
 
     const std::string imgPathHeart {"../src/game/img/heart.png"};
     const sf::Vector2f imgScaleHeart {0.4f, 0.4f};
