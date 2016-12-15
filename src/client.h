@@ -1,17 +1,25 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include <SFML/Network.hpp>
+#include <vector>
 
 #include <boost/asio.hpp>
-
 #include <thread>
 #include <functional>
 
 #include "events/pressedKey.h"
 #include "game/gameDrawable.h"
 
+//<<<<<<< HEAD
 #include "network/client_connection.h"
+//=======
+struct CurrentPlay
+{
+    int index;
+    bool isLife;
+    CurrentPlay(int _index = 0, bool _isLife = 1) : index(_index), isLife(_isLife) {}
+};
+//>>>>>>> feature/game
 
 class Client{
 public:
@@ -22,8 +30,6 @@ public:
     ~Client();
     void run();
 private:
-    //int id = {0};
-
     //MenuDrawable menu;//TODO
     GameDrawable game;
 
@@ -42,7 +48,13 @@ private:
 
     ClientState state = GAME;
 
+//<<<<<<< HEAD
 
+//=======
+    //std::function< void(Command command) > commandHandler;
+    
+    std::vector<CurrentPlay> arrayPlayers;
+//>>>>>>> feature/game
 
 
     std::function<void(PressedKey key)> keyboardHandler;

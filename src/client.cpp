@@ -1,6 +1,6 @@
 #include "client.h"
 
-Client::Client() :
+Client::Client() : 
         window(sf::VideoMode(settings::windowSizeX, settings::windowSizeY), settings::windowName),
         keyboardHandler( [this](PressedKey key){ gameKeyboardHandler(key); } ),
         sendToServer( [this](const PlayerEvent& playerEvent){ virtualConnectionWrite(playerEvent); } ){
@@ -28,10 +28,20 @@ Client::Client(boost::asio::io_service& io_service,
     );
 
     window.setPosition(sf::Vector2i(settings::windowPositionX, settings::windowPositionY));
+    
+    
+//<<<<<<< HEAD
+//=======
+    CurrentPlay first(0, true);
+    arrayPlayers.push_back(first);
+    //eventLoop();
+//>>>>>>> feature/game
 }
 
 Client::~Client(){
-    clientConnection->close();
+    if(clientConnection){
+        clientConnection->close();
+    }
 }
 
 
@@ -53,14 +63,26 @@ void Client::run(){
 }
 
 void Client::events(){
+    sf::Vector2i mouse = sf::Mouse::getPosition(window);
     while (window.pollEvent(event)){
         switch(event.type){
             case sf::Event::Closed:
                 window.close();
                 break;
+//<<<<<<< HEAD
             case sf::Event::GainedFocus:
                 break;
             case sf::Event::LostFocus:
+//=======
+            case sf::Event::MouseButtonPressed:
+                if ((mouse.x >= 130) && (mouse.x <= 456) && (mouse.y >= 260) && (mouse.y <= 325)){
+                    window.close();
+                    Client client;
+                }
+                else if ((mouse.x >= 222) && (mouse.x <= 366) && (mouse.y >= 325) && (mouse.y <= 390)){
+                    window.close();
+                }
+//>>>>>>> feature/game
                 break;
             default:
                 break;
@@ -86,6 +108,7 @@ void Client::update(){
     }
 }
 
+//<<<<<<< HEAD
 void Client::menuKeyboardHandler(PressedKey key){
     //TODO
 }
@@ -100,8 +123,31 @@ void Client::gameKeyboardHandler(PressedKey key){
         if(game.checkPlayerAction(currentPlayerIndex, playerEvent)){
             sendToServer(playerEvent);
         }
+        /*game.menu();
+        if(game.checkPlayerAction(arrayPlayers[0].index, playerEvent) && arrayPlayers[0].isLife){
+            //if(verifyСommand(server_socket, player, command))...//TODO
+            arrayPlayers[0].isLife = game.applyPlayerAction(arrayPlayers[0].index, playerEvent);
+        }*/
     }
 }
+//=======
+/*void Client::menuCommandHandler(Command command){
+    
+}
+*/
+/*
+void Client::playerActionHandler(Command command){
+    //PlayerAction(&currentPlayer, command);
+    game.menu();
+
+    //Player *currentPlayer = game.getCurrentPlayer();
+    
+    if(game.checkPlayerAction(arrayPlayers[0].index, command) && arrayPlayers[0].isLife){
+        //if(verifyСommand(server_socket, player, command))...//TODO
+        arrayPlayers[0].isLife = game.applyPlayerAction(arrayPlayers[0].index, command);
+    }
+}*/
+//>>>>>>> feature/game
 
 void Client::render(){
     window.clear();

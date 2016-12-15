@@ -1,7 +1,9 @@
 #include "cellDrawable.h"
 
+//using namespace sf;
+
 CellDrawable::CellDrawable() :
-        cellShape(sf::Vector2f(settings::cellDrawableSize, settings::cellDrawableSize)){
+        cellShape(sf::Vector2f(settingsDrawable::cellDrawableSize, settingsDrawable::cellDrawableSize)){
 }
 
 void CellDrawable::setType(CellType t){
@@ -9,16 +11,19 @@ void CellDrawable::setType(CellType t){
 
     switch(type){
         case WALL:
-            cellShape.setFillColor(settings::cellDrawableTypeWall);
+            cellShape.setFillColor(settingsDrawable::cellDrawableTypeWall);
             break;
         case GROUND:
-            cellShape.setFillColor(settings::cellDrawableTypeGround);
+            cellShape.setFillColor(settingsDrawable::cellDrawableTypeGround);
             break;
         case WATER:
-            cellShape.setFillColor(settings::cellDrawableTypeWater);
+            cellShape.setFillColor(settingsDrawable::cellDrawableTypeWater);
             break;
         case FIRE:
-            cellShape.setFillColor(settings::cellDrawableTypeFire);
+            cellShape.setFillColor(settingsDrawable::cellDrawableTypeFire);
+            break;
+        case HEART:
+            cellShape.setFillColor(settingsDrawable::cellDrawableTypeGround);
             break;
         default:
             break;
@@ -31,4 +36,19 @@ void CellDrawable::setPosition(float x, float y){
 
 void CellDrawable::draw(sf::RenderTarget& target, sf::RenderStates states) const{
     target.draw(cellShape, states);
+    if(type == HEART){
+        Heart heart;
+        heart.sprite.setPosition(cellShape.getPosition());
+        target.draw(heart.sprite);
+    }
+    if(type == FIRE){
+        Fire fire;
+        fire.sprite.setPosition(cellShape.getPosition());
+        target.draw(fire.sprite);
+    }
+    if(type == WATER){
+        Water water;
+        water.sprite.setPosition(cellShape.getPosition());
+        target.draw(water.sprite);
+    }
 }

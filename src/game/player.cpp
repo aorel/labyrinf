@@ -4,6 +4,8 @@ Player::Player() :
         position(settings::playerStartPositionX, settings::playerStartPositionY){
     lastStepTime.restart();
     std::cout << "Player" << std::endl;
+    health = 2;
+    wet = 0;
 }
 
 bool Player::readyForNewCommand(){
@@ -28,8 +30,7 @@ void Player::applyCommand(const PlayerEvent& playerEvent){
     else if(key == PressedKey::Right)
         movement.x += 1;
 
-    this->move(movement);
-
+    move(movement);
     lastStepTime.restart();
 }
 
@@ -40,8 +41,7 @@ void Player::setPosition(const int& x, const int& y){
     std::cout << dx << "_" << dy << std::endl;
 
     sf::Vector2i movement(dx, dy);
-    this->move(movement);
-
+    move(movement);
     lastStepTime.restart();
 }
 
@@ -58,7 +58,23 @@ std::string Player::getPositionInString() const{
     return returnString;
 }
 
-void Player::move(sf::Vector2i movement){
+void Player::move(sf::Vector2i& movement){
     position += movement;
     std::cout << "Player::move " << position.x << ' ' << position.y << std::endl;
+}
+
+void Player::addHealth(int add){
+    health += add;
+}
+
+int Player::getHealth() const{
+    return health;
+}
+
+void Player::changeWet(){
+    wet = !wet;
+}
+
+bool Player::isWet() const{
+    return wet;
 }

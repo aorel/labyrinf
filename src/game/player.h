@@ -14,13 +14,21 @@ public:
     void applyCommand(const PlayerEvent&);
     void setPosition(const int& x, const int& y);
     sf::Vector2i getPosition() const;
+
     std::string getPositionInString() const;
+
+    void addHealth(int add);
+    int getHealth() const;
+    void changeWet();
+    bool isWet() const;
 
 protected:
     sf::Clock lastStepTime;
 
     sf::Vector2i position;
-    int state = {0};//TODO bonus, health, etc
 
-    virtual void move(sf::Vector2i movement);
+    int health;
+    bool wet;//TODO bonus, health, etc
+
+    virtual void move(sf::Vector2i& movement);
 };

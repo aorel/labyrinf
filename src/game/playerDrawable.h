@@ -10,8 +10,8 @@ public:
     PlayerDrawable();
 
 private:
-    sf::CircleShape playerShape = sf::CircleShape(settings::playerDrawableRadius);
+    sf::CircleShape playerShape = sf::CircleShape(settingsDrawable::playerDrawableRadius);
 
-    void move(sf::Vector2i movement) override;
+    void move(sf::Vector2i& movement) override;
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 };

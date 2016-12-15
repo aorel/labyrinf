@@ -45,12 +45,10 @@ void ClientConnection::write(const std::string& str){
     write(msg);
 }
 
-
 void ClientConnection::close()
 {
     io_service_.post([this]() { socket_.close(); });
 }
-
 
 void ClientConnection::do_connect(boost::asio::ip::tcp::resolver::iterator endpoint_iterator)
 {

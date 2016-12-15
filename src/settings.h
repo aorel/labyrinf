@@ -15,8 +15,8 @@ namespace settings{
     constexpr float gameFps {60.0f};
     const sf::Time gameSpf {sf::seconds(1.f/gameFps)};
 
-    constexpr int labyrinthSizeX {15};
-    constexpr int labyrinthSizeY {17};
+    constexpr int labyrinthSizeX {20};
+    constexpr int labyrinthSizeY {20};
 
     constexpr float playerFps {7.0f};
     const sf::Time playerSpf {sf::seconds(1.f/playerFps)};
