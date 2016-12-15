@@ -1,29 +1,27 @@
 #include "cellDrawable.h"
 
-using namespace sf;
-
 CellDrawable::CellDrawable() :
-        cellShape(Vector2f(settings::cellSize, settings::cellSize)){
+        cellShape(sf::Vector2f(settingsDrawable::cellDrawableSize, settingsDrawable::cellDrawableSize)){
 }
 
 void CellDrawable::setType(CellType t){
     type = t;
-    
+
     switch(type){
         case WALL:
-            cellShape.setFillColor(settings::cellTypeWall);
+            cellShape.setFillColor(settingsDrawable::cellDrawableTypeWall);
             break;
         case GROUND:
-            cellShape.setFillColor(settings::cellTypeGround);
+            cellShape.setFillColor(settingsDrawable::cellDrawableTypeGround);
             break;
         case WATER:
-            cellShape.setFillColor(settings::cellTypeWater);
+            cellShape.setFillColor(settingsDrawable::cellDrawableTypeWater);
             break;
         case FIRE:
-            cellShape.setFillColor(settings::cellTypeFire);
+            cellShape.setFillColor(settingsDrawable::cellDrawableTypeFire);
             break;
         case HEART:
-            cellShape.setFillColor(settings::cellTypeGround);
+            cellShape.setFillColor(settingsDrawable::cellDrawableTypeGround);
             break;
         default:
             break;
@@ -34,6 +32,7 @@ void CellDrawable::setPosition(float x, float y){
     cellShape.setPosition(x, y);
 }
 
+<<<<<<< HEAD
 class Heart
 {
     Image image;
@@ -80,22 +79,23 @@ public:
     }
 };
 
+=======
+>>>>>>> develop
 void CellDrawable::draw(sf::RenderTarget& target, sf::RenderStates states) const{
     target.draw(cellShape, states);
-    if (getType() == HEART){
+    if(type == HEART){
         Heart heart;
         heart.sprite.setPosition(cellShape.getPosition());
         target.draw(heart.sprite);
     }
-    if (getType() == FIRE){
+    if(type == FIRE){
         Fire fire;
         fire.sprite.setPosition(cellShape.getPosition());
         target.draw(fire.sprite);
     }
-    if (getType() == WATER){
+    if(type == WATER){
         Water water;
         water.sprite.setPosition(cellShape.getPosition());
         target.draw(water.sprite);
     }
 }
-

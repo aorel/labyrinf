@@ -3,22 +3,27 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 
-#include "command.h"
-#include "game/gameDrawable.h"
+#include <boost/asio.hpp>
+#include <thread>
+#include <functional>
 
-struct CurrentPlay
-{
-    int index;
-    bool isLife;
-    CurrentPlay(int _index = 0, bool _isLife = 1) : index(_index), isLife(_isLife) {}
-};
+#include "events/pressedKey.h"
+#include "game/gameDrawable.h"
+#include "network/clientConnection.h"
 
 class Client{
 public:
     Client();
-    //void run();
+    Client(boost::asio::ip::tcp::resolver::iterator endpointIterator);
+    Client(boost::asio::io_service& ioService,
+        boost::asio::ip::tcp::resolver::iterator endpointIterator);
+    ~Client();
+    void run();
 private:
-    //int id = {0};
+    //MenuDrawable menu;//TODO
+    GameDrawable game;
+
+    std::shared_ptr<ClientConnection> clientConnection;
 
     sf::RenderWindow window;
     sf::Event event;
@@ -26,34 +31,25 @@ private:
     sf::Clock clock;
     sf::Time timeSinceLastUpdate = sf::Time::Zero;
 
-
     typedef enum ClientState{
         MEMU,
         GAME,
     } ClientState;
-    
+
     ClientState state = GAME;
 
-    //MenuDrawable menu;//TODO
-    GameDrawable game;
-    
-    //std::function< void(Command) > verifyCommandCallback = std::bind( &GameDrawable::blah, game );
-    //CommandFunction verifyCommandCallback;
-    std::function< void(Command command) > commandHandler;
-    
-    std::vector<CurrentPlay> arrayPlayers;
+    std::function<void(PressedKey key)> keyboardHandler;
 
-    void eventLoop();
     void events();
     void update();
-    void menuCommandHandler(Command command);
-    void playerActionHandler(Command command);
+    void menuKeyboardHandler(PressedKey key);
+    void gameKeyboardHandler(PressedKey key);
     void render();
 
-public:
-    void commandSendTest();
-    void commandSend(Command command);
-    void commandRecv(Command command);
+    const int currentPlayerIndex = 0;
+    std::function<void(const PlayerEvent&)> sendToServer;
+    void connectionWrite(const PlayerEvent&);
+    void virtualConnectionWrite(const PlayerEvent&);
+
+    void connectionReadHandler(const std::string& msg);
 };
-
-

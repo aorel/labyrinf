@@ -1,20 +1,24 @@
 cmake_minimum_required(VERSION 2.6)
 project (labyrinf)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Werror")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Werror -g")
 
-add_executable(
-main main.cpp
-src/network/socket.cpp
-src/server.cpp
-src/client.cpp
-src/game/game.cpp
-src/game/gameDrawable.cpp
-src/game/labyrinth.cpp
-src/game/labyrinthDrawable.cpp
-src/game/cell.cpp
-src/game/cellDrawable.cpp
-src/game/player.cpp
-src/game/playerDrawable.cpp)
+add_library(libLabyrinth SHARED
+    src/events/playerEvent.cpp
+    src/game/game.cpp
+    src/game/labyrinth.cpp
+    src/game/cell.cpp
+    src/game/player.cpp
+)
+add_library(libLabyrinthDrawable SHARED
+    src/game/gameDrawable.cpp
+    src/game/labyrinthDrawable.cpp
+    src/game/cellDrawable.cpp
+    src/game/playerDrawable.cpp
+)
 
-target_link_libraries(main sfml-graphics sfml-window sfml-system)
+add_executable(server server.cpp src/server.cpp src/network/serverConnection.cpp src/network/chatMessage.cpp)
+add_executable(client client.cpp src/client.cpp src/network/clientConnection.cpp src/network/chatMessage.cpp)
+
+target_link_libraries(server boost_system pthread sfml-system libLabyrinth)
+target_link_libraries(client boost_system pthread sfml-system sfml-window sfml-graphics libLabyrinth libLabyrinthDrawable)
