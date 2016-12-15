@@ -42,8 +42,8 @@ private:
     int counter_{0};
     std::map<ParticipantPtr, int> map_;
 
-    /*enum { max_recent_msgs = 100 };
-    Message_deque recent_msgs_;*/
+    /*enum { maxRecentMessages = 100 };
+    MessageDeque recentMessages_;*/
 };
 
 //----------------------------------------------------------------------

@@ -5,7 +5,7 @@
 #include <iterator>
 
 Labyrinth::Labyrinth() : Labyrinth( [](){return new Cell;} ){
-    generator_init();
+    generatorInit();
 }
 
 Labyrinth::Labyrinth(std::function<Cell*()> cellFactory){
@@ -45,7 +45,7 @@ CellType Labyrinth::getBonus(sf::Vector2i place){
     return cells[place.x][place.y]->getType();
 }
 
-void Labyrinth::test_init(){
+void Labyrinth::testInit(){
     for(int i(0); i<settings::labyrinthSizeX; ++i){
         for(int j(0); j<settings::labyrinthSizeY; ++j){
             if( i == 0 || i == settings::labyrinthSizeX-1 || j == 0 || j == settings::labyrinthSizeY-1 ){
@@ -66,7 +66,7 @@ void Labyrinth::test_init(){
     }
 }
 
-void Labyrinth::generator_init(){
+void Labyrinth::generatorInit(){
     std::vector<std::vector<int>> temp = generator(settings::labyrinthSizeX, settings::labyrinthSizeY);
     for(auto i = 0; i < settings::labyrinthSizeY; ++i){
         for(auto j = 0; j < settings::labyrinthSizeX; ++j)

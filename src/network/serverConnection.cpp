@@ -11,7 +11,7 @@ void Room::join(ParticipantPtr participant)
 
     game._join();
 
-    /*for (auto msg: recent_msgs_)
+    /*for (auto msg: recentMessages_)
         participant->deliver(msg);*/
 }
 
@@ -23,9 +23,9 @@ void Room::leave(ParticipantPtr participant)
 
 void Room::deliver(const Message& msg)
 {
-    /*recent_msgs_.push_back(msg);
-    while (recent_msgs_.size() > max_recent_msgs)
-        recent_msgs_.pop_front();*/
+    /*recentMessages_.push_back(msg);
+    while (recentMessages_.size() > maxRecentMessages_)
+        recentMessages_.pop_front();*/
 
     for (auto participant: participants_)
         participant->deliver(msg);
@@ -50,8 +50,8 @@ void Room::readHandler(ParticipantPtr p, const Message& msg)
     for (auto participant: participants_)
         participant->deliver(stateMsg);
 
-    //deliver(response_msg_);// отправить всем
-    //participant->deliver(response_msg_);// отправить конкретному игроку
+    //deliver(responseMessage_);// отправить всем
+    //participant->deliver(responseMessage_);// отправить конкретному игроку
 }
 
 
@@ -115,20 +115,6 @@ void ServerConnection::doReadBody()
                 //room_.deliver(readMessage_);
                 room_.readHandler(shared_from_this(), readMessage_);
                 doReadHeader();
-
-
-                //=========================== NEW BEGIN
-                /*
-                //game.handler(readMessage_)
-                room_.gameHandler(shared_from_this(), readMessage_);{
-                    response_msg_ = ...
-
-                    room_.deliver(response_msg_);// отправить всем
-                    deliver(response_msg_);// отправить конкретному игроку
-                }
-                do_read_header();
-                */
-                //=========================== NEW END
             }
             else
             {

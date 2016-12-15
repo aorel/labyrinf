@@ -1,6 +1,6 @@
 #include "client.h"
 
-Client::Client() : 
+Client::Client() :
         window(sf::VideoMode(settings::windowSizeX, settings::windowSizeY), settings::windowName),
         keyboardHandler( [this](PressedKey key){ gameKeyboardHandler(key); } ),
         sendToServer( [this](const PlayerEvent& playerEvent){ virtualConnectionWrite(playerEvent); } ){
@@ -8,16 +8,16 @@ Client::Client() :
     window.setPosition(sf::Vector2i(settings::windowPositionX, settings::windowPositionY));
 }
 
-Client::Client(boost::asio::io_service& io_service,
-    boost::asio::ip::tcp::resolver::iterator endpoint_iterator) :
+Client::Client(boost::asio::io_service& ioService,
+    boost::asio::ip::tcp::resolver::iterator endpointIterator) :
         window(sf::VideoMode(settings::windowSizeX, settings::windowSizeY), settings::windowName),
         keyboardHandler( [this](PressedKey key){ gameKeyboardHandler(key); } ),
         sendToServer( [this](const PlayerEvent& playerEvent){ connectionWrite(playerEvent); } ){
     game.init();
 
     clientConnection = std::make_shared<ClientConnection>(
-        io_service,
-        endpoint_iterator,
+        ioService,
+        endpointIterator,
         std::bind(&Client::connectionReadHandler, this, std::placeholders::_1)
     );
 
