@@ -4,22 +4,35 @@
 #include <functional>
 #include <vector>
 
-#include "../command.h"
+#include "../events/playerEvent.h"
 #include "labyrinth.h"
 #include "player.h"
-
 
 class Game{
 public:
     Game();
-    //TODO on server side
-    bool checkPlayerAction(int &playerIndex, Command &command);
-    //virtual void applyPlayerAction(int &playerIndex, Command &command);
-    bool applyPlayerAction(int &playerIndex, Command &command);
-    void menu();
-protected:
+//<<<<<<< HEAD
+    virtual void init();
 
+    bool checkPlayerAction(const int & playerIndex, const PlayerEvent& playerEvent);
+    bool applyPlayerAction(const int& playerIndex, const PlayerEvent& playerEvent);
+    void setPlayerPosition(const int& playerIndex, const int& x, const int& y);
+
+    void _join();
+    void _move(const int& playerIndex, const std::string& str);
+    std::string _state();
+//=======
+    //TODO on server side
+    //bool checkPlayerAction(int &playerIndex, Command &command);
+    //virtual void applyPlayerAction(int &playerIndex, Command &command);
+    //bool applyPlayerAction(int &playerIndex, Command &command);
+    void menu();
+//protected:
+//>>>>>>> feature/game
+
+protected:
     Game(Labyrinth *_l);
+
     std::unique_ptr<Labyrinth> labyrinth;
     std::vector<std::unique_ptr<Player>> players;
     bool isGame;

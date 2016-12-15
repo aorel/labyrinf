@@ -4,6 +4,7 @@
 
 #include "labyrinth.h"
 #include "cellDrawable.h"
+#include "../settingsDrawable.h"
 
 #include <iostream>
 

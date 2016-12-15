@@ -1,18 +1,18 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include <sstream>
+#include <iostream>
 
 #include "cell.h"
-#include <iostream>
+#include "bonuses.h"
+#include "../settingsDrawable.h"
 
 class CellDrawable : public Cell, public sf::Drawable{
 public:
     CellDrawable();
-    
-    virtual void setType(CellType t) override;
-    
+    void setType(CellType t) override;
     void setPosition(float x, float y);
+
 private:
     sf::RectangleShape cellShape;
 

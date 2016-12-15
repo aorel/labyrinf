@@ -8,7 +8,7 @@ Labyrinth::Labyrinth() : Labyrinth( [](){return new Cell;} ){
     generator_init();
 }
 
-Labyrinth::Labyrinth(std::function< Cell* () > cellFactory){
+Labyrinth::Labyrinth(std::function<Cell*()> cellFactory){
     for(int i(0); i<settings::labyrinthSizeX; ++i){
         std::vector<std::unique_ptr<Cell>> cellRow;
         for(int j(0); j<settings::labyrinthSizeY; ++j){
@@ -18,6 +18,44 @@ Labyrinth::Labyrinth(std::function< Cell* () > cellFactory){
     }
 }
 
+/*<<<<<<< HEAD
+bool Labyrinth::checkCommand(const Player &p, const PlayerEvent& playerEvent){
+
+    PressedKey key = playerEvent.getKey();
+    sf::Vector2i position = p.getPosition();
+    if(key == PressedKey::Up && position.y == 0){
+        return false;
+    }
+    else if(key == PressedKey::Down && position.y == (settings::labyrinthSizeY-1)){
+        return false;
+    }
+    else if(key == PressedKey::Left && position.x == 0){
+        return false;
+    }
+    else if(key == PressedKey::Right && position.x == (settings::labyrinthSizeX-1)){
+        return false;
+    }
+*/
+bool Labyrinth::checkCommand(const Player &p, const PlayerEvent& playerEvent){
+    PressedKey key = playerEvent.getKey();
+    sf::Vector2i position = p.getPosition();
+
+    if(key == PressedKey::Up && cells[position.x][position.y-1]->getType() == WALL){
+        return false;
+    }
+    else if(key == PressedKey::Down && cells[position.x][position.y+1]->getType() == WALL){
+        return false;
+    }
+    else if(key == PressedKey::Left && cells[position.x-1][position.y]->getType() == WALL){
+        return false;
+    }
+    else if(key == PressedKey::Right && cells[position.x+1][position.y]->getType() == WALL){
+        return false;
+    }
+    return true;
+}
+
+//=======
 CellType Labyrinth::getBonus(sf::Vector2i place)
 {
     if (cells[place.x][place.y]->getType() == HEART){
@@ -26,24 +64,9 @@ CellType Labyrinth::getBonus(sf::Vector2i place)
     }
     return cells[place.x][place.y]->getType();
 }
+//>>>>>>> feature/game
 
-bool Labyrinth::checkCommand(const Player &p, Command &command){
-    sf::Vector2i position = p.getPosition();
 
-    if(command == PlayerUp && cells[position.x][position.y-1]->getType() == WALL){
-        return false;
-    }
-    else if(command == PlayerDown && cells[position.x][position.y+1]->getType() == WALL){
-        return false;
-    }
-    else if(command == PlayerLeft && cells[position.x-1][position.y]->getType() == WALL){
-        return false;
-    }
-    else if(command == PlayerRight && cells[position.x+1][position.y]->getType() == WALL){
-        return false;
-    }
-    return true;
-}
 
 void Labyrinth::test_init(){
     for(int i(0); i<settings::labyrinthSizeX; ++i){

@@ -1,11 +1,5 @@
 #include "cell.h"
 
-/*
-Cell::Cell(CellType t) :
-        type(t){
-}
-*/
-
 CellType Cell::getType() const{
     return type;
 }
