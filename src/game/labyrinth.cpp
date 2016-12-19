@@ -5,12 +5,22 @@
 #include <iterator>
 
 Labyrinth::Labyrinth() : Labyrinth( [](){return new Cell;} ){
-    generator_init();
+    generatorInit();
 }
 
-void Labyrinth::fromString (const std::string &labyrinthString)
+Labyrinth::Labyrinth(std::function<Cell*()> cellFactory){
+    for(int i(0); i<settings::labyrinthSizeX; ++i){
+        std::vector<std::unique_ptr<Cell>> cellRow;
+        for(int j(0); j<settings::labyrinthSizeY; ++j){
+            cellRow.emplace_back( cellFactory() );
+        }
+        cells.push_back(std::move(cellRow));
+    }
+}
+
+void Labyrinth::fromString(const std::string &labyrinthString)
 {
-    auto position = 0;
+    size_t position = 0;
     auto i = 0;
     auto j = 0;
     while (position < labyrinthString.length())
@@ -99,34 +109,6 @@ std::string Labyrinth::toString()
     return result;
 }
 
-Labyrinth::Labyrinth(std::function<Cell*()> cellFactory){
-    for(int i(0); i<settings::labyrinthSizeX; ++i){
-        std::vector<std::unique_ptr<Cell>> cellRow;
-        for(int j(0); j<settings::labyrinthSizeY; ++j){
-            cellRow.emplace_back( cellFactory() );
-        }
-        cells.push_back(std::move(cellRow));
-    }
-}
-
-/*<<<<<<< HEAD
-bool Labyrinth::checkCommand(const Player &p, const PlayerEvent& playerEvent){
-
-    PressedKey key = playerEvent.getKey();
-    sf::Vector2i position = p.getPosition();
-    if(key == PressedKey::Up && position.y == 0){
-        return false;
-    }
-    else if(key == PressedKey::Down && position.y == (settings::labyrinthSizeY-1)){
-        return false;
-    }
-    else if(key == PressedKey::Left && position.x == 0){
-        return false;
-    }
-    else if(key == PressedKey::Right && position.x == (settings::labyrinthSizeX-1)){
-        return false;
-    }
-*/
 bool Labyrinth::checkCommand(const Player &p, const PlayerEvent& playerEvent){
     PressedKey key = playerEvent.getKey();
     sf::Vector2i position = p.getPosition();
@@ -146,7 +128,6 @@ bool Labyrinth::checkCommand(const Player &p, const PlayerEvent& playerEvent){
     return true;
 }
 
-//=======
 CellType Labyrinth::getBonus(sf::Vector2i place)
 {
     if (cells[place.x][place.y]->getType() == HEART){
@@ -155,11 +136,8 @@ CellType Labyrinth::getBonus(sf::Vector2i place)
     }
     return cells[place.x][place.y]->getType();
 }
-//>>>>>>> feature/game
 
-
-
-void Labyrinth::test_init(){
+void Labyrinth::testInit(){
     for(int i(0); i<settings::labyrinthSizeX; ++i){
         for(int j(0); j<settings::labyrinthSizeY; ++j){
             if( i == 0 || i == settings::labyrinthSizeX-1 || j == 0 || j == settings::labyrinthSizeY-1 ){
@@ -180,7 +158,7 @@ void Labyrinth::test_init(){
     }
 }
 
-void Labyrinth::generator_init()
+void Labyrinth::generatorInit()
 {
     /*std::vector<std::vector<int>> temp = generator(settings::labyrinthSizeX, settings::labyrinthSizeY);
     for(auto i = 0; i < settings::labyrinthSizeY; ++i)
