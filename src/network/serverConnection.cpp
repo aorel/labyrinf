@@ -9,7 +9,10 @@ void Room::join(ParticipantPtr participant)
     map_.insert({participant, counter_});
     ++counter_;
 
-    game._join();
+    //game._join();
+    //int playerKey(game._join());
+    participant->deliver(game._info());//labyrinth
+    participant->deliver(game._join());//player key
 
     /*for (auto msg: recentMessages_)
         participant->deliver(msg);*/

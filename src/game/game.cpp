@@ -60,8 +60,29 @@ void Game::setPlayerPosition(const int& playerIndex, const int& x, const int& y)
     players[playerIndex]->setPosition(x, y);
 }
 
-void Game::_join(){
+std::string Game::_info(){
+    std::string msg = _infoMsg;// + labyr.toString();
+    return msg;
+}
+std::string Game::_join(){
     players.emplace_back(new Player);
+
+
+    //int playerKey(testPlayersCounter);
+    testPlayers[testPlayersCounter] = std::unique_ptr<Player>(new Player);
+
+
+    std::string msg = _joinMsg + "|";
+
+    auto search = testPlayers.find(testPlayersCounter);
+    if(search != testPlayers.end()) {
+        msg +=  std::to_string(testPlayersCounter) + "|" +
+                search->second->positionToString();
+    }
+
+
+    ++testPlayersCounter;
+    return msg;
 }
 void Game::_move(const int& playerIndex, const std::string& str){
     std::cout << "_move: " << playerIndex << std::endl;
@@ -75,10 +96,22 @@ std::string Game::_state(){
         state.append( {"@"} );
         state.append( std::to_string(i) );
         state.append( {':'} );
-        state.append( player->getPositionInString() );
+        state.append( player->positionToString() );
         state.append( {'\n'} );
         ++i;
     }
     std::cout << state << std::endl;
     return state;
+}
+void Game::_handler(const std::string& msg){
+    if(msg.substr(0, _infoMsg.size()) == _infoMsg) {
+        std::cout << "Game::_handler: _infoMsg" << std::endl;
+    }
+    else if(msg.substr(0, _joinMsg.size()) == _joinMsg){
+        std::cout << "Game::_handler: _joinMsg" << std::endl;
+        size_t start(msg.find_first_of('@'));
+    }
+    else{
+        std::cout << "Game::_handler: unknown msg" << std::endl;
+    }
 }

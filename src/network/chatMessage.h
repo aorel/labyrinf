@@ -5,6 +5,8 @@
 #include <cstring>
 #include <deque>
 
+#include <string>
+
 class Message
 {
 public:
@@ -12,6 +14,7 @@ public:
     enum { maxBodyLength = 512 };
 
     Message();
+    Message(const std::string& str);
 
     const char* data() const;
 

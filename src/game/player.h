@@ -15,7 +15,8 @@ public:
     void setPosition(const int& x, const int& y);
     sf::Vector2i getPosition() const;
 
-    std::string getPositionInString() const;
+    std::string positionToString() const;
+    void positionFromString(const std::string& str);
 
     void addHealth(int add);
     int getHealth() const;

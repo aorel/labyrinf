@@ -5,6 +5,13 @@ Message::Message() :
 {
 }
 
+Message::Message(const std::string& str)
+{
+    bodyLength(std::strlen(str.c_str()));
+    std::memcpy(this->body(), str.c_str(), this->bodyLength());
+    this->encodeHeader();
+}
+
 const char* Message::data() const
 {
     return data_;

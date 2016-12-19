@@ -121,7 +121,8 @@ void Client::virtualConnectionWrite(const PlayerEvent& playerEvent){
 
 void Client::connectionReadHandler(const std::string& msg){
     std::cout << '[' << msg << ']' << std::endl;
-
+    game._handler(msg);
+    /*
     size_t start(msg.find_first_of('@'));
     size_t end(0);
     int i(0);
@@ -158,4 +159,5 @@ void Client::connectionReadHandler(const std::string& msg){
         int i2 = std::stoi(msg.substr(i2pos+1, end));
         std::cout << '?' << i1 << "-" << i2 << std::endl;
             game.setPlayerPosition(i, i1, i2);
+    */
 }

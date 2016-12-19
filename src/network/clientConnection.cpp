@@ -89,8 +89,8 @@ void ClientConnection::doReadBody()
         {
           if (!ec)
           {
-            std::cout.write(readMessage_.body(), readMessage_.bodyLength());
-            std::cout << "\n";
+            //std::cout.write(readMessage_.body(), readMessage_.bodyLength());
+            //std::cout << "\n";
 
             std::string str(readMessage_.body(), readMessage_.bodyLength());
             readHandler(str);
