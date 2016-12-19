@@ -8,6 +8,97 @@ Labyrinth::Labyrinth() : Labyrinth( [](){return new Cell;} ){
     generatorInit();
 }
 
+void Labyrinth::fromString (const std::string &labyrinthString)
+{
+    auto position = 0;
+    auto i = 0;
+    auto j = 0;
+    while (position < labyrinthString.length())
+    {
+        std::cout << labyrinthString[position];
+        if(labyrinthString[position] != ';' && labyrinthString[position] != '\n')
+        {
+            CellType type;
+            switch(labyrinthString[position])
+            {
+                case '0':
+                    type = WALL;
+                    break;
+
+                case '1':
+                    type = GROUND;
+                    break;
+
+                case '2':
+                    type = WATER;
+                    break;
+
+                case '3':
+                    type = FIRE;
+                    break;
+
+                case '4':
+                    type = HEART;
+                    break;
+
+                default:
+                    type = WALL;
+                    break;
+            }
+            cells[i][j]->setType(type);
+            ++i;
+        }
+
+        else
+        {
+            ++j;
+            i = 0;
+        }
+
+        ++position;
+    }
+}
+
+std::string Labyrinth::toString()
+{
+    std::cout << "To String:" << std::endl;
+    std::string result = "";
+
+    for(auto i (0); i < settings::labyrinthSizeX; ++i)
+    {
+        for(auto j (0); j < settings::labyrinthSizeY; ++j)
+        {
+            CellType type = cells[j][i]->getType();
+            switch(type)
+            {
+                case WALL:
+                    result += "0";
+                    break;
+
+                case GROUND:
+                    result += "1";
+                    break;
+
+                case WATER:
+                    result += "2";
+                    break;
+
+                case FIRE:
+                    result += "3";
+                    break;
+
+                case HEART:
+                    result += "4";
+                    break;
+            }
+        }
+        result += ";";
+    }
+
+    std::cout << result << std::endl;
+    return result;
+}
+
 Labyrinth::Labyrinth(std::function<Cell*()> cellFactory){
     for(int i(0); i<settings::labyrinthSizeX; ++i){
         std::vector<std::unique_ptr<Cell>> cellRow;
@@ -66,9 +157,12 @@ void Labyrinth::testInit(){
     }
 }
 
-void Labyrinth::generatorInit(){
-    std::vector<std::vector<int>> temp = generator(settings::labyrinthSizeX, settings::labyrinthSizeY);
-    for(auto i = 0; i < settings::labyrinthSizeY; ++i){
+void Labyrinth::generatorInit()
+{
+    /*std::vector<std::vector<int>> temp = generator(settings::labyrinthSizeX, settings::labyrinthSizeY);
+    for(auto i = 0; i < settings::labyrinthSizeY; ++i)
+    {
+
         for(auto j = 0; j < settings::labyrinthSizeX; ++j)
             std::cout << temp[i][j];
         std::cout << std::endl;
@@ -95,6 +189,10 @@ void Labyrinth::generatorInit(){
             }
         }
     }
+
+    toString();*/
+    std::cout <<  "------------------" << std::endl << "00000000000000000000;04111112131101110100;01000000000001000100;01140203010101110100;01000101010101000100;01111311111111111100;01000101010000010000;01110104010111011100;01010001010100010100;01011101041111010100;01010101010100010100;01010101010411010100;00010000010001000000;01111111011104111100;01010101010101000100;01010101010101140100;00010000000101000000;01111111110101111400;00000000000000000000;00000000000000000000;" << "-----------------------------" << std::endl;
+    fromString("00000000000000000000;04111112131101110100;01000000000001000100;01140203010101110100;01000101010101000100;01111311111111111100;01000101010000010000;01110104010111011100;01010001010100010100;01011101041111010100;01010101010100010100;01010101010411010100;00010000010001000000;01111111011104111100;01010101010101000100;01010101010101140100;00010000000101000000;01111111110101111400;00000000000000000000;00000000000000000000;");
 }
 
 std::vector<std::pair<int, int>> Labyrinth::adjacent(std::pair<int, int> cell){

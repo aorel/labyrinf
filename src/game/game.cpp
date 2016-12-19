@@ -109,7 +109,7 @@ void Game::_handler(const std::string& msg){
     }
     else if(msg.substr(0, _joinMsg.size()) == _joinMsg){
         std::cout << "Game::_handler: _joinMsg" << std::endl;
-        size_t start(msg.find_first_of('@'));
+        //size_t start(msg.find_first_of('@'));
     }
     else{
         std::cout << "Game::_handler: unknown msg" << std::endl;
