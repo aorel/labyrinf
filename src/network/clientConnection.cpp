@@ -38,10 +38,11 @@ void ClientConnection::write(const Message& msg)
 }
 
 void ClientConnection::write(const std::string& str){
-    Message msg;
+    /*Message msg;
     msg.bodyLength(std::strlen(str.c_str()));
     std::memcpy(msg.body(), str.c_str(), msg.bodyLength());
-    msg.encodeHeader();
+    msg.encodeHeader();*/
+    Message msg(str);
     write(msg);
 }
 

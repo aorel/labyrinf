@@ -12,7 +12,9 @@ void Room::join(ParticipantPtr participant)
     //game._join();
     //int playerKey(game._join());
     participant->deliver(game._info());//labyrinth
+    map_[participant] = game._joinKey();
     participant->deliver(game._join());//player key
+    deliverExceptOne(participant, game._add());
 
     /*for (auto msg: recentMessages_)
         participant->deliver(msg);*/
@@ -21,7 +23,10 @@ void Room::join(ParticipantPtr participant)
 void Room::leave(ParticipantPtr participant)
 {
     std::cout << "-connection: " << participant->getAddressString() << std::endl;
+    std::string msg = game._del(map_.at(participant));
+    map_.erase(participant);
     participants_.erase(participant);
+    deliver(msg);
 }
 
 void Room::deliver(const Message& msg)
@@ -33,6 +38,19 @@ void Room::deliver(const Message& msg)
     for (auto participant: participants_)
         participant->deliver(msg);
 }
+void Room::deliverExceptOne(ParticipantPtr exceptParticipant, const Message& msg)
+{
+    /*recentMessages_.push_back(msg);
+    while (recentMessages_.size() > maxRecentMessages_)
+        recentMessages_.pop_front();*/
+
+    for (auto participant: participants_){
+        if(participant == exceptParticipant){
+            continue;
+        }
+        participant->deliver(msg);
+    }
+}
 
 
 void Room::readHandler(ParticipantPtr p, const Message& msg)
@@ -40,14 +58,17 @@ void Room::readHandler(ParticipantPtr p, const Message& msg)
 
     std::string msgString(msg.body(), msg.bodyLength());
 
-    int j = map_.at(p);
+    /*int j = map_.at(p);
     game._move(j, msgString);
 
     std::string stateString(game._state());
-    Message stateMsg;
-    stateMsg.bodyLength(std::strlen(stateString.c_str()));
-    std::memcpy(stateMsg.body(), stateString.c_str(), stateMsg.bodyLength());
-    stateMsg.encodeHeader();
+    //Message stateMsg;
+    //stateMsg.bodyLength(std::strlen(stateString.c_str()));
+    //std::memcpy(stateMsg.body(), stateString.c_str(), stateMsg.bodyLength());
+    //stateMsg.encodeHeader();
+    Message stateMsg(stateString);*/
+
+    Message stateMsg(game._move(map_.at(p), msgString));
 
 
     for (auto participant: participants_)

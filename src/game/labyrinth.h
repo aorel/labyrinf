@@ -14,6 +14,9 @@ public:
     Labyrinth(std::function<Cell*()> cellFactory);
     virtual ~Labyrinth() = default;
 
+    void fromString(const std::string &labyrinthString);
+    std::string toString();
+
     bool checkCommand(const Player&, const PlayerEvent&);
     CellType getBonus(sf::Vector2i place);
 

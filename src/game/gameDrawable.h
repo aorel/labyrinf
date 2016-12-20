@@ -10,7 +10,8 @@
 class GameDrawable : public Game, public sf::Drawable{
 public:
     GameDrawable();
-    void init() override;
+    void addLocalPlayer() override;
+    void addPlayer(const int& playerIndex) override;
 
 private:
     void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;

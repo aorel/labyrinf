@@ -4,8 +4,21 @@ GameDrawable::GameDrawable() :
         Game(new LabyrinthDrawable){
 }
 
-void GameDrawable::init(){
-    players.emplace_back(new PlayerDrawable);
+void GameDrawable::addLocalPlayer(){
+    std::cout << "GameDrawable::addLocalPlayer()" << std::endl;
+    //players.emplace_back(new PlayerDrawable);
+    //players[localPlayer] = std::unique_ptr<Player>(new PlayerDrawable);
+    addPlayer(localPlayer);
+}
+
+void GameDrawable::addPlayer(const int& playerIndex){
+    std::cout << "GameDrawable::addPlayer() " << playerIndex << std::endl;
+    if(players.find(playerIndex) == players.end()){
+        players[playerIndex] = std::unique_ptr<Player>(new PlayerDrawable);
+    }
+    else{
+        std::cout << "GameDrawable::addPlayer(): ERROR" << std::endl;
+    }
 }
 
 void GameDrawable::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const{
@@ -14,14 +27,14 @@ void GameDrawable::drawCurrent(sf::RenderTarget& target, sf::RenderStates states
 
 void GameDrawable::draw(sf::RenderTarget& target, sf::RenderStates states) const{
     drawCurrent(target, states);
-    
+
     const LabyrinthDrawable* labyrinthDrawable = dynamic_cast<LabyrinthDrawable*>(labyrinth.get());
     target.draw(*labyrinthDrawable);
     for(const auto &player : players){
-        const PlayerDrawable* playerDrawable = dynamic_cast<PlayerDrawable*>(player.get());
+        const PlayerDrawable* playerDrawable = dynamic_cast<PlayerDrawable*>(player.second.get());
         target.draw(*playerDrawable);
     }
-    
+
     if (!isGame){
         sf::Image listImage;
         listImage.loadFromFile(settingsDrawable::imgPathList);

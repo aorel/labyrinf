@@ -8,9 +8,19 @@ Labyrinth::Labyrinth() : Labyrinth( [](){return new Cell;} ){
     generatorInit();
 }
 
-void Labyrinth::fromString (const std::string &labyrinthString)
+Labyrinth::Labyrinth(std::function<Cell*()> cellFactory){
+    for(int i(0); i<settings::labyrinthSizeX; ++i){
+        std::vector<std::unique_ptr<Cell>> cellRow;
+        for(int j(0); j<settings::labyrinthSizeY; ++j){
+            cellRow.emplace_back( cellFactory() );
+        }
+        cells.push_back(std::move(cellRow));
+    }
+}
+
+void Labyrinth::fromString(const std::string &labyrinthString)
 {
-    auto position = 0;
+    size_t position = 0;
     auto i = 0;
     auto j = 0;
     while (position < labyrinthString.length())
@@ -97,16 +107,6 @@ std::string Labyrinth::toString()
 
     std::cout << result << std::endl;
     return result;
-}
-
-Labyrinth::Labyrinth(std::function<Cell*()> cellFactory){
-    for(int i(0); i<settings::labyrinthSizeX; ++i){
-        std::vector<std::unique_ptr<Cell>> cellRow;
-        for(int j(0); j<settings::labyrinthSizeY; ++j){
-            cellRow.emplace_back( cellFactory() );
-        }
-        cells.push_back(std::move(cellRow));
-    }
 }
 
 bool Labyrinth::checkCommand(const Player &p, const PlayerEvent& playerEvent){

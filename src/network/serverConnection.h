@@ -33,6 +33,7 @@ public:
     void leave(ParticipantPtr participant);
 
     void deliver(const Message& msg);
+    void deliverExceptOne(ParticipantPtr exeptParticipant, const Message& msg);
     void readHandler(ParticipantPtr p, const Message& msg);
 
 private:
@@ -47,7 +48,7 @@ private:
 };
 
 //----------------------------------------------------------------------
-class Room;
+//class Room;
 class ServerConnection :
     public Participant,
     public std::enable_shared_from_this<ServerConnection>
