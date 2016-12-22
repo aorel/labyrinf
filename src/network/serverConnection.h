@@ -10,10 +10,11 @@
 
 #include "chatMessage.h"
 
+#include "../game/game.h"
+
 //----------------------------------------------------------------------
 
-class Participant
-{
+class Participant{
 public:
     virtual ~Participant() {}
     virtual const std::string getAddressString() const = 0;
@@ -24,10 +25,7 @@ typedef std::shared_ptr<Participant> ParticipantPtr;
 
 //----------------------------------------------------------------------
 
-#include "../game/game.h"
-
-class Room
-{
+class Room{
 public:
     void join(ParticipantPtr participant);
     void leave(ParticipantPtr participant);
@@ -42,17 +40,13 @@ private:
     Game game;
     int counter_{0};
     std::map<ParticipantPtr, int> map_;
-
-    /*enum { maxRecentMessages = 100 };
-    MessageDeque recentMessages_;*/
 };
 
 //----------------------------------------------------------------------
-//class Room;
+
 class ServerConnection :
     public Participant,
-    public std::enable_shared_from_this<ServerConnection>
-{
+    public std::enable_shared_from_this<ServerConnection>{
 public:
     ServerConnection(boost::asio::ip::tcp::socket socket, Room& room);
 

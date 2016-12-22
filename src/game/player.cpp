@@ -9,12 +9,7 @@ Player::Player() :
 }
 
 bool Player::readyForNewCommand(){
-    if(lastStepTime.getElapsedTime() > settings::playerSpf){
-        return true;
-    }
-    else{
-        return false;
-    }
+    return lastStepTime.getElapsedTime() > settings::playerSpf;
 }
 
 void Player::applyCommand(const PlayerEvent& playerEvent){

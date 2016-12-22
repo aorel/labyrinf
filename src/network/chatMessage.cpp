@@ -1,69 +1,58 @@
 #include "chatMessage.h"
 
 Message::Message() :
-        bodyLength_(0)
-{
+        bodyLength_(0){
 }
 
-Message::Message(const std::string& str)
-{
-    bodyLength(std::strlen(str.c_str()));
-    std::memcpy(this->body(), str.c_str(), this->bodyLength());
+Message::Message(const std::string& str){
+    setBodyLength(std::strlen(str.c_str()));
+    std::memcpy(this->body(), str.c_str(), this->getBodyLength());
     this->encodeHeader();
 }
 
-const char* Message::data() const
-{
+/*const char* Message::data() const{
+    return data_;
+}*/
+
+char* Message::data(){
     return data_;
 }
 
-char* Message::data()
-{
-    return data_;
-}
-
-std::size_t Message::length() const
-{
+std::size_t Message::length() const{
     return headerLength + bodyLength_;
 }
 
-const char* Message::body() const
-{
+const char* Message::body() const{
     return data_ + headerLength;
 }
 
-char* Message::body()
-{
+char* Message::body(){
     return data_ + headerLength;
 }
 
-std::size_t Message::bodyLength() const
-{
+std::size_t Message::getBodyLength() const{
     return bodyLength_;
 }
 
-void Message::bodyLength(std::size_t new_length)
-{
+void Message::setBodyLength(std::size_t new_length){
     bodyLength_ = new_length;
-    if (bodyLength_ > maxBodyLength)
+    if (bodyLength_ > maxBodyLength){
         bodyLength_ = maxBodyLength;
+    }
 }
 
-bool Message::decodeHeader()
-{
+bool Message::decodeHeader(){
     char header[headerLength + 1] = "";
     std::strncat(header, data_, headerLength);
     bodyLength_ = std::atoi(header);
-    if (bodyLength_ > maxBodyLength)
-    {
+    if (bodyLength_ > maxBodyLength){
         bodyLength_ = 0;
         return false;
     }
     return true;
 }
 
-void Message::encodeHeader()
-{
+void Message::encodeHeader(){
     char header[headerLength + 1] = "";
     std::sprintf(header, "%4d", static_cast<int>(bodyLength_));
     std::memcpy(data_, header, headerLength);

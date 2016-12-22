@@ -34,19 +34,19 @@ void CellDrawable::setPosition(float x, float y){
 
 void CellDrawable::draw(sf::RenderTarget& target, sf::RenderStates states) const{
     target.draw(cellShape, states);
+    
+    AbstractBonuse* bonuse(0);
     if(type == HEART){
-        Heart heart;
-        heart.sprite.setPosition(cellShape.getPosition());
-        target.draw(heart.sprite);
+        bonuse = new Heart;
     }
     if(type == FIRE){
-        Fire fire;
-        fire.sprite.setPosition(cellShape.getPosition());
-        target.draw(fire.sprite);
+        bonuse = new Fire;
     }
     if(type == WATER){
-        Water water;
-        water.sprite.setPosition(cellShape.getPosition());
-        target.draw(water.sprite);
+        bonuse = new Water;
+    }
+    if(bonuse!=0){
+        bonuse->sprite.setPosition(cellShape.getPosition());
+        target.draw(bonuse->sprite);
     }
 }

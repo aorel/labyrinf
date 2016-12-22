@@ -2,9 +2,17 @@
 
 #include "../settingsDrawable.h"
 
-class Heart{
+class AbstractBonuse{
 public:
     sf::Sprite sprite;
+protected:
+    sf::Image image;
+    sf::Texture texture;
+};
+
+class Heart : public AbstractBonuse{
+public:
+    //sf::Sprite sprite;
     Heart(){
         image.loadFromFile(settingsDrawable::imgPathHeart);
         texture.loadFromImage(image);
@@ -12,13 +20,13 @@ public:
         sprite.setScale(settingsDrawable::imgScaleHeart);
     }
 private:
-    sf::Image image;
-    sf::Texture texture;
+    //sf::Image image;
+    //sf::Texture texture;
 };
 
-class Fire{
+class Fire : public AbstractBonuse{
 public:
-    sf::Sprite sprite;
+    //sf::Sprite sprite;
     Fire(){
         image.loadFromFile(settingsDrawable::imgPathFire);
         image.createMaskFromColor(settingsDrawable::imgMaskColorFire);
@@ -27,13 +35,13 @@ public:
         sprite.setScale(settingsDrawable::imgScaleFire);
     }
 private:
-    sf::Image image;
-    sf::Texture texture;
+    //sf::Image image;
+    //sf::Texture texture;
 };
 
-class Water{
+class Water : public AbstractBonuse{
 public:
-    sf::Sprite sprite;
+    //sf::Sprite sprite;
     Water(){
         image.loadFromFile(settingsDrawable::imgPathWater);
         texture.loadFromImage(image);
@@ -41,7 +49,7 @@ public:
         sprite.setTextureRect(sf::IntRect(0, 0, settingsDrawable::cellDrawableSize, settingsDrawable::cellDrawableSize));
     }
 private:
-    sf::Image image;
-    sf::Texture texture;
+    //sf::Image image;
+    //sf::Texture texture;
 };
 

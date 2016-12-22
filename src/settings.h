@@ -36,4 +36,11 @@ namespace settings{
     const std::string gameMsgAdd {"@add"};
     const std::string gameMsgDel {"@del"};
     const std::string gameMsgMove {"@move"};
+    
+    const std::string playerEventKeyUp {"up"};
+    const std::string playerEventKeyDown {"down"};
+    const std::string playerEventKeyLeft {"left"};
+    const std::string playerEventKeyRight {"right"};
+    const std::string playerEventKeyUnknown {"unknown"};
+
 }
