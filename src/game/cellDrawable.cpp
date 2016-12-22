@@ -49,4 +49,5 @@ void CellDrawable::draw(sf::RenderTarget& target, sf::RenderStates states) const
         bonuse->sprite.setPosition(cellShape.getPosition());
         target.draw(bonuse->sprite);
     }
+    delete bonuse;
 }
