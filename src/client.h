@@ -46,7 +46,7 @@ private:
     void gameKeyboardHandler(PressedKey key);
     void render();
 
-    const int currentPlayerIndex = 0;
+    //const int currentPlayerIndex = 0;
     std::function<void(const PlayerEvent&)> sendToServer;
     void connectionWrite(const PlayerEvent&);
     void virtualConnectionWrite(const PlayerEvent&);

@@ -4,7 +4,9 @@ Client::Client() :
         window(sf::VideoMode(settings::windowSizeX, settings::windowSizeY), settings::windowName),
         keyboardHandler( [this](PressedKey key){ gameKeyboardHandler(key); } ),
         sendToServer( [this](const PlayerEvent& playerEvent){ virtualConnectionWrite(playerEvent); } ){
-    game.init();
+    std::cout << "Client local" << std::endl;
+
+    game.addLocalPlayer();
     window.setPosition(sf::Vector2i(settings::windowPositionX, settings::windowPositionY));
 }
 
@@ -13,7 +15,8 @@ Client::Client(boost::asio::io_service& ioService,
         window(sf::VideoMode(settings::windowSizeX, settings::windowSizeY), settings::windowName),
         keyboardHandler( [this](PressedKey key){ gameKeyboardHandler(key); } ),
         sendToServer( [this](const PlayerEvent& playerEvent){ connectionWrite(playerEvent); } ){
-    game.init();
+    std::cout << "Client multiplayer" << std::endl;
+    //game.init();
 
     clientConnection = std::make_shared<ClientConnection>(
         ioService,
@@ -97,7 +100,7 @@ void Client::gameKeyboardHandler(PressedKey key){
     }
     else{
         PlayerEvent playerEvent(key);
-        if(game.checkPlayerAction(currentPlayerIndex, playerEvent)){
+        if(game.checkPlayerAction(playerEvent)){
             sendToServer(playerEvent);
         }
     }
@@ -116,46 +119,10 @@ void Client::connectionWrite(const PlayerEvent& playerEvent){
 }
 
 void Client::virtualConnectionWrite(const PlayerEvent& playerEvent){
-    game.applyPlayerAction(currentPlayerIndex, playerEvent);
+    game.applyPlayerAction(playerEvent);
 }
 
 void Client::connectionReadHandler(const std::string& msg){
     std::cout << '[' << msg << ']' << std::endl;
-
-    size_t start(msg.find_first_of('@'));
-    size_t end(0);
-    int i(0);
-    while(1){
-        end = msg.find_first_of('@', start+1);
-
-        if(end == std::string::npos){
-            break;
-        }
-
-        std::cout << '!' << msg.substr(start, end) << std::endl;
-
-
-        size_t i1pos = msg.find_first_of(':', start);
-        size_t i2pos = msg.find_first_of(',', start);
-        std::cout << '^' << msg.substr(i1pos+1, end) << std::endl;
-        std::cout << '^' << msg.substr(i2pos+1, end) << std::endl;
-        int i1 = std::stoi(msg.substr(i1pos+1, end));
-        int i2 = std::stoi(msg.substr(i2pos+1, end));
-        std::cout << '?' << i1 << "-" << i2 << std::endl;
-            game.setPlayerPosition(i, i1, i2);
-
-        start = end;
-        ++i;
-    }
-    end = msg.find_first_of('\n', start+1);
-    std::cout << '!' << msg.substr(start, end) << std::endl;
-
-        size_t i1pos = msg.find_first_of(':', start);
-        size_t i2pos = msg.find_first_of(',', start);
-        std::cout << '^' << msg.substr(i1pos+1, end) << std::endl;
-        std::cout << '^' << msg.substr(i2pos+1, end) << std::endl;
-        int i1 = std::stoi(msg.substr(i1pos+1, end));
-        int i2 = std::stoi(msg.substr(i2pos+1, end));
-        std::cout << '?' << i1 << "-" << i2 << std::endl;
-            game.setPlayerPosition(i, i1, i2);
+    game._handler(msg);
 }

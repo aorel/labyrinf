@@ -29,4 +29,18 @@ namespace settings{
          {1,0,1},
          {1,0,1},
          {1,1,1}};
+
+    const std::string gameMsgSep {"\n"};
+    const std::string gameMsgInfo {"@info"};
+    const std::string gameMsgJoin {"@join"};
+    const std::string gameMsgAdd {"@add"};
+    const std::string gameMsgDel {"@del"};
+    const std::string gameMsgMove {"@move"};
+    
+    const std::string playerEventKeyUp {"up"};
+    const std::string playerEventKeyDown {"down"};
+    const std::string playerEventKeyLeft {"left"};
+    const std::string playerEventKeyRight {"right"};
+    const std::string playerEventKeyUnknown {"unknown"};
+
 }

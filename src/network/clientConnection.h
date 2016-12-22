@@ -10,8 +10,7 @@
 
 typedef std::function<void(const std::string& msg)> ReadHandler;
 
-class ClientConnection
-{
+class ClientConnection{
 public:
     ClientConnection(boost::asio::io_service& ioService,
         boost::asio::ip::tcp::resolver::iterator endpointIterator);
@@ -32,8 +31,6 @@ private:
     void doReadBody();
 
     void doWrite();
-
-
 
     boost::asio::io_service& ioService_;
     boost::asio::ip::tcp::socket socket_;

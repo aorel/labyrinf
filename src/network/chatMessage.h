@@ -5,15 +5,17 @@
 #include <cstring>
 #include <deque>
 
-class Message
-{
+#include <string>
+
+class Message{
 public:
     enum { headerLength = 4 };
     enum { maxBodyLength = 512 };
 
     Message();
+    Message(const std::string& str);
 
-    const char* data() const;
+    //const char* data() const;
 
     char* data();
 
@@ -23,9 +25,9 @@ public:
 
     char* body();
 
-    std::size_t bodyLength() const;
+    std::size_t getBodyLength() const;
 
-    void bodyLength(std::size_t newLength);
+    void setBodyLength(std::size_t newLength);
 
     bool decodeHeader();
 

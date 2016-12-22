@@ -1,23 +1,21 @@
 #include "playerEvent.h"
 
 PlayerEvent::PlayerEvent(const PressedKey& k) : key(k) {
-    generateMessage();
 }
 
 PlayerEvent::PlayerEvent(const std::string& s) {
-    if(s == "up"){
+    if(s == settings::playerEventKeyUp){
         key = PressedKey::Up;
     }
-    else if(s == "down"){
+    else if(s == settings::playerEventKeyDown){
         key = PressedKey::Down;
     }
-    else if(s == "left"){
+    else if(s == settings::playerEventKeyLeft){
         key = PressedKey::Left;
     }
-    else if(s == "right"){
+    else if(s == settings::playerEventKeyRight){
         key = PressedKey::Right;
     }
-    generateMessage();
 }
 
 PressedKey PlayerEvent::getKey() const{
@@ -26,18 +24,18 @@ PressedKey PlayerEvent::getKey() const{
 
 std::string PlayerEvent::generateMessage() const{
     if(key == PressedKey::Up){
-        return "up";
+        return settings::playerEventKeyUp;
     }
     else if(key == PressedKey::Down){
-        return "down";
+        return settings::playerEventKeyDown;
     }
     else if(key == PressedKey::Left){
-        return "left";
+        return settings::playerEventKeyLeft;
     }
     else if(key == PressedKey::Right){
-        return "right";
+        return settings::playerEventKeyRight;
     }
     else{
-        return "unknown";
+        return settings::playerEventKeyUnknown;
     }
 }

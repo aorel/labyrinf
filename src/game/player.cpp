@@ -3,18 +3,13 @@
 Player::Player() :
         position(settings::playerStartPositionX, settings::playerStartPositionY){
     lastStepTime.restart();
-    std::cout << "Player" << std::endl;
+    std::cout << "Player()" << std::endl;
     health = 2;
     wet = 0;
 }
 
 bool Player::readyForNewCommand(){
-    if(lastStepTime.getElapsedTime() > settings::playerSpf){
-        return true;
-    }
-    else{
-        return false;
-    }
+    return lastStepTime.getElapsedTime() > settings::playerSpf;
 }
 
 void Player::applyCommand(const PlayerEvent& playerEvent){
@@ -49,13 +44,16 @@ sf::Vector2i Player::getPosition() const{
     return position;
 }
 
-std::string Player::getPositionInString() const{
+std::string Player::positionToString() const{
     sf::Vector2i position = getPosition();
 
     std::string returnString(std::to_string(position.x));
     returnString.append(",");
     returnString.append(std::to_string(position.y));
     return returnString;
+}
+void Player::positionFromString(const std::string& str){
+    //TODO
 }
 
 void Player::move(sf::Vector2i& movement){

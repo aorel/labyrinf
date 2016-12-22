@@ -2,6 +2,7 @@
 
 #include <string>
 #include "pressedKey.h"
+#include "../settings.h"
 
 class PlayerEvent{
 public:
