@@ -10,9 +10,9 @@ Labyrinf is a simple, multiplayer game
 
 ## Usage
 
-# Client
+#####  Client
 1. local client `./client`
 2. multiplayer client `./client <host> <port>`
 
-# Server
+#####  Server
 1. server `./server <port> [<port> ...]`
